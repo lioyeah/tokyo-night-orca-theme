@@ -1,0 +1,784 @@
+import { setupL10N, t } from "./libs/l10n";
+import zhCNTranslations from "./translations/zhCN";
+
+// --- TypeScript 类型定义增强 ---
+// 声明全局变量，使得在代码中可以直接访问 window 对象下自定义的属性，
+// 而不会引发 TypeScript 在编译阶段的类型检查错误。
+declare global {
+  interface Window {
+    [key: string]: any; // 允许 window 对象拥有任意以字符串为键的属性
+  }
+}
+
+// --- 全局插件变量 ---
+let pluginIdFromOrca: string; // 用于存储从 Orca 应用传递过来的本插件的唯一ID
+
+// --- 主题常量 ---
+const THEME_DISPLAY_NAME = "Tokyo Night"; // 主题在 Orca 设置中显示的名称
+const THEME_CSS_FILE = "theme.css";     // 注册到 Orca 的静态 CSS 文件名。
+                                        // 注意：此文件的内容不由本 main.ts 动态生成，而是作为插件资产的一部分。
+                                        // 如果主题的大部分样式是静态的，应放在此文件中。
+                                        // 本 main.ts 主要处理基于用户设置的动态样式。
+
+// --- 设置项的键名 ---
+// 定义在插件设置中使用的键，用于让用户通过开关控制主题的某些动态方面。
+const SETTING_KEY_ENABLE_BASE_BACKGROUND = "enableTokyoNightBaseBackground"; // 控制是否启用主题的基础背景和相关UI元素样式
+const SETTING_KEY_ENABLE_SIDEBAR_COLOR = "enableTokyoNightSidebarColor";   // 控制是否启用自定义的侧边栏颜色
+
+// --- 动态样式管理 ---
+// 这些对象用于持有动态插入到文档 <head> 中的 <style> 元素的引用。
+// 使用对象包装器 ({ el: ... }) 是为了在函数中修改其属性时，能改变原始对象的引用，
+// 类似于传递引用（因为对象本身是引用类型）。
+const styleHolders = {
+    baseBackground: { el: null as HTMLStyleElement | null },  // 用于基础背景和大部分UI元素的样式
+    sidebar: { el: null as HTMLStyleElement | null },         // 用于侧边栏特定样式的元素
+    settingsModal: { el: null as HTMLStyleElement | null },   // 用于设置模态框特定样式的元素
+};
+
+// --- 核心CSS字符串定义 ---
+
+// 东京之夜核心CSS变量定义以及基础UI元素样式
+const tokyoNightBaseBackgroundCssString = `
+:root {
+    /* Tokyo Night 配色变量覆盖 Orca 默认变量 */
+    /* 基础背景和文字颜色 */
+    --orca-color-bg-1: #1a1b26 !important;           /* 主背景色 (Editor Background (Night)) */
+    --orca-color-bg-2: #24283b !important;           /* 次背景色 (Editor Background (Storm)) - 用于如查询区域、设置视图等 */
+    --orca-color-text-1: #a9b1d6 !important;         /* 主文字颜色 (Editor Foreground) */
+    --orca-color-text-2: #9aa5ce !important;         /* 次文字颜色 (Markdown Text / HTML Text) */
+    --orca-color-placeholder: #565f89 !important;    /* 占位符文字颜色 (Comments) */
+
+    /* 边框和分隔线 */
+    --orca-color-border: #414868 !important;         /* 通用边框颜色 (Terminal Black) */
+    --orca-border-general: 1px solid #414868 !important; /* 通用边框定义 */
+    --orca-color-separator: #414868 !important;       /* 分隔线颜色 (Terminal Black) */
+
+    /* 主题强调色 */
+    --orca-color-primary-5: #7aa2f7 !important;       /* 主题强调色 (Terminal Blue) */
+    --orca-color-primary-4: #7aa2f7 !important;       /* 主题强调色变体 (Terminal Blue) - 通常比 primary-5 稍暗或不同饱和度，此处统一 */
+    --orca-color-tab: #7aa2f7 !important;             /* 查询编辑器选中标签下划线 (Terminal Blue) */
+    
+    /* Orca 的灰色调映射 - 用于按钮、未选中项等 */
+    --orca-color-gray-7: #292e42 !important;         /* 用于 soft 按钮背景等 (一个协调的深灰蓝色) */
+    --orca-color-gray-6: #565f89 !important;         /* 用于未选中标签文字等 (Comments - 更柔和) */
+    --orca-color-gray-5: #565f89 !important;         /* (假设值，Comments) */
+    --orca-color-gray-4: #565f89 !important;         /* 用于未选中标签文字等 (Comments) */
+
+    /* Tokyo Night 特定颜色变量，可供本主题内部更精确地使用 */
+    --tokyo-night-red: #f7768e;
+    --tokyo-night-orange: #ff9e64;
+    --tokyo-night-yellow: #e0af68;
+    --tokyo-night-green: #9ece6a;
+    --tokyo-night-spring-green: #73daca;
+    --tokyo-night-cyan: #7dcfff;
+    --tokyo-night-blue: #7aa2f7;        /* 与 --orca-color-primary-5 一致 */
+    --tokyo-night-magenta: #bb9af7;
+    --tokyo-night-white: #c0caf5;       /* 用于变量、类名等，比主前景亮 */
+    --tokyo-night-foreground: #a9b1d6;  /* 与 --orca-color-text-1 一致 */
+    --tokyo-night-comment: #565f89;     /* 与 --orca-color-placeholder 一致 */
+    --tokyo-night-bg-night: #1a1b26;    /* 与 --orca-color-bg-1 一致 */
+    --tokyo-night-bg-storm: #24283b;    /* 与 --orca-color-bg-2 一致 */
+    --tokyo-night-bg-float: #1f2335;    /* 用于浮动元素或略浅的背景，如设置界面的一些区域 */
+    --tokyo-night-terminal-black: #414868; /* 作为深灰/蓝黑色，用于边框、次要背景等 */
+}
+
+/* 基础页面和应用容器样式 */
+/* 这些元素的颜色现在主要通过上面 :root 中定义的 --orca-color-bg-1 和 --orca-color-text-1 自动应用。*/
+/* 保留这些规则是为了确保最高优先级，以防 Orca 默认样式未使用这些变量或具有更高特异性。*/
+body,
+div#app {
+    background-color: var(--orca-color-bg-1) !important;
+    color: var(--orca-color-text-1) !important;
+}
+.orca-panels-container { /* Orca 的主要内容面板容器 */
+    background-color: var(--orca-color-bg-1) !important;
+}
+
+/* 查询构建器/条件区域 */
+/* 其背景、文字、边框颜色已由 :root 中的相应变量 (--orca-color-bg-2, --orca-color-text-1, --orca-border-general) 控制。*/
+/* 只保留非颜色相关的、或需要特定于此组件的样式。*/
+.orca-query-conditions {
+    /* background-color: var(--orca-color-bg-2) !important; /* 已由 :root 定义 */
+    /* color: var(--orca-color-text-1) !important;       /* 已由 :root 定义 */
+    /* border: var(--orca-border-general) !important;    /* 已由 :root 定义 */
+    border-radius: var(--orca-radius-sm) !important; /* 遵循Orca的圆角变量 */
+    padding: var(--orca-spacing-md) !important;     /* 遵循Orca的内边距变量 */
+}
+
+/* 查询条件区域的 "重置" 按钮 */
+/* 此按钮有 .soft 类，其默认颜色已通过 --orca-color-gray-7 (背景) 和 --orca-color-text-1 (文字) 在 :root 中定义。*/
+/* 这里提供更具体的覆盖以符合Tokyo Night风格。*/
+.orca-query-conditions .orca-query-conditions-reset.orca-button {
+    background-color: var(--tokyo-night-bg-float) !important; /* 使用一个特定于主题的柔和背景色 */
+    color: var(--tokyo-night-white) !important;               /* 使用更亮的白色作为文字颜色 */
+    border: 1px solid var(--tokyo-night-terminal-black) !important; /* 与其他元素协调的边框 */
+}
+.orca-query-conditions .orca-query-conditions-reset.orca-button:hover {
+    background-color: var(--tokyo-night-terminal-black) !important; /* 悬浮时使用更深的背景 */
+}
+
+
+/* 主界面中的 "plain" 类型按钮 (通常用于只有图标或简单文本的按钮) */
+/* 其文字颜色默认可能继承自父元素或由 .ti 规则覆盖。这里确保它们使用醒目的白色。*/
+.orca-button.plain {
+    color: var(--tokyo-night-white) !important;
+}
+.orca-button.plain .ti { /* 确保此类按钮内的图标颜色也一致 */
+    color: var(--tokyo-night-white) !important;
+}
+
+
+/* 主界面中的通用图标 (Tabler Icons) 颜色 */
+/* 这是一个基础覆盖，确保所有 .ti 图标都有一个统一的亮色。*/
+/* 特定组件内的图标可能会有更具体的规则来覆盖此颜色。*/
+.ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+/* 文本块中的占位符文字颜色 */
+/* 其颜色已由 :root 中的 --orca-color-placeholder (--tokyo-night-comment) 控制。*/
+/* .orca-repr-text-content::after { */
+    /* color: var(--orca-color-placeholder) !important; */
+/* } */
+
+/* 查询编辑器中的标签页样式 */
+/* 未选中项的文字和图标颜色已由 :root 中的 --orca-color-gray-6 (映射到 --tokyo-night-comment) 控制。*/
+.orca-block-editor-query-tabs .orca-segmented-item {
+    color: var(--orca-color-gray-6) !important; /* 确保使用定义的柔和颜色 */
+}
+.orca-block-editor-query-tabs .orca-segmented-item .ti {
+    color: var(--orca-color-gray-6) !important; /* 图标颜色与文字一致 */
+}
+
+/* 选中项的文字颜色使用更亮的白色，底部边框使用主题强调色。*/
+/* Orca的默认样式是背景透明，无阴影，这里保持这些特性。*/
+.orca-block-editor-query-tabs .orca-segmented-item.orca-selected {
+    color: var(--tokyo-night-white) !important;
+    border-bottom-color: var(--orca-color-tab) !important; /* --orca-color-tab 已在 :root 中定义为 --tokyo-night-blue */
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+.orca-block-editor-query-tabs .orca-segmented-item.orca-selected .ti {
+    color: var(--tokyo-night-white) !important; /* 选中项的图标颜色与文字一致 */
+}
+`;
+
+// 东京之夜侧边栏颜色的CSS定义
+const tokyoNightSidebarCssString = `
+/* Tokyo Night - 主应用侧边栏颜色 */
+/* nav#sidebar 的主背景和文字颜色已由 :root 中的 --tokyo-night-bg-storm 和 --orca-color-text-1 控制。*/
+/* 这里再次指定是为了确保当 SETTING_KEY_ENABLE_SIDEBAR_COLOR 单独控制时，这些特定值被应用。*/
+nav#sidebar {
+    background-color: var(--tokyo-night-bg-storm) !important;
+    color: var(--orca-color-text-1) !important;
+}
+nav#sidebar .item,
+nav#sidebar a {
+    color: var(--orca-color-text-1) !important;
+}
+nav#sidebar .item .ti, /* 侧边栏项目中的图标 */
+nav#sidebar a .ti {
+    color: var(--orca-color-text-1) !important; /* 默认与文字同色，或可改为 --tokyo-night-white 以增加对比 */
+}
+
+nav#sidebar .item:hover,
+nav#sidebar a:hover {
+    background-color: var(--tokyo-night-terminal-black) !important; /* 悬浮背景 */
+    color: var(--tokyo-night-white) !important;                     /* 悬浮文字 */
+}
+nav#sidebar .item:hover .ti,
+nav#sidebar a:hover .ti {
+    color: var(--tokyo-night-white) !important;                     /* 悬浮图标 */
+}
+
+nav#sidebar .item.active,
+nav#sidebar a.active {
+    background-color: var(--orca-color-primary-5) !important;     /* 激活项背景 (主题蓝) */
+    color: var(--tokyo-night-bg-night) !important;                /* 激活项文字 (用深色背景形成对比) */
+}
+nav#sidebar .item.active .ti,
+nav#sidebar a.active .ti {
+    color: var(--tokyo-night-bg-night) !important;                /* 激活项图标 */
+}
+
+
+/* 侧边栏顶部的标签页选项 (如 "全部", "标签", "收藏") */
+.orca-sidebar-tab-options {
+    background-color: var(--tokyo-night-bg-night) !important; /* 使用比侧边栏主背景更暗的颜色 */
+}
+
+/* 未选中标签项的文字和图标颜色已由 :root 中的 --orca-color-gray-4 (映射到 --tokyo-night-comment) 控制 */
+.orca-sidebar-tab-options .orca-segmented-item {
+    color: var(--orca-color-gray-4) !important; /* 确保使用定义的柔和颜色 */
+}
+.orca-sidebar-tab-options .orca-segmented-item .ti {
+    color: var(--orca-color-gray-4) !important; /* 图标颜色与文字一致 */
+}
+
+/* 选中标签项的背景和文字颜色 */
+.orca-sidebar-tab-options .orca-segmented-item.orca-selected {
+    background-color: var(--orca-color-primary-5) !important; /* 主题蓝背景 */
+    color: var(--tokyo-night-bg-night) !important;            /* 深色文字形成对比 */
+}
+.orca-sidebar-tab-options .orca-segmented-item.orca-selected .ti {
+    color: var(--tokyo-night-bg-night) !important;            /* 图标颜色与文字一致 */
+}
+
+/* 侧边栏收藏夹项目图标的背景色 */
+/* 其颜色已由 :root 中的 --orca-color-gray-7 (映射到 #292e42) 控制 */
+nav#sidebar .orca-fav-item-icon {
+    background-color: var(--orca-color-gray-7) !important; /* 确保应用此颜色 */
+    /* 图标本身的颜色已由全局 .ti 规则设置为 --tokyo-night-white */
+}
+`;
+
+// 东京之夜设置模态框及内部组件的CSS定义
+const tokyoNightSettingsModalCssString = `
+/* Tokyo Night - 设置模态框主题化 */
+/* div.orca-settings 的主背景、文字、边框颜色已由 :root 变量 (--tokyo-night-bg-storm, --orca-color-text-1, --tokyo-night-terminal-black) 控制 */
+div.orca-settings {
+    background-color: var(--tokyo-night-bg-storm) !important;
+    color: var(--orca-color-text-1) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3) !important; /* 保留明确的阴影 */
+}
+
+.orca-settings > .sections { /* 左侧导航区 */
+    background-color: var(--tokyo-night-bg-night) !important; /* 使用更暗的背景 */
+    border-right: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+.orca-settings > .sections .item,
+.orca-settings > .sections .plugin-item { /* 导航项 */
+    color: var(--orca-color-text-1) !important;
+    padding: var(--orca-spacing-sm) var(--orca-spacing-md) !important;
+    border-radius: var(--orca-radius-md) !important;
+    transition: background-color 0.2s ease, color 0.2s ease; /* 保留过渡效果 */
+}
+.orca-settings > .sections .item .ti, /* 导航项内图标 */
+.orca-settings > .sections .plugin-item .ti {
+    color: var(--orca-color-text-1) !important; /* 默认与文字同色 */
+}
+
+.orca-settings > .sections .item:hover,
+.orca-settings > .sections .plugin-item:hover { /* 导航项悬浮 */
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important; /* 使用更亮的白色 */
+}
+.orca-settings > .sections .item:hover .ti,
+.orca-settings > .sections .plugin-item:hover .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+.orca-settings > .sections .item.selected,
+.orca-settings > .sections .plugin-item.selected { /* 导航项选中 */
+    background-color: var(--tokyo-night-terminal-black) !important; /* 与悬浮状态一致，或可选择其他强调色 */
+    color: var(--tokyo-night-white) !important;
+}
+.orca-settings > .sections .item.selected .ti,
+.orca-settings > .sections .plugin-item.selected .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+.orca-settings > .views { /* 右侧内容视图区 */
+    /* 背景和文字颜色已由 :root 中的 --tokyo-night-bg-storm 和 --orca-color-text-1 控制 */
+    background-color: var(--tokyo-night-bg-storm) !important;
+    color: var(--orca-color-text-1) !important;
+}
+
+.orca-settings > .views h1,
+.orca-settings > .views h2,
+.orca-settings > .views h3,
+.orca-settings > .views .settings-group-title { /* 视图区标题 */
+    color: var(--tokyo-night-white) !important; /* 使用更亮的白色 */
+    border-bottom: 1px solid var(--tokyo-night-terminal-black) !important;
+    padding-bottom: 0.5em !important;
+    margin-bottom: 1em !important;
+}
+.orca-settings > .views h2 { /* 确保 h2 背景与视图背景一致 */
+    background-color: var(--tokyo-night-bg-storm) !important;
+}
+
+.orca-settings > .views .setting-item-label { /* 设置项标签 */
+    color: var(--tokyo-night-white) !important;
+}
+.orca-settings > .views div.desc { /* 设置项描述 */
+    color: var(--tokyo-night-comment) !important; /* 使用注释颜色 */
+    font-size: var(--orca-fontsize-xs) !important;
+}
+
+/* 设置界面中的普通按钮 (非开关) */
+.orca-settings > .views button:not(.orca-switch),
+.orca-settings button:not(.orca-switch) {
+    background-color: var(--tokyo-night-terminal-black) !important; /* 使用较深的背景 */
+    color: var(--tokyo-night-white) !important;
+    border: 1px solid var(--tokyo-night-comment) !important; /* 使用柔和的注释色作为边框 */
+    padding: 0.5em 1em !important;
+    border-radius: 4px !important;
+}
+.orca-settings > .views button:not(.orca-switch):hover,
+.orca-settings button:not(.orca-switch):hover {
+    background-color: var(--tokyo-night-comment) !important; /* 悬浮时使用注释色背景 */
+}
+.orca-settings > .views button:not(.orca-switch) .ti, /* 按钮内图标 */
+.orca-settings button:not(.orca-switch) .ti {
+    color: var(--tokyo-night-white) !important; /* 与按钮文字颜色一致 */
+}
+
+/* 快捷方式设置中的特定按钮 */
+.orca-settings > .views .shortcut-input button.orca-button.plain {
+    padding: var(--orca-spacing-xs) var(--orca-spacing-sm) !important; /* Orca默认的更小padding */
+    color: var(--tokyo-night-white) !important; /* 文字颜色已通过全局 .orca-button.plain 设置 */
+    background-color: var(--tokyo-night-terminal-black) !important; /* 给予一个明确的背景 */
+    border: 1px solid var(--tokyo-night-comment) !important; /* 协调边框 */
+}
+.orca-settings > .views .shortcut-input button.orca-button.plain:hover {
+    background-color: var(--tokyo-night-comment) !important;
+}
+.orca-settings > .views .shortcut-input button.orca-button.plain .ti {
+    color: var(--tokyo-night-white) !important; /* 图标颜色已通过全局 .ti 设置 */
+}
+
+/* 输入框包裹层 (.orca-input-input) */
+/* 其背景、文字、边框颜色已由 :root 变量 (--tokyo-night-bg-night, --orca-color-text-1, --tokyo-night-terminal-black) 控制 */
+.orca-settings > .views .orca-input-input,
+.orca-settings .orca-input-input {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--orca-color-text-1) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    padding: var(--orca-spacing-sm) var(--orca-spacing-md) !important; /* 遵循Orca的内边距 */
+    border-radius: var(--orca-radius-sm) !important; /* 遵循Orca的圆角 */
+}
+
+/* 实际的 <input> 元素 (位于 .orca-input-input 内部) */
+.orca-settings > .views .orca-input-input .orca-input-actualinput,
+.orca-settings .orca-input-input .orca-input-actualinput {
+    background-color: transparent !important; /* 使其背景透明，从而显示父级 .orca-input-input 的背景色 */
+    color: var(--orca-color-text-1) !important; /* 文字颜色继承或与父级一致 */
+}
+
+/* 颜色选择器 input[type="color"] 的特定内边距调整 */
+.orca-settings > .views .orca-input-input[type="color"],
+.orca-settings .orca-input-input[type="color"] {
+    padding: 0 var(--orca-spacing-xs) !important; /* 保持Orca为颜色选择器设定的紧凑内边距 */
+    background-color: var(--tokyo-night-bg-night) !important; /* 确保它也有背景，以防父级背景不适用 */
+}
+
+/* 未被 .orca-input-input 包裹的通用输入控件的备用样式 (如独立的 <select>) */
+.orca-settings > .views input[type="text"],
+.orca-settings > .views input[type="password"],
+.orca-settings > .views textarea,
+.orca-settings > .views select {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--orca-color-text-1) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    padding: 0.5em !important; /* 这些控件的内边距 */
+    border-radius: 4px !important;
+}
+
+/* 开关组件 - 仅应用Tokyo Night配色，保留Orca默认形状 */
+.orca-settings .orca-switch { /* 开关轨道 */
+    background-color: var(--tokyo-night-terminal-black) !important; /* 关闭时的轨道背景色 */
+    transition: background-color 0.2s ease !important; /* 保留过渡 */
+}
+
+.orca-settings .orca-switch .orca-switch-toggle { /* 开关滑块 */
+    background-color: var(--orca-color-text-1) !important; /* 关闭时滑块颜色 (使用主文字色，较柔和) */
+    transition: background-color 0.2s ease, transform 0.1s ease-in-out !important; /* 保留过渡 */
+}
+
+.orca-settings .orca-switch.orca-switch-on { /* 开启状态的轨道 */
+    background-color: var(--orca-color-primary-5) !important; /* 主题蓝 */
+}
+
+.orca-settings .orca-switch.orca-switch-on .orca-switch-toggle { /* 开启状态的滑块 */
+    background-color: var(--tokyo-night-white) !important; /* 使用更亮的白色 */
+}
+
+/* 设置界面中的分段控件 (Tabs) */
+.orca-settings > .views .orca-segmented {
+    background-color: var(--tokyo-night-bg-night) !important; /* 整体背景 */
+    border-radius: var(--orca-radius-md) !important;
+    padding: 3px !important; /* 内部留白 */
+}
+
+.orca-settings > .views .orca-segmented .orca-segmented-item { /* 单个标签项 */
+    color: var(--orca-color-text-1) !important; /* 默认文字颜色 */
+    /* 其他尺寸和圆角属性尽量依赖Orca的默认变量或样式 */
+    height: var(--orca-height-segmented, 22px) !important;
+    line-height: var(--orca-height-segmented, 22px) !important;
+    border-radius: var(--orca-radius-sm) !important;
+    transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out !important;
+    background-color: transparent !important; /* 未选中时透明 */
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item .ti { /* 标签项内图标 */
+    color: var(--orca-color-text-1) !important;
+}
+
+.orca-settings > .views .orca-segmented .orca-segmented-item:hover { /* 标签项悬浮 */
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item:hover .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+.orca-settings > .views .orca-segmented .orca-segmented-item.orca-selected { /* 选中的标签项 */
+    background-color: var(--orca-color-primary-5) !important; /* 主题蓝背景 */
+    color: var(--tokyo-night-bg-night) !important;          /* 深色文字形成对比 */
+    box-shadow: var(--orca-shadow-segmented, 0 1px 3px rgba(0,0,0,0.1)) !important; /* 保留Orca阴影 */
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item.orca-selected .ti {
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+/* 设置界面中的表格头部 */
+/* 其背景、文字、边框颜色已由 :root 变量控制 */
+.orca-settings > .views .orca-table-header-cell,
+.orca-settings .orca-table-header-cell,
+.orca-settings > .views .orca-settings-shortcuts-header,
+.orca-settings .orca-settings-shortcuts-header {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--tokyo-night-white) !important;
+    border-bottom: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+/* 设置界面中表格的列宽调整器 (拖动条) */
+/* 其颜色已由 :root 中的 --orca-color-separator 控制 */
+/* .orca-settings > .views .orca-table-resizer, */
+/* .orca-settings .orca-table-resizer { */
+    /* background: center top / 1px 100% linear-gradient(var(--orca-color-separator), var(--orca-color-separator)) no-repeat !important; */
+/* } */
+`;
+
+// --- 节流函数 ---
+// 作用：限制一个函数在特定时间间隔内最多执行一次。
+// 例如，用于限制 resize 或 scroll 事件处理函数的执行频率，以提高性能。
+function throttle(func: (...args: any[]) => void, delay: number) {
+  let lastCall = 0;       // 上次执行函数的时间戳
+  let timeoutId: number | null = null; // 定时器ID
+
+  return function(this: any, ...args: any[]) {
+    const now = Date.now(); // 当前时间戳
+    const remaining = delay - (now - lastCall); // 距离下次可执行的剩余时间
+    const context = this; // 保存当前函数的上下文 (this)
+
+    if (remaining <= 0) { // 如果剩余时间小于等于0，说明可以立即执行
+      if (timeoutId) { // 如果存在等待中的定时器，清除它
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+      lastCall = now; // 更新上次执行时间
+      func.apply(context, args); // 执行函数
+    } else if (!timeoutId) { // 如果不立即执行，且没有等待中的定时器
+      // 设置一个新的定时器，在剩余时间后执行
+      timeoutId = window.setTimeout(() => {
+        lastCall = Date.now(); // 更新上次执行时间
+        timeoutId = null;      // 清除定时器ID
+        func.apply(context, args); // 执行函数
+      }, remaining);
+    }
+  };
+}
+
+
+// --- 辅助函数：应用/移除样式 ---
+// 参数:
+//   cssString: 要应用的CSS规则字符串。
+//   enabled: 布尔值，为true则应用样式，为false则移除样式。
+//   styleHolder: 一个包含 { el: HTMLStyleElement | null } 的对象，用于持有和更新<style>元素的引用。
+//   styleIdSuffix: 用于构成<style>元素ID的后缀，确保ID唯一性。
+function applyStyle(cssString: string, enabled: boolean, styleHolder: {el: HTMLStyleElement | null}, styleIdSuffix: string): void {
+    const fullStyleId = `${pluginIdFromOrca}-style-${styleIdSuffix}`; // 拼接完整的样式ID
+
+    if (enabled) { // 如果要启用样式
+        // 检查styleHolder中是否已有关联的<style>元素，或者该元素是否还在文档头部
+        if (!styleHolder.el || !document.head || !document.head.contains(styleHolder.el)) {
+            // 如果没有或已丢失，先尝试通过ID移除可能残留的旧<style>元素
+            const oldElById = document.getElementById(fullStyleId);
+            if (oldElById) {
+                try {
+                    oldElById.remove();
+                } catch (e) { /* console.warn(`移除旧样式元素 (ID: ${fullStyleId}) 失败:`, e); */ }
+            }
+
+            // 创建新的<style>元素
+            try {
+                if (document && document.head) { // 确保 document 和 document.head 存在
+                    styleHolder.el = document.createElement("style");
+                    styleHolder.el.id = fullStyleId;
+                    styleHolder.el.textContent = cssString;
+                    document.head.appendChild(styleHolder.el);
+                    // console.log(`[${pluginIdFromOrca}] 应用样式: ${fullStyleId}`);
+                } else {
+                    // console.error(`[${pluginIdFromOrca}] document 或 document.head 不可用，无法应用样式 ${fullStyleId}`);
+                    styleHolder.el = null;
+                }
+            } catch (e) {
+                // console.error(`[${pluginIdFromOrca}] 创建并应用样式 ${fullStyleId} 失败:`, e);
+                styleHolder.el = null; // 创建失败则重置
+            }
+        } else if (styleHolder.el.textContent !== cssString) { // 如果<style>元素存在且内容不同，则更新内容
+            try {
+                styleHolder.el.textContent = cssString;
+                // console.log(`[${pluginIdFromOrca}] 更新样式: ${fullStyleId}`);
+            } catch (e) {
+                // console.error(`[${pluginIdFromOrca}] 更新样式 ${fullStyleId} 内容失败:`, e);
+            }
+        }
+    } else { // 如果要禁用样式
+        if (styleHolder.el && document.head && document.head.contains(styleHolder.el)) { // 如果通过引用能找到元素且在DOM中
+            try {
+                styleHolder.el.remove();
+                // console.log(`[${pluginIdFromOrca}] 移除样式 (通过引用): ${fullStyleId}`);
+            } catch (e) { /* console.warn(`移除样式元素 (引用, ID: ${fullStyleId}) 失败:`, e); */ }
+        } else { // 否则，尝试通过ID查找并移除，作为备用方案
+            const elById = document.getElementById(fullStyleId);
+            if (elById) {
+                try {
+                    elById.remove();
+                    // console.log(`[${pluginIdFromOrca}] 移除样式 (通过ID): ${fullStyleId}`);
+                } catch (e) { /* console.warn(`移除样式元素 (ID: ${fullStyleId}) 失败:`, e); */ }
+            }
+        }
+        styleHolder.el = null; // 无论如何，将引用置空
+    }
+}
+
+
+// --- 默认设置值 ---
+// 定义插件各项设置的默认状态。
+const settingsSchemaDefaults = {
+    [SETTING_KEY_ENABLE_BASE_BACKGROUND]: true, // 默认启用基础背景
+    [SETTING_KEY_ENABLE_SIDEBAR_COLOR]: true,   // 默认启用侧边栏颜色
+};
+
+// --- 更新所有动态样式 ---
+// 根据当前插件的设置，统一更新所有受控的动态<style>标签。
+async function updateAllDynamicStyles(calledBy?: string) { // calledBy参数用于调试，追踪调用来源
+    // console.log(`[${pluginIdFromOrca}] 进入 updateAllDynamicStyles. 调用来源: ${calledBy || '未知'}`);
+
+    // 确保orca对象和相关插件状态存在
+    const currentPluginState = orca?.state?.plugins?.[pluginIdFromOrca];
+    if (!currentPluginState) {
+        // console.warn(`[${pluginIdFromOrca}] 插件状态对象不可用，无法更新样式。`);
+        return;
+    }
+    const pluginSettings = currentPluginState.settings || {}; // 获取当前插件的设置，如果为空则使用空对象
+
+    // 辅助函数，用于安全获取布尔类型的设置值，如果设置中不存在或类型不符，则返回默认值
+    const getSetting = (key: string, defaultValue: boolean): boolean => {
+        const value = pluginSettings[key];
+        return typeof value === 'boolean' ? value : defaultValue;
+    };
+
+    // 获取各项设置的当前值
+    const enableBaseBg = getSetting(SETTING_KEY_ENABLE_BASE_BACKGROUND, settingsSchemaDefaults[SETTING_KEY_ENABLE_BASE_BACKGROUND]);
+    const enableSidebarColor = getSetting(SETTING_KEY_ENABLE_SIDEBAR_COLOR, settingsSchemaDefaults[SETTING_KEY_ENABLE_SIDEBAR_COLOR]);
+
+    // 应用或移除各个部分的样式
+    // 基础背景和设置模态框的样式通常一起控制，因为它们可能共享基础颜色或主题开关
+    applyStyle(tokyoNightBaseBackgroundCssString, enableBaseBg, styleHolders.baseBackground, "base-bg");
+    applyStyle(tokyoNightSettingsModalCssString, enableBaseBg, styleHolders.settingsModal, "settings-modal"); // 设置模态框样式也受基础背景开关控制
+    applyStyle(tokyoNightSidebarCssString, enableSidebarColor, styleHolders.sidebar, "sidebar-color");
+
+    // console.log(`[${pluginIdFromOrca}] 样式已更新。背景/模态框启用: ${enableBaseBg}, 侧边栏颜色启用: ${enableSidebarColor}`);
+}
+
+// --- Orca Notes 插件生命周期函数 ---
+// 这些变量用于持有事件监听器或订阅的引用，以便在插件卸载时正确清理。
+// let throttledUpdateFromClick: (() => void) | null = null; // 节流化的点击事件处理器 (当前已注释掉其使用)
+let valtioUnsubscribeSettings: (() => void) | null = null; // Valtio状态订阅的取消函数
+let themeChangedHandlerRef: (() => void) | null = null;   // Orca主题变更事件的处理函数引用
+
+
+// `load` 函数：当插件被加载或启用时由 Orca 调用。
+export async function load(_name: string) { // _name 参数是 Orca 传递的插件ID
+    pluginIdFromOrca = _name; // 保存插件ID
+    // console.log(`插件 "${pluginIdFromOrca}" 正在加载... (显示名称: "${THEME_DISPLAY_NAME}")`);
+
+    // 定义国际化翻译资源
+    const translationsForL10N = {
+        "en": { // 英文翻译
+            [SETTING_KEY_ENABLE_BASE_BACKGROUND]: "Enable Tokyo Night Base Background",
+            "Sets the main application background to the classic Tokyo Night dark color.": "Sets the main application background to the classic Tokyo Night dark color.",
+            [SETTING_KEY_ENABLE_SIDEBAR_COLOR]: "Enable Tokyo Night Sidebar Color",
+            "Sets the sidebar background to a custom Tokyo Night color (#16161F).": "Sets the sidebar background to a custom Tokyo Night color (#16161F)."
+        },
+        "zh-CN": zhCNTranslations // 中文翻译 (从 ./translations/zhCN.ts 导入)
+    };
+
+    // 初始化国际化设置，如果Orca状态中没有语言设置，则默认为英文
+    setupL10N(orca?.state?.locale || "en", translationsForL10N);
+    if (!orca?.state?.locale) {
+        // console.warn(`[${pluginIdFromOrca}] orca.state.locale 在加载时不可用，l10n 使用英文初始化。`);
+    }
+
+    // 注册插件的设置项到 Orca 系统
+    try {
+        if (orca?.plugins?.setSettingsSchema) { // 检查 Orca API 是否可用
+            await orca.plugins.setSettingsSchema(pluginIdFromOrca, {
+                [SETTING_KEY_ENABLE_BASE_BACKGROUND]: {
+                    label: t(SETTING_KEY_ENABLE_BASE_BACKGROUND), // 使用 t 函数获取国际化标签
+                    description: t("Sets the main application background to the classic Tokyo Night dark color."),
+                    type: "boolean", // 设置项类型为布尔值 (开关)
+                    defaultValue: settingsSchemaDefaults[SETTING_KEY_ENABLE_BASE_BACKGROUND] // 默认值
+                },
+                [SETTING_KEY_ENABLE_SIDEBAR_COLOR]: {
+                    label: t(SETTING_KEY_ENABLE_SIDEBAR_COLOR),
+                    description: t("Sets the sidebar background to a custom Tokyo Night color (#16161F)."),
+                    type: "boolean",
+                    defaultValue: settingsSchemaDefaults[SETTING_KEY_ENABLE_SIDEBAR_COLOR]
+                }
+            });
+            // console.log(`[${pluginIdFromOrca}] 设置 schema 注册成功。`);
+        } else {
+            // console.error(`[${pluginIdFromOrca}] Orca plugins API (setSettingsSchema) 不可用。`);
+        }
+    } catch (error) {
+        // console.error(`[${pluginIdFromOrca}] 注册设置 schema 失败。`, error);
+    }
+
+    // 注册主题到 Orca 系统
+    try {
+        if (orca?.themes?.register) { // 检查 Orca API 是否可用
+            orca.themes.register(pluginIdFromOrca, THEME_DISPLAY_NAME, THEME_CSS_FILE);
+            // console.log(`[${pluginIdFromOrca}] 主题 "${THEME_DISPLAY_NAME}" 已注册，CSS 文件: "${THEME_CSS_FILE}".`);
+        } else {
+            // console.error(`[${pluginIdFromOrca}] Orca themes API (register) 不可用。`);
+        }
+    } catch (error) {
+        // console.error(`[${pluginIdFromOrca}] 注册主题 "${THEME_DISPLAY_NAME}" 失败。`, error);
+    }
+
+    // 使用 Valtio 订阅插件设置对象的变化，以便实时更新样式
+    const pluginStateForSubscription = orca?.state?.plugins?.[pluginIdFromOrca];
+    if (typeof window.Valtio?.subscribe === 'function' && pluginStateForSubscription?.settings) {
+        valtioUnsubscribeSettings = window.Valtio.subscribe(
+            pluginStateForSubscription.settings, // 订阅当前插件的 settings 对象
+            () => { // 当 settings 变化时执行的回调
+                // console.log(`[${pluginIdFromOrca}] Valtio 检测到 settings 对象更改。`);
+                updateAllDynamicStyles("Valtio_PluginSettings_Subscription"); // 更新所有动态样式
+            }
+        );
+        // console.log(`[${pluginIdFromOrca}] 已通过 Valtio 订阅 settings 对象。`);
+    } else {
+        // console.warn(`[${pluginIdFromOrca}] Valtio subscribe 不可用或插件 settings 对象不存在或不是对象。`);
+    }
+
+    // 处理主题激活/停用状态的逻辑
+    const ORCA_APP_THEME_SETTING_KEY = 11; // 假设这是 Orca 存储当前选用主题的设置键 (需要确认此键是否正确)
+    const themeIsActiveKeyOnWindow = `${pluginIdFromOrca}_isActive`; // 用于在 window 对象上标记本主题是否激活
+    window[themeIsActiveKeyOnWindow] = false; // 初始化为未激活
+
+    themeChangedHandlerRef = () => { // 定义处理 Orca 主题变化的函数
+        const currentOrcaState = orca?.state;
+        if (!currentOrcaState) {
+            // console.warn(`[${pluginIdFromOrca}] orca.state 不可用（在 themeChangedHandlerRef 中），无法检查主题更改。`);
+            return;
+        }
+
+        const currentSettings = currentOrcaState.settings;
+        if (typeof currentSettings === 'undefined' || currentSettings === null) {
+            // console.warn(`[${pluginIdFromOrca}] orca.state.settings 对象不可用（在 themeChangedHandlerRef 中），无法检查主题更改。`);
+            return;
+        }
+
+        const currentOrcaThemeSetting = currentSettings[ORCA_APP_THEME_SETTING_KEY];
+        // 修复：在比较之前，确保 currentOrcaThemeSetting 不是 undefined
+        if (typeof currentOrcaThemeSetting === 'undefined') {
+            // console.warn(`[${pluginIdFromOrca}] Orca 主题设置键 (ID: ${ORCA_APP_THEME_SETTING_KEY}) 未找到或值为 undefined。`);
+             // 在这种情况下，可以假定我们的主题未被激活，除非有特定逻辑需要处理
+            const isActiveNow = false;
+            const previouslyActive = window[themeIsActiveKeyOnWindow] as boolean;
+            if (!isActiveNow && previouslyActive) {
+                disableThemeFeatures();
+            }
+            window[themeIsActiveKeyOnWindow] = isActiveNow;
+            return;
+        }
+
+        const isActiveNow = (currentOrcaThemeSetting === THEME_DISPLAY_NAME);
+        const previouslyActive = window[themeIsActiveKeyOnWindow] as boolean;
+
+        if (isActiveNow && !previouslyActive) {
+            // console.log(`[${pluginIdFromOrca}] 主题 "${THEME_DISPLAY_NAME}" 已激活。正在应用样式。`);
+            enableThemeFeatures();
+        } else if (!isActiveNow && previouslyActive) {
+            // console.log(`[${pluginIdFromOrca}] 主题 "${THEME_DISPLAY_NAME}" 已停用。正在移除样式。`);
+            disableThemeFeatures();
+        }
+        window[themeIsActiveKeyOnWindow] = isActiveNow;
+    };
+
+    // 注册 Orca 的全局主题变更事件监听器
+    if (orca?.broadcasts?.registerHandler) {
+        const globalThemeChangeEvent = "core.themeChanged"; // Orca 主题选择变化时发出的广播事件名
+        orca.broadcasts.registerHandler(globalThemeChangeEvent, themeChangedHandlerRef);
+        // console.log(`[${pluginIdFromOrca}] 已注册全局事件处理器: ${globalThemeChangeEvent}.`);
+    } else {
+        // console.warn(`[${pluginIdFromOrca}] Orca broadcasts API 不可用，无法监听全局主题变更。`);
+    }
+
+    // 首次加载时，立即执行一次主题状态检查和样式应用
+    if (themeChangedHandlerRef) {
+        themeChangedHandlerRef();
+    }
+
+    // console.log(`插件 "${pluginIdFromOrca}" 加载成功。`);
+}
+
+// `unload` 函数：当插件被禁用或卸载时由 Orca 调用。
+export async function unload() {
+    if (!pluginIdFromOrca) { // 如果插件ID未设置 (可能 load 失败)
+        // console.warn("卸载函数被调用，但 pluginIdFromOrca 未设置。");
+        return;
+    }
+    // console.log(`插件 "${pluginIdFromOrca}" 正在卸载...`);
+    disableThemeFeatures(); // 移除所有动态样式
+
+    // 取消 Valtio 订阅
+    if (valtioUnsubscribeSettings) {
+        valtioUnsubscribeSettings();
+        valtioUnsubscribeSettings = null; // 清理引用
+        // console.log(`[${pluginIdFromOrca}] 已取消 Valtio settings 的订阅。`);
+    }
+
+    // 取消 Orca 全局主题变更事件的监听
+    if (orca?.broadcasts?.unregisterHandler && themeChangedHandlerRef) {
+        const globalThemeChangeEvent = "core.themeChanged";
+        orca.broadcasts.unregisterHandler(globalThemeChangeEvent, themeChangedHandlerRef);
+        themeChangedHandlerRef = null; // 清理引用
+    }
+
+    // 清理在 window 对象上设置的标记
+    delete window[`${pluginIdFromOrca}_isActive`];
+
+    // 从 Orca 系统注销本主题
+    try {
+        if (orca?.themes?.unregister) { // 检查 Orca API 是否可用
+            orca.themes.unregister(THEME_DISPLAY_NAME);
+            // console.log(`[${pluginIdFromOrca}] 主题 "${THEME_DISPLAY_NAME}" 注销成功。`);
+        } else {
+            // console.error(`[${pluginIdFromOrca}] Orca themes API (unregister) 不可用。`);
+        }
+    } catch (e) {
+        // console.warn(`[${pluginIdFromOrca}] 注销主题 "${THEME_DISPLAY_NAME}" 时出错。`, e);
+    }
+    // console.log(`插件 "${pluginIdFromOrca}" 卸载成功。`);
+}
+
+// 启用主题特性 (主要是应用所有动态样式)
+async function enableThemeFeatures() {
+    // console.log(`[${pluginIdFromOrca}] 正在启用主题特性...`);
+    await updateAllDynamicStyles("enableThemeFeatures");
+}
+
+// 禁用主题特性 (主要是移除所有动态样式)
+function disableThemeFeatures() {
+    // console.log(`[${pluginIdFromOrca}] 正在禁用主题特性 (清理动态样式)...`);
+    applyStyle("", false, styleHolders.baseBackground, "base-bg");
+    applyStyle("", false, styleHolders.sidebar, "sidebar-color");
+    applyStyle("", false, styleHolders.settingsModal, "settings-modal");
+    // console.log(`[${pluginIdFromOrca}] 所有动态样式已清理。`);
+}

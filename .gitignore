@@ -1,0 +1,57 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 构建输出
+/dist
+/out
+/build
+
+# Node.js 依赖
+/node_modules
+
+# 日志文件
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# IDE 和编辑器特定文件
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 操作系统生成的文件
+.DS_Store
+Thumbs.db
+
+# 其他临时文件或本地配置文件
+.env
+.env.local
+.env.*.local
+
