@@ -94,6 +94,112 @@ div#app {
     background-color: var(--orca-color-bg-1) !important;
 }
 
+/* 链接颜色 */
+.orca-panels-container a {
+    color: var(--orca-color-link) !important;
+}
+.orca-panels-container a:hover {
+    color: var(--orca-color-primary-5) !important;
+}
+
+.orca-button.primary {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+.orca-button.primary:hover {
+    filter: brightness(1.05) !important;
+}
+.orca-button.dangerous {
+    background-color: var(--orca-color-dangerous-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+.orca-button.warn {
+    background-color: var(--orca-color-warn-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+.orca-button.info {
+    background-color: var(--orca-color-info-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+.orca-input-input:focus-within {
+    border-color: var(--orca-color-primary-5) !important;
+}
+
+.orca-table-row:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+}
+.orca-table-row.selected {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+.orca-inline-code {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--tokyo-night-white) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    border-radius: var(--orca-radius-sm) !important;
+    padding: 0 0.25em !important;
+}
+
+.orca-menu {
+    background-color: var(--tokyo-night-bg-storm) !important;
+    color: var(--orca-color-text-1) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+.orca-menu .orca-menu-item:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+.orca-menu .orca-menu-item.selected {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+.orca-tooltip {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--tokyo-night-white) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+.orca-modal,
+.orca-dialog {
+    background-color: var(--tokyo-night-bg-storm) !important;
+    color: var(--orca-color-text-1) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+.orca-button.soft {
+    background-color: var(--orca-color-gray-7) !important;
+    color: var(--tokyo-night-white) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+.orca-settings .orca-table-row:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+}
+.orca-settings .orca-table-row.selected {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+*::-webkit-scrollbar-track {
+    background: var(--tokyo-night-bg-night);
+}
+*::-webkit-scrollbar-thumb {
+    background-color: var(--tokyo-night-terminal-black);
+    border-radius: 6px;
+    border: 2px solid var(--tokyo-night-bg-night);
+}
+
 /* 查询构建器/条件区域 */
 /* 其背景、文字、边框颜色已由 :root 中的相应变量 (--orca-color-bg-2, --orca-color-text-1, --orca-border-general) 控制。*/
 /* 只保留非颜色相关的、或需要特定于此组件的样式。*/
@@ -124,14 +230,6 @@ div#app {
     color: var(--tokyo-night-white) !important;
 }
 .orca-button.plain .ti { /* 确保此类按钮内的图标颜色也一致 */
-    color: var(--tokyo-night-white) !important;
-}
-
-
-/* 主界面中的通用图标 (Tabler Icons) 颜色 */
-/* 这是一个基础覆盖，确保所有 .ti 图标都有一个统一的亮色。*/
-/* 特定组件内的图标可能会有更具体的规则来覆盖此颜色。*/
-.ti {
     color: var(--tokyo-night-white) !important;
 }
 
@@ -176,10 +274,6 @@ nav#sidebar .item,
 nav#sidebar a {
     color: var(--orca-color-text-1) !important;
 }
-nav#sidebar .item .ti, /* 侧边栏项目中的图标 */
-nav#sidebar a .ti {
-    color: var(--orca-color-text-1) !important; /* 默认与文字同色，或可改为 --tokyo-night-white 以增加对比 */
-}
 
 nav#sidebar .item:hover,
 nav#sidebar a:hover {
@@ -188,7 +282,7 @@ nav#sidebar a:hover {
 }
 nav#sidebar .item:hover .ti,
 nav#sidebar a:hover .ti {
-    color: var(--tokyo-night-white) !important;                     /* 悬浮图标 */
+    color: var(--tokyo-night-white) !important;                     /* 悬浮图标颜色由默认或语义色控制 */
 }
 
 nav#sidebar .item.active,
@@ -198,7 +292,7 @@ nav#sidebar a.active {
 }
 nav#sidebar .item.active .ti,
 nav#sidebar a.active .ti {
-    color: var(--tokyo-night-bg-night) !important;                /* 激活项图标 */
+    color: var(--tokyo-night-bg-night) !important;                /* 激活项图标颜色 */
 }
 
 
@@ -671,7 +765,7 @@ export async function load(_name: string) { // _name 参数是 Orca 传递的插
     const themeIsActiveKeyOnWindow = `${pluginIdFromOrca}_isActive`; // 用于在 window 对象上标记本主题是否激活
     window[themeIsActiveKeyOnWindow] = false; // 初始化为未激活
 
-    themeChangedHandlerRef = () => { // 定义处理 Orca 主题变化的函数
+    themeChangedHandlerRef = (themeName?: string) => { // 定义处理 Orca 主题变化的函数
         const currentOrcaState = orca?.state;
         if (!currentOrcaState) {
             // console.warn(`[${pluginIdFromOrca}] orca.state 不可用（在 themeChangedHandlerRef 中），无法检查主题更改。`);
@@ -684,21 +778,18 @@ export async function load(_name: string) { // _name 参数是 Orca 传递的插
             return;
         }
 
-        const currentOrcaThemeSetting = currentSettings[ORCA_APP_THEME_SETTING_KEY];
-        // 修复：在比较之前，确保 currentOrcaThemeSetting 不是 undefined
-        if (typeof currentOrcaThemeSetting === 'undefined') {
-            // console.warn(`[${pluginIdFromOrca}] Orca 主题设置键 (ID: ${ORCA_APP_THEME_SETTING_KEY}) 未找到或值为 undefined。`);
-             // 在这种情况下，可以假定我们的主题未被激活，除非有特定逻辑需要处理
-            const isActiveNow = false;
-            const previouslyActive = window[themeIsActiveKeyOnWindow] as boolean;
-            if (!isActiveNow && previouslyActive) {
-                disableThemeFeatures();
+        // 优先使用广播提供的主题名称，其次回退到设置键
+        let isActiveNow = false;
+        if (typeof themeName === 'string' && themeName.length > 0) {
+            isActiveNow = (themeName === THEME_DISPLAY_NAME);
+        } else {
+            const currentOrcaThemeSetting = currentSettings[ORCA_APP_THEME_SETTING_KEY];
+            if (typeof currentOrcaThemeSetting === 'string') {
+                isActiveNow = (currentOrcaThemeSetting === THEME_DISPLAY_NAME);
+            } else {
+                isActiveNow = false;
             }
-            window[themeIsActiveKeyOnWindow] = isActiveNow;
-            return;
         }
-
-        const isActiveNow = (currentOrcaThemeSetting === THEME_DISPLAY_NAME);
         const previouslyActive = window[themeIsActiveKeyOnWindow] as boolean;
 
         if (isActiveNow && !previouslyActive) {
