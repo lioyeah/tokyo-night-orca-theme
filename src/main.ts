@@ -15,7 +15,7 @@ let pluginIdFromOrca: string; // 用于存储从 Orca 应用传递过来的本�
 
 // --- 主题常量 ---
 const THEME_DISPLAY_NAME = "Tokyo Night"; // 主题在 Orca 设置中显示的名称
-const THEME_CSS_FILE = "theme.css";     // 注册到 Orca 的静态 CSS 文件名。
+const THEME_CSS_FILE = "dist/theme.css";     // 注册到 Orca 的静态 CSS 文件名。
                                         // 注意：此文件的内容不由本 main.ts 动态生成，而是作为插件资产的一部分。
                                         // 如果主题的大部分样式是静态的，应放在此文件中。
                                         // 本 main.ts 主要处理基于用户设置的动态样式。
@@ -34,6 +34,7 @@ const styleHolders = {
     sidebar: { el: null as HTMLStyleElement | null },         // 用于侧边栏特定样式的元素
     settingsModal: { el: null as HTMLStyleElement | null },   // 用于设置模态框特定样式的元素
 };
+ 
 
 // --- 核心CSS字符串定义 ---
 
@@ -102,6 +103,201 @@ div#app {
     color: var(--orca-color-primary-5) !important;
 }
 
+.orca-panels-container blockquote {
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    border-left: 3px solid var(--orca-color-primary-5) !important;
+    background-color: var(--tokyo-night-bg-float) !important;
+    padding: 0.5em 0.75em !important;
+    margin: 0.75em 0 !important;
+    border-radius: var(--orca-radius-sm) !important;
+}
+.orca-panels-container .orca-block[data-type="quote"] .orca-block,
+.orca-panels-container .orca-block[data-type="quote2"] .orca-block {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+.orca-panels-container h1 {
+    font-size: 1.6em !important;
+    color: var(--tokyo-night-white) !important;
+    font-weight: 600 !important;
+}
+.orca-panels-container h2 {
+    font-size: 1.4em !important;
+    color: var(--tokyo-night-blue) !important;
+    font-weight: 600 !important;
+}
+.orca-panels-container h3 {
+    font-size: 1.25em !important;
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 600 !important;
+}
+.orca-panels-container h4 {
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: 600 !important;
+}
+.orca-panels-container h5 {
+    color: var(--tokyo-night-spring-green) !important;
+    font-weight: 600 !important;
+    font-size: 1em !important;
+}
+.orca-panels-container h6 {
+    color: var(--tokyo-night-yellow) !important;
+    font-weight: 600 !important;
+    font-size: 1em !important;
+}
+
+/* 列表符号与数字的可读性增强（优先使用原生 ::marker） */
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ul li::marker,
+.orca-panels-container .orca-repr-main-content ul li::marker,
+.orca-panels-container .orca-repr-main-none-editable ul li::marker,
+.orca-panels-container ul li::marker {
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ol li::marker,
+.orca-panels-container .orca-repr-main-content ol li::marker,
+.orca-panels-container .orca-repr-main-none-editable ol li::marker,
+.orca-panels-container ol li::marker {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+
+/* 直接适配 Orca 列表容器（伪元素渲染编号/点） */
+.orca-panels-container .orca-repr-ul-content::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ul-content::before {
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ol-content::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ol-content::before {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ul::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ul::before {
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ol::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ol::before {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+
+/* level-based colors: unordered */
+.orca-panels-container ul ul li::marker { color: var(--tokyo-night-cyan) !important; font-weight: 700 !important; }
+.orca-panels-container ul ul ul li::marker { color: var(--tokyo-night-spring-green) !important; font-weight: 700 !important; }
+.orca-panels-container ul ul ul ul li::marker { color: var(--tokyo-night-magenta) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-main-none-editable ul ul li .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable ul ul li .ti-point,
+.orca-panels-container .orca-repr-main-none-editable ul ul li .ti-circle-filled { color: var(--tokyo-night-cyan) !important; }
+.orca-panels-container .orca-repr-main-none-editable ul ul ul li .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable ul ul ul li .ti-point,
+.orca-panels-container .orca-repr-main-none-editable ul ul ul li .ti-circle-filled { color: var(--tokyo-night-spring-green) !important; }
+.orca-panels-container .orca-repr-main-none-editable ul ul ul ul li .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable ul ul ul ul li .ti-point,
+.orca-panels-container .orca-repr-main-none-editable ul ul ul ul li .ti-circle-filled { color: var(--tokyo-night-magenta) !important; }
+.orca-panels-container .orca-repr-ul-content .orca-repr-ul-content::before { color: var(--tokyo-night-cyan) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ul-content .orca-repr-ul-content .orca-repr-ul-content::before { color: var(--tokyo-night-spring-green) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ul-content .orca-repr-ul-content .orca-repr-ul-content .orca-repr-ul-content::before { color: var(--tokyo-night-magenta) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-main-none-editable ul ul li:not(:has(.ti))::before { color: var(--tokyo-night-cyan) !important; }
+.orca-panels-container .orca-repr-main-none-editable ul ul ul li:not(:has(.ti))::before { color: var(--tokyo-night-spring-green) !important; }
+.orca-panels-container .orca-repr-main-none-editable ul ul ul ul li:not(:has(.ti))::before { color: var(--tokyo-night-magenta) !important; }
+.orca-panels-container ul ul li .ti-point-filled,
+.orca-panels-container ul ul li .ti-point,
+.orca-panels-container ul ul li .ti-circle,
+.orca-panels-container ul ul li .ti-circle-filled { color: var(--tokyo-night-cyan) !important; }
+.orca-panels-container ul ul ul li .ti-point-filled,
+.orca-panels-container ul ul ul li .ti-point,
+.orca-panels-container ul ul ul li .ti-circle,
+.orca-panels-container ul ul ul li .ti-circle-filled { color: var(--tokyo-night-spring-green) !important; }
+.orca-panels-container ul ul ul ul li .ti-point-filled,
+.orca-panels-container ul ul ul ul li .ti-point,
+.orca-panels-container ul ul ul ul li .ti-circle,
+.orca-panels-container ul ul ul ul li .ti-circle-filled { color: var(--tokyo-night-magenta) !important; }
+
+/* level-based colors: ordered */
+.orca-panels-container ol ol li::marker { color: var(--tokyo-night-blue) !important; font-weight: 700 !important; }
+.orca-panels-container ol ol ol li::marker { color: var(--tokyo-night-yellow) !important; font-weight: 700 !important; }
+.orca-panels-container ol ol ol ol li::marker { color: var(--tokyo-night-red) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ol-content .orca-repr-ol-content::before { color: var(--tokyo-night-blue) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ol-content .orca-repr-ol-content .orca-repr-ol-content::before { color: var(--tokyo-night-yellow) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ol-content .orca-repr-ol-content .orca-repr-ol-content .orca-repr-ol-content::before { color: var(--tokyo-night-red) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ol .orca-repr-ol::before { color: var(--tokyo-night-blue) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ol .orca-repr-ol .orca-repr-ol::before { color: var(--tokyo-night-yellow) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ol .orca-repr-ol .orca-repr-ol .orca-repr-ol::before { color: var(--tokyo-night-red) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-main-none-editable ol li:not(:has(.ti))::before { color: var(--tokyo-night-magenta) !important; }
+.orca-panels-container .orca-repr-main-none-editable ol ol li:not(:has(.ti))::before { color: var(--tokyo-night-blue) !important; }
+.orca-panels-container .orca-repr-main-none-editable ol ol ol li:not(:has(.ti))::before { color: var(--tokyo-night-yellow) !important; }
+.orca-panels-container .orca-repr-main-none-editable ol ol ol ol li:not(:has(.ti))::before { color: var(--tokyo-night-red) !important; }
+/* 降级方案：当某些渲染不使用原生 marker 时，使用 ::before 自绘 */
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ul {
+    list-style: disc outside !important;
+}
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ul li::before {
+    content: "•" !important;
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ol {
+    list-style: decimal outside !important;
+}
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ol li::before {
+    content: counters(item, ".") "." !important;
+    counter-increment: item !important;
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ol {
+    counter-reset: item !important;
+}
+
+/* 适配 none-editable 容器与图标子弹（Tabler Icons） */
+.orca-panels-container .orca-repr-main-none-editable ul {
+    list-style: disc outside !important;
+}
+.orca-panels-container .orca-repr-main-none-editable li .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable li .ti-point,
+.orca-panels-container .orca-repr-main-none-editable li .ti-circle-filled {
+    color: var(--tokyo-night-orange) !important;
+}
+.orca-panels-container .orca-repr-main-none-editable ul li:not(:has(.ti))::before {
+    content: "•" !important;
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+.orca-panels-container .orca-repr-main-none-editable ol {
+    list-style: decimal outside !important;
+    counter-reset: item !important;
+}
+.orca-panels-container .orca-repr-main-none-editable ol li:not(:has(.ti))::before {
+    content: counters(item, ".") "." !important;
+    counter-increment: item !important;
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+
+.orca-panels-container .orca-repr-main-content ul {
+    list-style: none !important;
+    padding-left: 1.2em !important;
+}
+.orca-panels-container .orca-repr-main-content ul li::before {
+    content: "•" !important;
+    display: inline-block !important;
+    width: 1.2em !important;
+    margin-left: -1.2em !important;
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: 700 !important;
+}
+
 .orca-button.primary {
     background-color: var(--orca-color-primary-5) !important;
     color: var(--tokyo-night-bg-night) !important;
@@ -138,6 +334,8 @@ div#app {
     color: var(--tokyo-night-bg-night) !important;
 }
 
+ 
+ 
 .orca-inline-code {
     background-color: var(--tokyo-night-bg-night) !important;
     color: var(--tokyo-night-white) !important;
@@ -274,6 +472,7 @@ nav#sidebar .item,
 nav#sidebar a {
     color: var(--orca-color-text-1) !important;
 }
+ 
 
 nav#sidebar .item:hover,
 nav#sidebar a:hover {
@@ -321,7 +520,7 @@ nav#sidebar a.active .ti {
 /* 侧边栏收藏夹项目图标的背景色 */
 /* 其颜色已由 :root 中的 --orca-color-gray-7 (映射到 #292e42) 控制 */
 nav#sidebar .orca-fav-item-icon {
-    background-color: var(--orca-color-gray-7) !important; /* 确保应用此颜色 */
+    background-color: var(--orca-color-gray-7) !important;
     /* 图标本身的颜色已由全局 .ti 规则设置为 --tokyo-night-white */
 }
 `;
@@ -575,6 +774,7 @@ function throttle(func: (...args: any[]) => void, delay: number) {
   };
 }
 
+ 
 
 // --- 辅助函数：应用/移除样式 ---
 // 参数:
@@ -815,8 +1015,6 @@ export async function load(_name: string) { // _name 参数是 Orca 传递的插
     if (themeChangedHandlerRef) {
         themeChangedHandlerRef();
     }
-
-    // console.log(`插件 "${pluginIdFromOrca}" 加载成功。`);
 }
 
 // `unload` 函数：当插件被禁用或卸载时由 Orca 调用。
