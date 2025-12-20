@@ -1,11 +1,11 @@
 {
   "name": "tokyo-night-orca-theme",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A Tokyo Night theme for Orca Notes.",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "cross-env NODE_ENV=production tsc && vite build && node scripts/copy-assets.cjs && node scripts/write-plugin-package.cjs",
+    "build": "cross-env NODE_ENV=production tsc && vite build",
     "preview": "vite preview"
   },
   "peerDependencies": {
