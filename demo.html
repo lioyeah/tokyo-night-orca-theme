@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokyo Night 主题演示</title>
+    <link id="theme-css" rel="stylesheet" href="dist/theme-night.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            min-height: 80vh;
+        }
+        
+        .sidebar {
+            background: var(--tn-bg-secondary);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--tn-border);
+        }
+        
+        .editor-area {
+            background: var(--tn-bg-primary);
+            border-radius: 8px;
+            padding: 30px;
+            border: 1px solid var(--tn-border);
+        }
+        
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .theme-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--tn-border);
+            background: var(--tn-bg-secondary);
+            color: var(--tn-text-primary);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .theme-btn:hover {
+            background: var(--tn-hover);
+        }
+        
+        .theme-btn.active {
+            background: var(--tn-blue);
+            color: white;
+        }
+        
+        h1, h2, h3 {
+            color: var(--tn-text-primary);
+            margin-top: 0;
+        }
+        
+        p, li {
+            color: var(--tn-text-secondary);
+            line-height: 1.6;
+        }
+        
+        .code-block {
+            background: var(--tn-bg-tertiary);
+            border: 1px solid var(--tn-border);
+            border-radius: 6px;
+            padding: 16px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: var(--tn-text-primary);
+            margin: 16px 0;
+        }
+        
+        .sidebar-item {
+            padding: 8px 12px;
+            margin: 4px 0;
+            border-radius: 4px;
+            color: var(--tn-text-secondary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        
+        .sidebar-item:hover {
+            background: var(--tn-hover);
+            color: var(--tn-text-primary);
+        }
+        
+        .sidebar-item.active {
+            background: var(--tn-selection);
+            color: var(--tn-text-primary);
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .color-item {
+            text-align: center;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--tn-border);
+        }
+        
+        .color-red { background: var(--tn-red); color: white; }
+        .color-orange { background: var(--tn-orange); color: white; }
+        .color-yellow { background: var(--tn-yellow); color: black; }
+        .color-green { background: var(--tn-green); color: white; }
+        .color-cyan { background: var(--tn-cyan); color: black; }
+        .color-blue { background: var(--tn-blue); color: white; }
+        .color-purple { background: var(--tn-purple); color: white; }
+    </style>
+</head>
+<body>
+    <div class="theme-switcher">
+        <button class="theme-btn active" data-theme="night">Night</button>
+        <button class="theme-btn" data-theme="storm">Storm</button>
+        <button class="theme-btn" data-theme="light">Light</button>
+    </div>
+
+    <div class="demo-container">
+        <div class="sidebar">
+            <h3>📁 文件浏览器</h3>
+            <div class="sidebar-item active">📄 README.md</div>
+            <div class="sidebar-item">📁 src/</div>
+            <div class="sidebar-item">📁 components/</div>
+            <div class="sidebar-item">📁 theme/</div>
+            <div class="sidebar-item">📄 package.json</div>
+            
+            <h3>🗓️ 日历</h3>
+            <div class="sidebar-item">今天的笔记</div>
+            <div class="sidebar-item">昨天的想法</div>
+            <div class="sidebar-item">项目计划</div>
+            
+            <h3>🔍 搜索</h3>
+            <div class="sidebar-item">最近搜索</div>
+            <div class="sidebar-item">标签: #工作</div>
+            <div class="sidebar-item">标签: #学习</div>
+        </div>
+
+        <div class="editor-area">
+            <h1>🌃 Tokyo Night 主题演示</h1>
+            <p>这是一个展示 Tokyo Night 主题效果的演示页面。主题实现了编辑器优先的设计理念，侧边栏采用微妙的视觉处理，而编辑区域保持高对比度和清晰度。</p>
+            
+            <h2>✨ 主要特性</h2>
+            <ul>
+                <li><strong>三个变体</strong>：Night（最暗）、Storm（中等）、Light（明亮）</li>
+                <li><strong>视觉层次</strong>：编辑器区域突出，侧边栏低调</li>
+                <li><strong>正宗配色</strong>：使用官方 Tokyo Night 颜色系统</li>
+                <li><strong>平滑动画</strong>：微妙的过渡效果和交互反馈</li>
+                <li><strong>无障碍设计</strong>：符合 WCAG 对比度标准</li>
+            </ul>
+
+            <h2>🎨 颜色调色板</h2>
+            <div class="color-palette">
+                <div class="color-item color-red">Red<br>#f7768e</div>
+                <div class="color-item color-orange">Orange<br>#ff9e64</div>
+                <div class="color-item color-yellow">Yellow<br>#e0af68</div>
+                <div class="color-item color-green">Green<br>#9ece6a</div>
+                <div class="color-item color-cyan">Cyan<br>#7dcfff</div>
+                <div class="color-item color-blue">Blue<br>#7aa2f7</div>
+                <div class="color-item color-purple">Purple<br>#bb9af7</div>
+            </div>
+
+            <h2>💻 代码示例</h2>
+            <div class="code-block">
+// Tokyo Night 主题配置示例
+const tokyoNightConfig = {
+  variant: 'night', // 'night' | 'storm' | 'light'
+  autoSwitch: true,
+  customizations: {
+    sidebarOpacity: 0.85,
+    animationSpeed: 'normal'
+  }
+};
+
+// 应用主题
+themeManager.applyVariant(tokyoNightConfig.variant);
+            </div>
+
+            <h2>📝 排版示例</h2>
+            <p>这段文字展示了优化后的排版效果。文字具有适当的对比度，行高设置为 1.6 以提供良好的可读性。字体权重层次清晰，为长时间的写作和阅读提供舒适的体验。</p>
+            
+            <blockquote style="border-left: 3px solid var(--tn-blue); padding-left: 16px; margin: 20px 0; font-style: italic; color: var(--tn-text-secondary);">
+                "好的主题不仅仅是美观，更重要的是提供优秀的用户体验和功能性。"
+            </blockquote>
+        </div>
+    </div>
+
+    <script>
+        // 主题切换功能
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        const themeCss = document.getElementById('theme-css');
+        
+        themeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const theme = btn.dataset.theme;
+                
+                // 更新 CSS 文件
+                themeCss.href = `dist/theme-${theme}.css`;
+                
+                // 更新按钮状态
+                themeButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 保存用户偏好
+                localStorage.setItem('tokyo-night-theme', theme);
+            });
+        });
+        
+        // 加载用户偏好
+        const savedTheme = localStorage.getItem('tokyo-night-theme') || 'night';
+        const savedBtn = document.querySelector(`[data-theme="${savedTheme}"]`);
+        if (savedBtn) {
+            savedBtn.click();
+        }
+    </script>
+</body>
+</html>

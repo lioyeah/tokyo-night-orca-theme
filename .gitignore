@@ -8,7 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
+# 保留 dist 目录用于部署演示
+# dist
 dist-ssr
 *.local
 
@@ -24,9 +25,10 @@ dist-ssr
 *.sw?
 
 # 构建输出
-/dist
 /out
 /build
+# 保留 dist 目录用于部署演示
+# /dist
 
 # Node.js 依赖
 /node_modules
@@ -60,3 +62,19 @@ Thumbs.db
 
 # 部署产物
 .deploy/
+# Kiro 规格和开发文件（保留用于项目理解）
+# .kiro/ - 保留规格文档
+
+# 项目特定文件
+# 保留演示文件和部署指南
+# demo.html
+# DEPLOYMENT_GUIDE.md
+
+# 测试覆盖率报告
+coverage/
+.nyc_output/
+
+# 临时文件
+*.tmp
+*.temp
+.cache/
