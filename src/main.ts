@@ -1,11 +1,5 @@
 import { setupL10N, t } from "./libs/l10n";
 import zhCNTranslations from "./translations/zhCN";
-import { ThemeVariant, TokyoNightColors } from "./types/colors";
-import { getVariantColors, generateOrcaColorMapping, generateCSSCustomPropertiesString } from "./utils/colors";
-import { colorPalette } from "./colors/variants";
-import { generateBaseBackgroundCSS, generateSidebarCSS, generateSettingsModalCSS } from "./styles/cssGenerator";
-import { ThemeVariantManager, createThemeVariantManager } from "./theme/ThemeVariantManager";
-import { ThemeSystemIntegrator, createThemeSystemIntegrator, ThemeSystemConfig } from "./components/ThemeSystemIntegrator";
 
 // --- TypeScript 类型定义增强 ---
 // 声明全局变量，使得在代码中可以直接访问 window 对象下自定义的属性，
@@ -18,8 +12,6 @@ declare global {
 
 // --- 全局插件变量 ---
 let pluginIdFromOrca: string; // 用于存储从 Orca 应用传递过来的本插件的唯一ID
-let themeVariantManager: ThemeVariantManager | null = null; // 主题变体管理器实例
-let themeSystemIntegrator: ThemeSystemIntegrator | null = null; // 主题系统集成器实例
 
 // --- 主题常量 ---
 const THEME_DISPLAY_NAME = "Tokyo Night"; // 主题在 Orca 设置中显示的名称
@@ -32,8 +24,6 @@ const THEME_CSS_FILE = "dist/theme.css";     // 注册到 Orca 的静态 CSS 文
 // 定义在插件设置中使用的键，用于让用户通过开关控制主题的某些动态方面。
 const SETTING_KEY_ENABLE_BASE_BACKGROUND = "enableTokyoNightBaseBackground"; // 控制是否启用主题的基础背景和相关UI元素样式
 const SETTING_KEY_ENABLE_SIDEBAR_COLOR = "enableTokyoNightSidebarColor";   // 控制是否启用自定义的侧边栏颜色
-const SETTING_KEY_THEME_VARIANT = "tokyoNightThemeVariant";                // 控制当前使用的主题变体
-const SETTING_KEY_AUTO_SWITCH_SYSTEM = "tokyoNightAutoSwitchSystem";       // 控制是否根据系统偏好自动切换主题
 
 // --- 动态样式管理 ---
 // 这些对象用于持有动态插入到文档 <head> 中的 <style> 元素的引用。
@@ -47,8 +37,500 @@ const styleHolders = {
  
 
 // --- 核心CSS字符串定义 ---
-// CSS strings are now generated dynamically using the color system
-// See src/styles/cssGenerator.ts for CSS generation functions
+
+// 东京之夜核心CSS变量定义以及基础UI元素样式
+const tokyoNightBaseBackgroundCssString = `
+:root {
+    /* Tokyo Night 配色变量覆盖 Orca 默认变量 */
+    /* 基础背景和文字颜色 */
+    --orca-color-bg-1: #1a1b26 !important;           /* 主背景色 (Editor Background (Night)) */
+    --orca-color-bg-2: #16161e !important;           /* 次背景色 (Editor Background (Darker Night)) - 用于如查询区域、侧边栏等 */
+    --orca-color-text-1: #a9b1d6 !important;         /* 主文字颜色 (Editor Foreground) */
+    --orca-color-text-2: #9aa5ce !important;         /* 次文字颜色 (Markdown Text / HTML Text) */
+    --orca-color-placeholder: #565f89 !important;    /* 占位符文字颜色 (Comments) */
+
+    /* 边框和分隔线 */
+    --orca-color-border: #292e42 !important;         /* 通用边框颜色 (Highlight) - 更柔和 */
+    --orca-border-general: 1px solid #292e42 !important; /* 通用边框定义 */
+    --orca-color-separator: #292e42 !important;       /* 分隔线颜色 */
+
+    /* 主题强调色 */
+    --orca-color-primary-5: #7aa2f7 !important;       /* 主题强调色 (Terminal Blue) */
+    --orca-color-primary-4: #7aa2f7 !important;       /* 主题强调色变体 */
+    --orca-color-tab: #7aa2f7 !important;             /* 查询编辑器选中标签下划线 */
+    
+    /* Orca 的灰色调映射 */
+    --orca-color-gray-7: #292e42 !important;         /* 用于 soft 按钮背景等 */
+    --orca-color-gray-6: #565f89 !important;         /* 用于未选中标签文字等 */
+    --orca-color-gray-5: #565f89 !important;         /* (Comments) */
+    --orca-color-gray-4: #565f89 !important;         /* (Comments) */
+
+    /* Tokyo Night 特定颜色变量 */
+    --tokyo-night-red: #f7768e;
+    --tokyo-night-orange: #ff9e64;
+    --tokyo-night-yellow: #e0af68;
+    --tokyo-night-green: #9ece6a;
+    --tokyo-night-spring-green: #73daca;
+    --tokyo-night-cyan: #7dcfff;
+    --tokyo-night-blue: #7aa2f7;
+    --tokyo-night-magenta: #bb9af7;
+    --tokyo-night-white: #c0caf5;
+    --tokyo-night-foreground: #a9b1d6;
+    --tokyo-night-comment: #565f89;
+    --tokyo-night-bg-night: #1a1b26;
+    --tokyo-night-bg-storm: #24283b;
+    --tokyo-night-bg-dark: #16161e;     /* 新增：更深的背景色，用于侧边栏 */
+    --tokyo-night-bg-float: #1f2335;
+    --tokyo-night-terminal-black: #414868;
+}
+
+/* 高亮样式 (mark) - 灰色背景 + 红色文字 */
+mark, .orca-highlight {
+    background-color: var(--tokyo-night-terminal-black) !important; /* 深灰色背景 */
+    color: var(--tokyo-night-red) !important; /* 红色文字 */
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+/* 基础页面和应用容器样式 */
+/* 这些元素的颜色现在主要通过上面 :root 中定义的 --orca-color-bg-1 和 --orca-color-text-1 自动应用。*/
+/* 保留这些规则是为了确保最高优先级，以防 Orca 默认样式未使用这些变量或具有更高特异性。*/
+body,
+div#app {
+    background-color: var(--orca-color-bg-1) !important;
+    color: var(--orca-color-text-1) !important;
+}
+.orca-panels-container { /* Orca 的主要内容面板容器 */
+    background-color: var(--orca-color-bg-1) !important;
+}
+
+/* 链接颜色 */
+.orca-panels-container a {
+    color: var(--orca-color-link) !important;
+}
+.orca-panels-container a:hover {
+    color: var(--orca-color-primary-5) !important;
+}
+
+.orca-panels-container blockquote {
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    border-left: 3px solid var(--orca-color-primary-5) !important;
+    background-color: var(--tokyo-night-bg-float) !important;
+    padding: 0.5em 0.75em !important;
+    margin: 0.75em 0 !important;
+    border-radius: var(--orca-radius-sm) !important;
+}
+.orca-panels-container .orca-block[data-type="quote"] .orca-block,
+.orca-panels-container .orca-block[data-type="quote2"] .orca-block {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* 大纲层级缩进线 (Scope Lines) - 默认样式 */
+/* .orca-repr-scope-line 保持默认，无需额外CSS */
+
+/* 代码块卡片风格优化 (参考 orca-tune-theme) */
+.orca-panels-container pre,
+.orca-panels-container .orca-code-wrapper {
+    background-color: var(--tokyo-night-bg-float) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    border-radius: var(--orca-radius-md) !important;
+    padding: 1em !important;
+    margin: 1em 0 !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2) !important; /* 增加阴影以体现卡片感 */
+}
+
+/* 全局光标颜色 */
+* {
+    caret-color: var(--orca-color-primary-5) !important;
+}
+
+.orca-panels-container h1 {
+    font-size: 1.6em !important;
+    color: var(--tokyo-night-red) !important; /* H1 Red */
+    font-weight: 600 !important;
+}
+.orca-panels-container h2 {
+    font-size: 1.4em !important;
+    color: var(--tokyo-night-orange) !important; /* H2 Orange */
+    font-weight: 600 !important;
+}
+.orca-panels-container h3 {
+    font-size: 1.25em !important;
+    color: var(--tokyo-night-yellow) !important; /* H3 Yellow */
+    font-weight: 600 !important;
+}
+.orca-panels-container h4 {
+    color: var(--tokyo-night-green) !important; /* H4 Green */
+    font-weight: 600 !important;
+}
+.orca-panels-container h5 {
+    color: var(--tokyo-night-blue) !important; /* H5 Blue */
+    font-weight: 600 !important;
+    font-size: 1em !important;
+}
+.orca-panels-container h6 {
+    color: var(--tokyo-night-magenta) !important; /* H6 Magenta */
+    font-weight: 600 !important;
+    font-size: 1em !important;
+}
+
+/* 列表符号与数字的可读性增强（优先使用原生 ::marker） */
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ul li::marker,
+.orca-panels-container .orca-repr-main-content ul li::marker,
+.orca-panels-container .orca-repr-main-none-editable ul li::marker,
+.orca-panels-container ul li::marker {
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ol li::marker,
+.orca-panels-container .orca-repr-main-content ol li::marker,
+.orca-panels-container .orca-repr-main-none-editable ol li::marker,
+.orca-panels-container ol li::marker {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+
+/* 直接适配 Orca 列表容器（伪元素渲染编号/点） */
+.orca-panels-container .orca-repr-ul-content::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ul-content::before {
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ol-content::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ol-content::before {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ul::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ul::before {
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ol::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ol::before {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+
+/* level-based colors: unordered */
+.orca-panels-container ul ul li::marker { color: var(--tokyo-night-cyan) !important; font-weight: 700 !important; }
+.orca-panels-container ul ul ul li::marker { color: var(--tokyo-night-spring-green) !important; font-weight: 700 !important; }
+.orca-panels-container ul ul ul ul li::marker { color: var(--tokyo-night-magenta) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-main-none-editable ul ul li .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable ul ul li .ti-point,
+.orca-panels-container .orca-repr-main-none-editable ul ul li .ti-circle-filled { color: var(--tokyo-night-cyan) !important; }
+.orca-panels-container .orca-repr-main-none-editable ul ul ul li .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable ul ul ul li .ti-point,
+.orca-panels-container .orca-repr-main-none-editable ul ul ul li .ti-circle-filled { color: var(--tokyo-night-spring-green) !important; }
+.orca-panels-container .orca-repr-main-none-editable ul ul ul ul li .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable ul ul ul ul li .ti-point,
+.orca-panels-container .orca-repr-main-none-editable ul ul ul ul li .ti-circle-filled { color: var(--tokyo-night-magenta) !important; }
+.orca-panels-container .orca-repr-ul-content .orca-repr-ul-content::before { color: var(--tokyo-night-cyan) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ul-content .orca-repr-ul-content .orca-repr-ul-content::before { color: var(--tokyo-night-spring-green) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ul-content .orca-repr-ul-content .orca-repr-ul-content .orca-repr-ul-content::before { color: var(--tokyo-night-magenta) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-main-none-editable ul ul li:not(:has(.ti))::before { color: var(--tokyo-night-cyan) !important; }
+.orca-panels-container .orca-repr-main-none-editable ul ul ul li:not(:has(.ti))::before { color: var(--tokyo-night-spring-green) !important; }
+.orca-panels-container .orca-repr-main-none-editable ul ul ul ul li:not(:has(.ti))::before { color: var(--tokyo-night-magenta) !important; }
+.orca-panels-container ul ul li .ti-point-filled,
+.orca-panels-container ul ul li .ti-point,
+.orca-panels-container ul ul li .ti-circle,
+.orca-panels-container ul ul li .ti-circle-filled { color: var(--tokyo-night-cyan) !important; }
+.orca-panels-container ul ul ul li .ti-point-filled,
+.orca-panels-container ul ul ul li .ti-point,
+.orca-panels-container ul ul ul li .ti-circle,
+.orca-panels-container ul ul ul li .ti-circle-filled { color: var(--tokyo-night-spring-green) !important; }
+.orca-panels-container ul ul ul ul li .ti-point-filled,
+.orca-panels-container ul ul ul ul li .ti-point,
+.orca-panels-container ul ul ul ul li .ti-circle,
+.orca-panels-container ul ul ul ul li .ti-circle-filled { color: var(--tokyo-night-magenta) !important; }
+
+/* level-based colors: ordered */
+.orca-panels-container ol ol li::marker { color: var(--tokyo-night-blue) !important; font-weight: 700 !important; }
+.orca-panels-container ol ol ol li::marker { color: var(--tokyo-night-yellow) !important; font-weight: 700 !important; }
+.orca-panels-container ol ol ol ol li::marker { color: var(--tokyo-night-red) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ol-content .orca-repr-ol-content::before { color: var(--tokyo-night-blue) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ol-content .orca-repr-ol-content .orca-repr-ol-content::before { color: var(--tokyo-night-yellow) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ol-content .orca-repr-ol-content .orca-repr-ol-content .orca-repr-ol-content::before { color: var(--tokyo-night-red) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ol .orca-repr-ol::before { color: var(--tokyo-night-blue) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ol .orca-repr-ol .orca-repr-ol::before { color: var(--tokyo-night-yellow) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-ol .orca-repr-ol .orca-repr-ol .orca-repr-ol::before { color: var(--tokyo-night-red) !important; font-weight: 700 !important; }
+.orca-panels-container .orca-repr-main-none-editable ol li:not(:has(.ti))::before { color: var(--tokyo-night-magenta) !important; }
+.orca-panels-container .orca-repr-main-none-editable ol ol li:not(:has(.ti))::before { color: var(--tokyo-night-blue) !important; }
+.orca-panels-container .orca-repr-main-none-editable ol ol ol li:not(:has(.ti))::before { color: var(--tokyo-night-yellow) !important; }
+.orca-panels-container .orca-repr-main-none-editable ol ol ol ol li:not(:has(.ti))::before { color: var(--tokyo-night-red) !important; }
+/* 降级方案：当某些渲染不使用原生 marker 时，使用 ::before 自绘 */
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ul {
+    list-style: disc outside !important;
+}
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ul li::before {
+    content: "•" !important;
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ol {
+    list-style: decimal outside !important;
+}
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ol li::before {
+    content: counters(item, ".") "." !important;
+    counter-increment: item !important;
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ol {
+    counter-reset: item !important;
+}
+
+/* 适配 none-editable 容器与图标子弹（Tabler Icons） */
+.orca-panels-container .orca-repr-main-none-editable ul {
+    list-style: disc outside !important;
+}
+.orca-panels-container .orca-repr-main-none-editable li .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable li .ti-point,
+.orca-panels-container .orca-repr-main-none-editable li .ti-circle-filled {
+    color: var(--tokyo-night-orange) !important;
+}
+.orca-panels-container .orca-repr-main-none-editable ul li:not(:has(.ti))::before {
+    content: "•" !important;
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+.orca-panels-container .orca-repr-main-none-editable ol {
+    list-style: decimal outside !important;
+    counter-reset: item !important;
+}
+.orca-panels-container .orca-repr-main-none-editable ol li:not(:has(.ti))::before {
+    content: counters(item, ".") "." !important;
+    counter-increment: item !important;
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+
+.orca-panels-container .orca-repr-main-content ul {
+    list-style: none !important;
+    padding-left: 1.2em !important;
+}
+.orca-panels-container .orca-repr-main-content ul li::before {
+    content: "•" !important;
+    display: inline-block !important;
+    width: 1.2em !important;
+    margin-left: -1.2em !important;
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: 700 !important;
+}
+
+.orca-button.primary {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+.orca-button.primary:hover {
+    filter: brightness(1.05) !important;
+}
+.orca-button.dangerous {
+    background-color: var(--orca-color-dangerous-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+.orca-button.warn {
+    background-color: var(--orca-color-warn-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+.orca-button.info {
+    background-color: var(--orca-color-info-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+.orca-input-input:focus-within {
+    border-color: var(--orca-color-primary-5) !important;
+    box-shadow: 0 0 0 2px rgba(122,162,247,0.35) !important;
+}
+.orca-input-input .orca-input-actualinput:focus {
+    outline: none !important;
+}
+
+.orca-table-row:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+}
+.orca-table-row.selected {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+ 
+ 
+.orca-inline-code {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--tokyo-night-white) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    border-radius: var(--orca-radius-sm) !important;
+    padding: 0 0.25em !important;
+}
+
+.orca-menu {
+    background-color: var(--tokyo-night-bg-storm) !important;
+    color: var(--orca-color-text-1) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+.orca-menu .orca-menu-item:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+.orca-menu .orca-menu-item.selected {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+.orca-tooltip {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--tokyo-night-white) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+/* 块操作手柄 (Block Handle) */
+.orca-block-handle {
+    color: var(--orca-color-text-2) !important; /* 默认使用次要文字颜色，避免太抢眼 */
+    background-color: transparent !important;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+.orca-block-handle:hover {
+    color: var(--orca-color-text-1) !important; /* 悬浮时使用正文颜色 */
+    background-color: var(--tokyo-night-terminal-black) !important;
+    border-radius: var(--orca-radius-sm);
+}
+
+/* 通用弹出层 (如块操作手柄菜单) */
+.orca-popup {
+    background-color: var(--tokyo-night-bg-storm) !important;
+    color: var(--tokyo-night-foreground) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+    border-radius: var(--orca-radius-md) !important;
+}
+
+/* 弹出层内的列表项/按钮 */
+.orca-popup .item,
+.orca-popup .menu-item,
+.orca-popup button {
+    color: var(--tokyo-night-foreground) !important;
+}
+.orca-popup .item:hover,
+.orca-popup .menu-item:hover,
+.orca-popup button:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+.orca-popup .item .ti,
+.orca-popup .menu-item .ti,
+.orca-popup button .ti {
+    color: var(--tokyo-night-foreground) !important;
+}
+.orca-popup .item:hover .ti,
+.orca-popup .menu-item:hover .ti,
+.orca-popup button:hover .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+.orca-modal,
+.orca-dialog {
+    background-color: var(--tokyo-night-bg-storm) !important;
+    color: var(--orca-color-text-1) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+.orca-button.soft {
+    background-color: var(--orca-color-gray-7) !important;
+    color: var(--tokyo-night-white) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+.orca-settings .orca-table-row:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+}
+.orca-settings .orca-table-row.selected {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+*::-webkit-scrollbar-track {
+    background: var(--tokyo-night-bg-night);
+}
+*::-webkit-scrollbar-thumb {
+    background-color: var(--tokyo-night-terminal-black);
+    border-radius: 6px;
+    border: 2px solid var(--tokyo-night-bg-night);
+}
+
+/* 查询构建器/条件区域 */
+/* 其背景、文字、边框颜色已由 :root 中的相应变量 (--orca-color-bg-2, --orca-color-text-1, --orca-border-general) 控制。*/
+/* 只保留非颜色相关的、或需要特定于此组件的样式。*/
+.orca-query-conditions {
+    /* background-color: var(--orca-color-bg-2) !important; /* 已由 :root 定义 */
+    /* color: var(--orca-color-text-1) !important;       /* 已由 :root 定义 */
+    /* border: var(--orca-border-general) !important;    /* 已由 :root 定义 */
+    border-radius: var(--orca-radius-sm) !important; /* 遵循Orca的圆角变量 */
+    padding: var(--orca-spacing-md) !important;     /* 遵循Orca的内边距变量 */
+}
+
+/* 查询条件区域的 "重置" 按钮 */
+/* 此按钮有 .soft 类，其默认颜色已通过 --orca-color-gray-7 (背景) 和 --orca-color-text-1 (文字) 在 :root 中定义。*/
+/* 这里提供更具体的覆盖以符合Tokyo Night风格。*/
+.orca-query-conditions .orca-query-conditions-reset.orca-button {
+    background-color: var(--tokyo-night-bg-float) !important; /* 使用一个特定于主题的柔和背景色 */
+    color: var(--tokyo-night-white) !important;               /* 使用更亮的白色作为文字颜色 */
+    border: 1px solid var(--tokyo-night-terminal-black) !important; /* 与其他元素协调的边框 */
+}
+.orca-query-conditions .orca-query-conditions-reset.orca-button:hover {
+    background-color: var(--tokyo-night-terminal-black) !important; /* 悬浮时使用更深的背景 */
+}
+
+
+/* 主界面中的 "plain" 类型按钮 (通常用于只有图标或简单文本的按钮) */
+/* 其文字颜色默认可能继承自父元素或由 .ti 规则覆盖。这里确保它们使用醒目的白色。*/
+.orca-button.plain {
+    color: var(--tokyo-night-white) !important;
+}
+.orca-button.plain .ti { /* 确保此类按钮内的图标颜色也一致 */
+    color: var(--tokyo-night-white) !important;
+}
+
+/* 文本块中的占位符文字颜色 */
+/* 其颜色已由 :root 中的 --orca-color-placeholder (--tokyo-night-comment) 控制。*/
+
+/* 查询编辑器中的标签页样式 */
+/* 未选中项的文字和图标颜色已由 :root 中的 --orca-color-gray-6 (映射到 --tokyo-night-comment) 控制。*/
+.orca-block-editor-query-tabs .orca-segmented-item {
+    color: var(--orca-color-gray-6) !important; /* 确保使用定义的柔和颜色 */
+}
+.orca-block-editor-query-tabs .orca-segmented-item .ti {
+    color: var(--orca-color-gray-6) !important; /* 图标颜色与文字一致 */
+}
+
+/* 选中项的文字颜色使用更亮的白色，底部边框使用主题强调色。*/
+/* Orca的默认样式是背景透明，无阴影，这里保持这些特性。*/
+.orca-block-editor-query-tabs .orca-segmented-item.orca-selected {
+    color: var(--tokyo-night-white) !important;
+    border-bottom-color: var(--orca-color-tab) !important; /* --orca-color-tab 已在 :root 中定义为 --tokyo-night-blue */
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+.orca-block-editor-query-tabs .orca-segmented-item.orca-selected .ti {
+    color: var(--tokyo-night-white) !important; /* 选中项的图标颜色与文字一致 */
+}
+`;
 
 // 东京之夜侧边栏颜色的CSS定义
 const tokyoNightSidebarCssString = `
@@ -549,9 +1031,7 @@ function applyStyle(cssString: string, enabled: boolean, styleHolder: {el: HTMLS
             if (oldElById) {
                 try {
                     oldElById.remove();
-                } catch (e) { 
-                    // 移除旧样式元素失败
-                }
+                } catch (e) { /* console.warn(`移除旧样式元素 (ID: ${fullStyleId}) 失败:`, e); */ }
             }
 
             // 创建新的<style>元素
@@ -603,8 +1083,6 @@ function applyStyle(cssString: string, enabled: boolean, styleHolder: {el: HTMLS
 const settingsSchemaDefaults = {
     [SETTING_KEY_ENABLE_BASE_BACKGROUND]: true, // 默认启用基础背景
     [SETTING_KEY_ENABLE_SIDEBAR_COLOR]: true,   // 默认启用侧边栏颜色
-    [SETTING_KEY_THEME_VARIANT]: 'night' as ThemeVariant, // 默认使用 Night 变体
-    [SETTING_KEY_AUTO_SWITCH_SYSTEM]: false,    // 默认不自动切换
 };
 
 // --- 更新所有动态样式 ---
@@ -612,135 +1090,31 @@ const settingsSchemaDefaults = {
 async function updateAllDynamicStyles(calledBy?: string) { // calledBy参数用于调试，追踪调用来源
     // console.log(`[${pluginIdFromOrca}] 进入 updateAllDynamicStyles. 调用来源: ${calledBy || '未知'}`);
 
-    // 优先使用 ThemeSystemIntegrator 进行统一管理
-    if (themeSystemIntegrator) {
-        // 确保orca对象和相关插件状态存在
-        const currentPluginState = orca?.state?.plugins?.[pluginIdFromOrca];
-        if (!currentPluginState) {
-            console.warn(`[${pluginIdFromOrca}] 插件状态对象不可用，无法更新样式。`);
-            return;
-        }
-        const pluginSettings = currentPluginState.settings || {}; // 获取当前插件的设置，如果为空则使用空对象
-
-        // 辅助函数，用于安全获取设置值
-        const getSetting = (key: string, defaultValue: any): any => {
-            const value = pluginSettings[key];
-            return value !== undefined ? value : defaultValue;
-        };
-
-        // 获取各项设置的当前值
-        const themeVariant = getSetting(SETTING_KEY_THEME_VARIANT, settingsSchemaDefaults[SETTING_KEY_THEME_VARIANT]) as ThemeVariant;
-        const autoSwitchSystem = getSetting(SETTING_KEY_AUTO_SWITCH_SYSTEM, settingsSchemaDefaults[SETTING_KEY_AUTO_SWITCH_SYSTEM]);
-
-        try {
-            // 使用 ThemeSystemIntegrator 进行统一的主题管理
-            if (themeSystemIntegrator.getCurrentVariant() !== themeVariant) {
-                await themeSystemIntegrator.switchVariant(themeVariant);
-            }
-
-            // 更新自动切换设置
-            themeSystemIntegrator.setAutoSwitchEnabled(autoSwitchSystem);
-
-            // 验证系统一致性
-            const validation = themeSystemIntegrator.validateSystemConsistency();
-            if (validation.errors.length > 0) {
-                console.warn(`[${pluginIdFromOrca}] 系统一致性验证发现问题:`, validation.errors);
-            }
-
-            // 获取系统健康状态
-            const healthStatus = themeSystemIntegrator.getHealthStatus();
-            if (!healthStatus.healthy) {
-                console.warn(`[${pluginIdFromOrca}] 系统健康检查发现问题:`, healthStatus.issues);
-                if (healthStatus.recommendations.length > 0) {
-                    console.info(`[${pluginIdFromOrca}] 建议:`, healthStatus.recommendations);
-                }
-            }
-
-            console.log(`[${pluginIdFromOrca}] 主题系统已更新。变体: ${themeSystemIntegrator.getCurrentVariant()}, 自动切换: ${autoSwitchSystem}`);
-        } catch (error) {
-            console.error(`[${pluginIdFromOrca}] 使用 ThemeSystemIntegrator 更新主题时出错:`, error);
-            
-            // 回退到原始的 ThemeVariantManager 实现
-            if (themeVariantManager) {
-                console.log(`[${pluginIdFromOrca}] 回退到 ThemeVariantManager 实现`);
-                await updateAllDynamicStylesLegacy(calledBy);
-            }
-        }
-        return;
-    }
-
-    // 回退到原始实现
-    if (themeVariantManager) {
-        await updateAllDynamicStylesLegacy(calledBy);
-    } else {
-        console.warn(`[${pluginIdFromOrca}] 主题管理器未初始化，无法更新样式。`);
-    }
-}
-
-// 原始的样式更新实现（作为回退方案）
-async function updateAllDynamicStylesLegacy(calledBy?: string) {
-    if (!themeVariantManager) {
-        console.warn(`[${pluginIdFromOrca}] ThemeVariantManager 未初始化，无法更新样式。`);
-        return;
-    }
-
     // 确保orca对象和相关插件状态存在
     const currentPluginState = orca?.state?.plugins?.[pluginIdFromOrca];
     if (!currentPluginState) {
-        console.warn(`[${pluginIdFromOrca}] 插件状态对象不可用，无法更新样式。`);
+        // console.warn(`[${pluginIdFromOrca}] 插件状态对象不可用，无法更新样式。`);
         return;
     }
     const pluginSettings = currentPluginState.settings || {}; // 获取当前插件的设置，如果为空则使用空对象
 
-    // 辅助函数，用于安全获取设置值
-    const getSetting = (key: string, defaultValue: any): any => {
+    // 辅助函数，用于安全获取布尔类型的设置值，如果设置中不存在或类型不符，则返回默认值
+    const getSetting = (key: string, defaultValue: boolean): boolean => {
         const value = pluginSettings[key];
-        return value !== undefined ? value : defaultValue;
+        return typeof value === 'boolean' ? value : defaultValue;
     };
 
     // 获取各项设置的当前值
     const enableBaseBg = getSetting(SETTING_KEY_ENABLE_BASE_BACKGROUND, settingsSchemaDefaults[SETTING_KEY_ENABLE_BASE_BACKGROUND]);
     const enableSidebarColor = getSetting(SETTING_KEY_ENABLE_SIDEBAR_COLOR, settingsSchemaDefaults[SETTING_KEY_ENABLE_SIDEBAR_COLOR]);
-    const themeVariant = getSetting(SETTING_KEY_THEME_VARIANT, settingsSchemaDefaults[SETTING_KEY_THEME_VARIANT]) as ThemeVariant;
-    const autoSwitchSystem = getSetting(SETTING_KEY_AUTO_SWITCH_SYSTEM, settingsSchemaDefaults[SETTING_KEY_AUTO_SWITCH_SYSTEM]);
 
-    // 更新主题变体管理器设置
-    try {
-        // 检查是否需要切换变体
-        if (themeVariantManager.currentVariant !== themeVariant) {
-            await themeVariantManager.switchVariant(themeVariant);
-        }
-
-        // 更新自动切换设置
-        themeVariantManager.setAutoSwitchEnabled(autoSwitchSystem);
-
-        // 应用当前变体（这会处理样式的启用/禁用，包括视觉层次）
-        if (enableBaseBg || enableSidebarColor) {
-            themeVariantManager.applyVariant(themeVariantManager.currentVariant);
-        }
-
-        // 验证可访问性（可选，用于调试）
-        try {
-            const accessibilityResults = themeVariantManager.validateAccessibility();
-            if (!accessibilityResults.meetsWCAG) {
-                console.warn(`[${pluginIdFromOrca}] 可访问性警告:`, accessibilityResults);
-            }
-        } catch (accessibilityError) {
-            // 可访问性验证失败不应阻止主题应用
-            console.warn(`[${pluginIdFromOrca}] 可访问性验证失败:`, accessibilityError);
-        }
-
-    } catch (error) {
-        console.error(`[${pluginIdFromOrca}] 更新主题变体时出错:`, error);
-    }
-
-    // 应用或移除各个部分的样式（保持向后兼容的方式）
+    // 应用或移除各个部分的样式
     // 基础背景和设置模态框的样式通常一起控制，因为它们可能共享基础颜色或主题开关
-    applyStyle(generateBaseBackgroundCSS(themeVariantManager.currentVariant, pluginIdFromOrca), enableBaseBg, styleHolders.baseBackground, "base-bg");
-    applyStyle(generateSettingsModalCSS(themeVariantManager.currentVariant), enableBaseBg, styleHolders.settingsModal, "settings-modal"); // 设置模态框样式也受基础背景开关控制
-    applyStyle(generateSidebarCSS(themeVariantManager.currentVariant), enableSidebarColor, styleHolders.sidebar, "sidebar-color");
+    applyStyle(tokyoNightBaseBackgroundCssString, enableBaseBg, styleHolders.baseBackground, "base-bg");
+    applyStyle(tokyoNightSettingsModalCssString, enableBaseBg, styleHolders.settingsModal, "settings-modal"); // 设置模态框样式也受基础背景开关控制
+    applyStyle(tokyoNightSidebarCssString, enableSidebarColor, styleHolders.sidebar, "sidebar-color");
 
-    console.log(`[${pluginIdFromOrca}] 样式已更新（传统模式）。变体: ${themeVariantManager.currentVariant}, 背景/模态框启用: ${enableBaseBg}, 侧边栏颜色启用: ${enableSidebarColor}, 自动切换: ${autoSwitchSystem}`);
+    // console.log(`[${pluginIdFromOrca}] 样式已更新。背景/模态框启用: ${enableBaseBg}, 侧边栏颜色启用: ${enableSidebarColor}`);
 }
 
 // --- Orca Notes 插件生命周期函数 ---
@@ -754,32 +1128,13 @@ export async function load(_name: string) { // _name 参数是 Orca 传递的插
     pluginIdFromOrca = _name; // 保存插件ID
     // console.log(`插件 "${pluginIdFromOrca}" 正在加载... (显示名称: "${THEME_DISPLAY_NAME}")`);
 
-    // 初始化 ThemeVariantManager
-    themeVariantManager = createThemeVariantManager(pluginIdFromOrca);
-    // console.log(`[${pluginIdFromOrca}] ThemeVariantManager 已初始化`);
-
-    // 初始化 ThemeSystemIntegrator - 统一管理所有主题组件
-    const themeSystemConfig: ThemeSystemConfig = {
-        pluginId: pluginIdFromOrca,
-        debugLogging: false, // 可以根据需要启用调试
-        autoSwitchEnabled: false, // 将根据用户设置动态更新
-        initialVariant: 'night'
-    };
-    
-    themeSystemIntegrator = createThemeSystemIntegrator(themeSystemConfig);
-    console.log(`[${pluginIdFromOrca}] ThemeSystemIntegrator 已初始化，完整主题系统已就绪`);
-
     // 定义国际化翻译资源
     const translationsForL10N = {
         "en": { // 英文翻译
             [SETTING_KEY_ENABLE_BASE_BACKGROUND]: "Enable Tokyo Night Base Background",
             "Sets the main application background to the classic Tokyo Night dark color.": "Sets the main application background to the classic Tokyo Night dark color.",
             [SETTING_KEY_ENABLE_SIDEBAR_COLOR]: "Enable Tokyo Night Sidebar Color",
-            "Sets the sidebar background to a custom Tokyo Night color (#16161F).": "Sets the sidebar background to a custom Tokyo Night color (#16161F).",
-            [SETTING_KEY_THEME_VARIANT]: "Tokyo Night Theme Variant",
-            "Choose between Night (darkest), Storm (medium dark), or Light variant.": "Choose between Night (darkest), Storm (medium dark), or Light variant.",
-            [SETTING_KEY_AUTO_SWITCH_SYSTEM]: "Auto-switch with System Theme",
-            "Automatically switch between light and dark variants based on system preferences.": "Automatically switch between light and dark variants based on system preferences."
+            "Sets the sidebar background to a custom Tokyo Night color (#16161F).": "Sets the sidebar background to a custom Tokyo Night color (#16161F)."
         },
         "zh-CN": zhCNTranslations // 中文翻译 (从 ./translations/zhCN.ts 导入)
     };
@@ -805,23 +1160,6 @@ export async function load(_name: string) { // _name 参数是 Orca 传递的插
                     description: t("Sets the sidebar background to a custom Tokyo Night color (#16161F)."),
                     type: "boolean",
                     defaultValue: settingsSchemaDefaults[SETTING_KEY_ENABLE_SIDEBAR_COLOR]
-                },
-                [SETTING_KEY_THEME_VARIANT]: {
-                    label: t(SETTING_KEY_THEME_VARIANT),
-                    description: t("Choose between Night (darkest), Storm (medium dark), or Light variant."),
-                    type: "singleChoice",
-                    choices: [
-                        { value: "night", label: "Tokyo Night (Darkest)" },
-                        { value: "storm", label: "Tokyo Night Storm (Medium Dark)" },
-                        { value: "light", label: "Tokyo Night Light" }
-                    ],
-                    defaultValue: settingsSchemaDefaults[SETTING_KEY_THEME_VARIANT]
-                },
-                [SETTING_KEY_AUTO_SWITCH_SYSTEM]: {
-                    label: t(SETTING_KEY_AUTO_SWITCH_SYSTEM),
-                    description: t("Automatically switch between light and dark variants based on system preferences."),
-                    type: "boolean",
-                    defaultValue: settingsSchemaDefaults[SETTING_KEY_AUTO_SWITCH_SYSTEM]
                 }
             });
             // console.log(`[${pluginIdFromOrca}] 设置 schema 注册成功。`);
@@ -835,17 +1173,13 @@ export async function load(_name: string) { // _name 参数是 Orca 传递的插
     // 注册主题到 Orca 系统
     try {
         if (orca?.themes?.register) { // 检查 Orca API 是否可用
-            // Register the main theme (backward compatibility)
             orca.themes.register(pluginIdFromOrca, THEME_DISPLAY_NAME, THEME_CSS_FILE);
             // console.log(`[${pluginIdFromOrca}] 主题 "${THEME_DISPLAY_NAME}" 已注册，CSS 文件: "${THEME_CSS_FILE}".`);
-            
-            // Register all variants using ThemeVariantManager
-            await themeVariantManager.registerAllVariants();
         } else {
             // console.error(`[${pluginIdFromOrca}] Orca themes API (register) 不可用。`);
         }
     } catch (error) {
-        // console.error(`[${pluginIdFromOrca}] 注册主题失败。`, error);
+        // console.error(`[${pluginIdFromOrca}] 注册主题 "${THEME_DISPLAY_NAME}" 失败。`, error);
     }
 
     // 使用 Valtio 订阅插件设置对象的变化，以便实时更新样式
@@ -927,22 +1261,6 @@ export async function unload() {
         return;
     }
     // console.log(`插件 "${pluginIdFromOrca}" 正在卸载...`);
-    
-    // 清理 ThemeSystemIntegrator
-    if (themeSystemIntegrator) {
-        themeSystemIntegrator.cleanup();
-        themeSystemIntegrator = null;
-        console.log(`[${pluginIdFromOrca}] ThemeSystemIntegrator 已清理`);
-    }
-    
-    // 清理 ThemeVariantManager
-    if (themeVariantManager) {
-        themeVariantManager.cleanup();
-        await themeVariantManager.unregisterAllVariants();
-        themeVariantManager = null;
-        // console.log(`[${pluginIdFromOrca}] ThemeVariantManager 已清理`);
-    }
-    
     disableThemeFeatures(); // 移除所有动态样式
 
     // 取消 Valtio 订阅
@@ -985,19 +1303,6 @@ async function enableThemeFeatures() {
 // 禁用主题特性 (主要是移除所有动态样式)
 function disableThemeFeatures() {
     // console.log(`[${pluginIdFromOrca}] 正在禁用主题特性 (清理动态样式)...`);
-    
-    // 优先使用 ThemeSystemIntegrator 进行清理
-    if (themeSystemIntegrator) {
-        themeSystemIntegrator.cleanup();
-        return;
-    }
-    
-    // Use ThemeVariantManager cleanup if available
-    if (themeVariantManager) {
-        themeVariantManager.cleanup();
-    }
-    
-    // Fallback to manual cleanup for backward compatibility
     applyStyle("", false, styleHolders.baseBackground, "base-bg");
     applyStyle("", false, styleHolders.sidebar, "sidebar-color");
     applyStyle("", false, styleHolders.settingsModal, "settings-modal");

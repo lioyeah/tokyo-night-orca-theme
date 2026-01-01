@@ -1,8 +1,0 @@
-:root {
-  --orca-color-selection: oklch(from var(--orca-color-primary-5) l c h / 50%);
-  --orca-color-success-5: #9ece6a;
-  --orca-color-warn-5: #ff9e64;
-  --orca-color-dangerous-5: #f7768e;
-  --orca-color-info-5: #7dcfff;
-  --orca-color-link: #73daca;
-}
