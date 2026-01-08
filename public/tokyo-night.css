@@ -491,9 +491,8 @@ mark, .orca-highlight {
 
 /* ===== 侧边栏样式 ===== */
 nav#sidebar {
-    background-color: var(--tokyo-night-bg-dark) !important;
     color: var(--tokyo-night-foreground) !important;
-    border-right: 1px solid var(--tokyo-night-bg-storm) !important;
+    border-right: none !important;
     box-shadow: none !important;
 }
 nav#sidebar .orca-select-button-text {
@@ -936,4 +935,64 @@ div.orca-settings {
 .orca-settings .orca-table-row.selected {
     background-color: var(--orca-color-primary-5) !important;
     color: var(--tokyo-night-bg-night) !important;
+}
+
+/* ===== 悬浮圆角容器样式 ===== */
+:root {
+  --tokyo-shadow-floating: rgba(0, 0, 0, 0.3) 0 8px 32px;
+  --tokyo-floating-radius: 16px;
+  --tokyo-glass-bg: rgba(18, 20, 29, 0.95);
+  --tokyo-glass-blur: 8px;
+}
+
+/* 侧边栏透明，与窗体融合 */
+#sidebar {
+  background-color: transparent !important;
+  -webkit-backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
+  backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
+}
+
+/* 主编辑区悬浮容器 */
+#main {
+  border-radius: var(--tokyo-floating-radius) !important;
+  margin: 8px !important;
+  margin-left: 0 !important;
+  box-shadow: var(--tokyo-shadow-floating) !important;
+  overflow: hidden !important;
+  -webkit-backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
+  backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
+  background-color: var(--tokyo-glass-bg) !important;
+}
+
+/* 侧边栏关闭时的边距 */
+.sidebar-closed #main,
+.sidebar-closing #main {
+  margin-left: 8px !important;
+}
+
+/* 编辑区背景 */
+#main::before {
+  content: "";
+  background: var(--orca-color-bg-1) !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* 编辑器顶部间距 */
+.orca-block-editor-main {
+  padding-top: var(--orca-spacing-xl) !important;
+}
+
+/* 拖拽手柄位置调整 */
+.orca-panel-drag-handle {
+  top: var(--orca-spacing-xl) !important;
+}
+
+/* 侧边工具栏位置调整 */
+.orca-block-editor-sidetools {
+  top: calc(50px + var(--orca-spacing-xl)) !important;
 }
