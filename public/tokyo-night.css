@@ -1368,9 +1368,19 @@ div.orca-settings {
     h1 {
     display: inline-block;
     position: relative;
+    transition: all 0.4s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h1 > span:first-child {
+    display: inline-block;
     padding: 4px 16px;
     border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.02) !important;
+    background-color: rgba(255, 255, 255, 0.02);
     background-image: radial-gradient(
         ellipse at center bottom,
         color-mix(in srgb, var(--tokyo-night-red), transparent 85%),
@@ -1388,8 +1398,8 @@ div.orca-settings {
         .orca-repr-main-content,
         .orca-repr-main-none-editable
     )
-    h1:hover {
-    color: var(--tokyo-night-red) !important;
+    h1:hover > span:first-child {
+    color: var(--tokyo-night-red);
     text-shadow: 0 0 12px
         color-mix(in srgb, var(--tokyo-night-red), transparent 40%);
     background-image: radial-gradient(
