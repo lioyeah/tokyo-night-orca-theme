@@ -1,6 +1,12 @@
 /* Tokyo Night Theme for Orca Notes */
 /* 整合自 main.ts 中的所有 CSS 字符串 */
 
+.t-tokyo-night .orca-vibrant {
+    overflow: visible !important;
+    position: relative;
+    z-index: 600;
+}
+
 :root {
     /* ===== Tokyo Night 核心调色板 ===== */
     --tokyo-night-red: #f7768e;
@@ -749,10 +755,8 @@ mark,
 /* ===== 弹出层样式 ===== */
 .orca-popup {
     background-color: var(--tokyo-night-bg-storm) !important;
-    color: var(--tokyo-night-foreground) !important;
-    border: 1px solid var(--tokyo-night-terminal-black) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
-    border-radius: var(--orca-radius-md) !important;
+    opacity: 1 !important;
+    z-index: 501 !important;
 }
 .orca-popup .item,
 .orca-popup .menu-item,
@@ -1297,6 +1301,7 @@ div.orca-settings {
     background-color: transparent !important;
     -webkit-backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
     backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
+    z-index: 1;
 }
 
 /* 主编辑区悬浮容器 */
@@ -2112,4 +2117,12 @@ div.orca-settings {
     )
     blockquote:hover {
     transform: translateY(-1px) scale(1.01);
+}
+
+.orca-headbar-global-tools {
+    background-color: var(--tokyo-night-bg-night);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6px), linear-gradient(to top, transparent, black 6px);
+    mask-image: linear-gradient(to right, transparent, black 6px), linear-gradient(to top, transparent, black 6px);
+    -webkit-mask-composite: intersect;
+    mask-composite: intersect;
 }
