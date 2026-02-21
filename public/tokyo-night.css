@@ -1,12 +1,6 @@
 /* Tokyo Night Theme for Orca Notes */
 /* 整合自 main.ts 中的所有 CSS 字符串 */
 
-.t-tokyo-night .orca-vibrant {
-    overflow: visible !important;
-    position: relative;
-    z-index: 600;
-}
-
 :root {
     /* ===== Tokyo Night 核心调色板 ===== */
     --tokyo-night-red: #f7768e;
@@ -758,6 +752,9 @@ mark,
     opacity: 1 !important;
     z-index: 501 !important;
 }
+#main .orca-panel.active > .orca-hideable.no-pointer > .orca-popup.orca-hideable-content {
+    background: var(--tokyo-night-bg-storm) !important;
+}
 .orca-popup .item,
 .orca-popup .menu-item,
 .orca-popup button {
@@ -1301,7 +1298,12 @@ div.orca-settings {
     background-color: transparent !important;
     -webkit-backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
     backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
-    z-index: 1;
+}
+/* backdrop-filter 会创建新的层叠上下文，需确保弹出层容器在 body 内容之上 */
+.t-tokyo-night .orca-vibrant {
+    overflow: visible !important;
+    position: relative;
+    z-index: 600;
 }
 
 /* 主编辑区悬浮容器 */
