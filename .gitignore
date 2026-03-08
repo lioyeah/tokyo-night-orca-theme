@@ -71,3 +71,7 @@ Thumbs.db
 
 # 临时文件夹
 %TMPDIR%/
+
+# 本地参考文件（不应提交到远程仓库）
+/playwright-mcp/
+/typora-theme-phycat/
