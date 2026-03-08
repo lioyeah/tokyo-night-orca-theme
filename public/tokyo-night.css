@@ -1,12 +1,8 @@
-/*
- * 🌃 Tokyo Night Theme for Orca Notes
- * Designed for Vibe Coding & Elegance
- */
+/* Tokyo Night Theme for Orca Notes */
+/* 整合自 main.ts 中的所有 CSS 字符串 */
 
 :root {
-    /* ==========================================================================
-       1. Core Palette (Tokyo Night)
-       ========================================================================== */
+    /* ===== Tokyo Night 核心调色板 ===== */
     --tokyo-night-red: #f7768e;
     --tokyo-night-orange: #ff9e64;
     --tokyo-night-yellow: #e0af68;
@@ -24,92 +20,56 @@
     --tokyo-night-bg-float: #1f2335;
     --tokyo-night-terminal-black: #414868;
 
-    /* ==========================================================================
-       2. Semantic Hierarchy Levels (Titles & Lists)
-       Change these to instantly re-theme the entire hierarchy structure.
-       ========================================================================== */
-    --tn-level-1: var(--tokyo-night-red);
-    --tn-level-2: var(--tokyo-night-orange);
-    --tn-level-3: var(--tokyo-night-yellow);
-    --tn-level-4: var(--tokyo-night-green);
-    --tn-level-5: var(--tokyo-night-blue);
-    --tn-level-6: var(--tokyo-night-magenta);
-
-    /* ==========================================================================
-       3. Orca System Overrides
-       ========================================================================== */
-    /* Backgrounds & Text */
-    --orca-color-bg-1: var(--tokyo-night-bg-night) !important;
-    --orca-color-bg-2: var(--tokyo-night-bg-dark) !important;
-    --orca-color-text-1: var(--tokyo-night-foreground) !important;
+    /* ===== Orca 变量覆盖 ===== */
+    /* 基础背景和文字颜色 */
+    --orca-color-bg-1: #1a1b26 !important;
+    --orca-color-bg-2: #16161e !important;
+    --orca-color-text-1: #a9b1d6 !important;
     --orca-color-text-2: #9aa5ce !important;
-    --orca-color-placeholder: var(--tokyo-night-comment) !important;
+    --orca-color-placeholder: #565f89 !important;
 
-    /* Borders & Accents */
+    /* 边框和分隔线 */
     --orca-color-border: #292e42 !important;
     --orca-border-general: 1px solid #292e42 !important;
     --orca-color-separator: #292e42 !important;
-    --orca-color-primary-5: var(--tokyo-night-blue) !important;
-    --orca-color-primary-4: var(--tokyo-night-blue) !important;
-    --orca-color-tab: var(--tokyo-night-blue) !important;
 
-    /* Status Colors */
+    /* 主题强调色 */
+    --orca-color-primary-5: #7aa2f7 !important;
+    --orca-color-primary-4: #7aa2f7 !important;
+    --orca-color-tab: #7aa2f7 !important;
+
+    /* 状态颜色 */
     --orca-color-selection: oklch(from var(--orca-color-primary-5) l c h / 50%);
-    --orca-color-success-5: var(--tokyo-night-green);
-    --orca-color-warn-5: var(--tokyo-night-orange);
-    --orca-color-dangerous-5: var(--tokyo-night-red);
-    --orca-color-info-5: var(--tokyo-night-cyan);
-    --orca-color-link: var(--tokyo-night-spring-green);
+    --orca-color-success-5: #9ece6a;
+    --orca-color-warn-5: #ff9e64;
+    --orca-color-dangerous-5: #f7768e;
+    --orca-color-info-5: #7dcfff;
+    --orca-color-link: #73daca;
 
-    /* Grays */
+    /* 灰色调映射 */
     --orca-color-gray-7: #292e42 !important;
-    --orca-color-gray-6: var(--tokyo-night-comment) !important;
-    --orca-color-gray-5: var(--tokyo-night-comment) !important;
-    --orca-color-gray-4: var(--tokyo-night-comment) !important;
-
-    /* Floating Window Effects */
-    --tokyo-shadow-floating: rgba(0, 0, 0, 0.3) 0 8px 32px;
-    --tokyo-floating-radius: 16px;
-    --tokyo-glass-bg: rgba(18, 20, 29, 0.95);
-    --tokyo-glass-blur: 8px;
+    --orca-color-gray-6: #565f89 !important;
+    --orca-color-gray-5: #565f89 !important;
+    --orca-color-gray-4: #565f89 !important;
 }
 
-/* ==========================================================================
-   4. Global App Container
-   ========================================================================== */
+/* ===== 基础页面和应用容器样式 ===== */
 body,
-div#app,
-.orca-panels-container {
+div#app {
     background-color: var(--orca-color-bg-1) !important;
     color: var(--orca-color-text-1) !important;
 }
 
+.orca-panels-container {
+    background-color: var(--orca-color-bg-1) !important;
+}
+
+/* 全局光标颜色 */
 * {
     caret-color: var(--orca-color-primary-5) !important;
-    /* Custom Scrollbar */
-    &::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-    }
-    &::-webkit-scrollbar-track {
-        background: var(--tokyo-night-bg-night);
-    }
-    &::-webkit-scrollbar-thumb {
-        background-color: var(--tokyo-night-terminal-black);
-        border-radius: 6px;
-        border: 2px solid var(--tokyo-night-bg-night);
-    }
 }
 
-/* Links */
-.orca-panels-container a {
-    color: var(--orca-color-link) !important;
-    &:hover {
-        color: var(--orca-color-primary-5) !important;
-    }
-}
-
-/* Highlights */
+/* ===== 高亮样式 ===== */
 mark,
 .orca-highlight {
     background-color: var(--tokyo-night-terminal-black) !important;
@@ -118,270 +78,15 @@ mark,
     padding: 0 2px;
 }
 
-/* ==========================================================================
-   5. Typography: Headings
-   Using the semantic level variables
-   ========================================================================== */
-.orca-panels-container h1 {
-    font-size: 1.6em !important;
-    color: var(--tn-level-1) !important;
-    font-weight: 600 !important;
-    background-color: transparent !important;
-    border-bottom: none !important;
-    background-image: linear-gradient(
-        to right,
-        transparent,
-        var(--tn-level-1)
-    ) !important;
-    background-position: bottom left !important;
-    background-repeat: no-repeat !important;
-    background-size: 100% 3px !important;
-    padding-bottom: 0.3em !important;
-    margin-bottom: 0.5em !important;
+/* ===== 链接颜色 ===== */
+.orca-panels-container a {
+    color: var(--orca-color-link) !important;
+}
+.orca-panels-container a:hover {
+    color: var(--orca-color-primary-5) !important;
 }
 
-.orca-panels-container h2 {
-    font-size: 1.4em !important;
-    color: var(--tn-level-2) !important;
-    font-weight: 600 !important;
-    background-color: transparent !important;
-    border-bottom: none !important;
-    background-image: linear-gradient(
-        to right,
-        transparent,
-        var(--tn-level-2)
-    ) !important;
-    background-position: bottom left !important;
-    background-repeat: no-repeat !important;
-    background-size: 100% 2px !important;
-    padding-bottom: 0.3em !important;
-    margin-bottom: 0.5em !important;
-}
-
-.orca-panels-container h3 {
-    font-size: 1.25em !important;
-    color: var(--tn-level-3) !important;
-    font-weight: 600 !important;
-    background-color: transparent !important;
-    border-bottom: none !important;
-    background-image: linear-gradient(
-        to right,
-        transparent,
-        var(--tn-level-3)
-    ) !important;
-    background-position: bottom left !important;
-    background-repeat: no-repeat !important;
-    background-size: 100% 1px !important;
-    padding-bottom: 0.3em !important;
-    margin-bottom: 0.5em !important;
-}
-
-.orca-panels-container h4 {
-    color: var(--tn-level-4) !important;
-    font-weight: 600 !important;
-    background-color: transparent !important;
-}
-
-.orca-panels-container h5 {
-    color: var(--tn-level-5) !important;
-    font-weight: 600 !important;
-    font-size: 1em !important;
-    background-color: transparent !important;
-}
-
-.orca-panels-container h6 {
-    color: var(--tn-level-6) !important;
-    font-weight: 600 !important;
-    font-size: 1em !important;
-    background-color: transparent !important;
-}
-
-/* ==========================================================================
-   6. Typography: Lists (The Complex Part)
-   Mapped to semantic levels, targeting both UL and OL structures aggressively.
-   ========================================================================== */
-
-/* Level 1 (Red) */
-.orca-block[data-type="ul"][data-indent="0"] .orca-block-handle,
-.orca-block[data-type="ul"][data-indent="0"] .ti,
-.orca-block[data-type="ul"][data-indent="0"] .ti::before,
-.orca-block[data-type="ul"][data-indent="0"]
-    .orca-repr-main-none-editable::before,
-.orca-block[data-type="ul"][data-indent="0"] .orca-repr-ul-content::before,
-.orca-block[data-type="ol"][data-indent="0"] .orca-block-handle,
-.orca-block[data-type="ol"][data-indent="0"] .orca-block-handle::before,
-.orca-block[data-type="ol"][data-indent="0"] .ti,
-.orca-block[data-type="ol"][data-indent="0"] .ti::before,
-.orca-block[data-type="ol"][data-indent="0"] .orca-repr-ol::before,
-.orca-block[data-type="ol"][data-indent="0"] .orca-repr-ol-content::before,
-ul > li > .ti-point-filled,
-ol > li::marker {
-    color: var(--tn-level-1) !important;
-    font-weight: 700 !important;
-}
-
-/* Level 2 (Orange) */
-.orca-block[data-type="ul"][data-indent="1"] .orca-block-handle,
-.orca-block[data-type="ul"][data-indent="1"] .ti,
-.orca-block[data-type="ul"][data-indent="1"] .ti::before,
-.orca-block[data-type="ul"][data-indent="1"]
-    .orca-repr-main-none-editable::before,
-.orca-block[data-type="ul"][data-indent="1"] .orca-repr-ul-content::before,
-.orca-block[data-type="ol"][data-indent="1"] .orca-block-handle,
-.orca-block[data-type="ol"][data-indent="1"] .orca-block-handle::before,
-.orca-block[data-type="ol"][data-indent="1"] .ti,
-.orca-block[data-type="ol"][data-indent="1"] .ti::before,
-.orca-block[data-type="ol"][data-indent="1"] .orca-repr-ol::before,
-.orca-block[data-type="ol"][data-indent="1"] .orca-repr-ol-content::before,
-ul > li > ul > li > .ti-point-filled,
-ol > li > ol > li::marker {
-    color: var(--tn-level-2) !important;
-    font-weight: 700 !important;
-}
-
-/* Level 3 (Yellow) */
-.orca-block[data-type="ul"][data-indent="2"] .orca-block-handle,
-.orca-block[data-type="ul"][data-indent="2"] .ti,
-.orca-block[data-type="ul"][data-indent="2"] .ti::before,
-.orca-block[data-type="ul"][data-indent="2"]
-    .orca-repr-main-none-editable::before,
-.orca-block[data-type="ul"][data-indent="2"] .orca-repr-ul-content::before,
-.orca-block[data-type="ol"][data-indent="2"] .orca-block-handle,
-.orca-block[data-type="ol"][data-indent="2"] .orca-block-handle::before,
-.orca-block[data-type="ol"][data-indent="2"] .ti,
-.orca-block[data-type="ol"][data-indent="2"] .ti::before,
-.orca-block[data-type="ol"][data-indent="2"] .orca-repr-ol::before,
-.orca-block[data-type="ol"][data-indent="2"] .orca-repr-ol-content::before,
-ul > li > ul > li > ul > li > .ti-point-filled,
-ol > li > ol > li > ol > li::marker {
-    color: var(--tn-level-3) !important;
-    font-weight: 700 !important;
-}
-
-/* Level 4 (Green) */
-.orca-block[data-type="ul"][data-indent="3"] .orca-block-handle,
-.orca-block[data-type="ul"][data-indent="3"] .ti,
-.orca-block[data-type="ul"][data-indent="3"] .ti::before,
-.orca-block[data-type="ul"][data-indent="3"]
-    .orca-repr-main-none-editable::before,
-.orca-block[data-type="ul"][data-indent="3"] .orca-repr-ul-content::before,
-.orca-block[data-type="ol"][data-indent="3"] .orca-block-handle,
-.orca-block[data-type="ol"][data-indent="3"] .orca-block-handle::before,
-.orca-block[data-type="ol"][data-indent="3"] .ti,
-.orca-block[data-type="ol"][data-indent="3"] .ti::before,
-.orca-block[data-type="ol"][data-indent="3"] .orca-repr-ol::before,
-.orca-block[data-type="ol"][data-indent="3"] .orca-repr-ol-content::before,
-ul > li > ul > li > ul > li > ul > li > .ti-point-filled,
-ol > li > ol > li > ol > li > ol > li::marker {
-    color: var(--tn-level-4) !important;
-    font-weight: 700 !important;
-}
-
-/* Level 5 (Blue) */
-.orca-block[data-type="ul"][data-indent="4"] .orca-block-handle,
-.orca-block[data-type="ul"][data-indent="4"] .ti,
-.orca-block[data-type="ul"][data-indent="4"] .ti::before,
-.orca-block[data-type="ul"][data-indent="4"]
-    .orca-repr-main-none-editable::before,
-.orca-block[data-type="ul"][data-indent="4"] .orca-repr-ul-content::before,
-.orca-block[data-type="ol"][data-indent="4"] .orca-block-handle,
-.orca-block[data-type="ol"][data-indent="4"] .orca-block-handle::before,
-.orca-block[data-type="ol"][data-indent="4"] .ti,
-.orca-block[data-type="ol"][data-indent="4"] .ti::before,
-.orca-block[data-type="ol"][data-indent="4"] .orca-repr-ol::before,
-.orca-block[data-type="ol"][data-indent="4"] .orca-repr-ol-content::before {
-    color: var(--tn-level-5) !important;
-    font-weight: 700 !important;
-}
-
-/* Level 6 (Magenta) */
-.orca-block[data-type="ul"][data-indent="5"] .orca-block-handle,
-.orca-block[data-type="ul"][data-indent="5"] .ti,
-.orca-block[data-type="ul"][data-indent="5"] .ti::before,
-.orca-block[data-type="ul"][data-indent="5"]
-    .orca-repr-main-none-editable::before,
-.orca-block[data-type="ul"][data-indent="5"] .orca-repr-ul-content::before,
-.orca-block[data-type="ol"][data-indent="5"] .orca-block-handle,
-.orca-block[data-type="ol"][data-indent="5"] .orca-block-handle::before,
-.orca-block[data-type="ol"][data-indent="5"] .ti,
-.orca-block[data-type="ol"][data-indent="5"] .ti::before,
-.orca-block[data-type="ol"][data-indent="5"] .orca-repr-ol::before,
-.orca-block[data-type="ol"][data-indent="5"] .orca-repr-ol-content::before,
-.orca-block[data-indent="6"] .orca-block-handle,
-.orca-block[data-indent="6"] .ti {
-    color: var(--tn-level-6) !important;
-    font-weight: 700 !important;
-}
-
-/* List Structure Cleanup */
-.orca-panels-container .orca-repr-main-content[contenteditable="false"] ul,
-.orca-panels-container .orca-repr-main-none-editable ul,
-.orca-panels-container .orca-repr-main-content[contenteditable="false"] ol,
-.orca-panels-container .orca-repr-main-none-editable ol {
-    list-style: none !important;
-    padding-left: 1.2em !important;
-    counter-reset: item !important;
-}
-.orca-panels-container
-    .orca-repr-main-content[contenteditable="false"]
-    ul
-    li::before,
-.orca-panels-container
-    .orca-repr-main-none-editable
-    ul
-    li:not(:has(.ti))::before {
-    content: "•" !important;
-    display: inline-block !important;
-    width: 1em !important;
-    margin-left: -1em !important;
-}
-.orca-panels-container
-    .orca-repr-main-content[contenteditable="false"]
-    ol
-    li::before,
-.orca-panels-container
-    .orca-repr-main-none-editable
-    ol
-    li:not(:has(.ti))::before {
-    content: counters(item, ".") "." !important;
-    counter-increment: item !important;
-    margin-right: 0.25em !important;
-}
-
-/* ==========================================================================
-   7. Special Components: Task Lists
-   ========================================================================== */
-.orca-panels-container input[type="checkbox"] {
-    appearance: none !important;
-    -webkit-appearance: none !important;
-    width: 1.2em !important;
-    height: 1.2em !important;
-    border: 1px solid var(--tokyo-night-comment) !important;
-    border-radius: 4px !important;
-    background-color: var(--tokyo-night-bg-night) !important;
-    position: relative !important;
-    cursor: pointer !important;
-    vertical-align: text-bottom !important;
-    margin-right: 0.5em !important;
-}
-.orca-panels-container input[type="checkbox"]:checked {
-    background-color: var(--tokyo-night-green) !important;
-    border-color: var(--tokyo-night-green) !important;
-}
-.orca-panels-container input[type="checkbox"]:checked::after {
-    content: "✔" !important;
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    color: var(--tokyo-night-bg-night) !important;
-    font-size: 0.9em !important;
-    font-weight: bold !important;
-}
-
-/* ==========================================================================
-   8. Special Components: Blockquotes & Code
-   ========================================================================== */
+/* ===== 引用块样式 ===== */
 .orca-panels-container blockquote {
     border: 1px solid var(--tokyo-night-terminal-black) !important;
     border-left: 3px solid var(--orca-color-primary-5) !important;
@@ -399,6 +104,7 @@ ol > li > ol > li > ol > li > ol > li::marker {
     border-radius: 0 !important;
 }
 
+/* ===== 代码块卡片风格 ===== */
 .orca-panels-container pre,
 .orca-panels-container .orca-code-wrapper {
     background-color: var(--tokyo-night-bg-float) !important;
@@ -409,6 +115,110 @@ ol > li > ol > li > ol > li > ol > li::marker {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2) !important;
 }
 
+/* ===== Content hover motion (block-level) ===== */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    blockquote,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    :is(pre, .orca-code-wrapper),
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr {
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease,
+        background-color 0.18s ease,
+        opacity 0.18s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    blockquote:hover {
+    border-color: var(--orca-color-primary-5) !important;
+    background-color: color-mix(
+        in srgb,
+        var(--tokyo-night-bg-float),
+        var(--orca-color-primary-5) 8%
+    ) !important;
+    box-shadow: 0 4px 12px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 80%) !important;
+    transform: translateY(-1px);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    :is(pre, .orca-code-wrapper):hover {
+    border-color: var(--orca-color-primary-5) !important;
+    background-color: color-mix(
+        in srgb,
+        var(--tokyo-night-bg-float),
+        var(--orca-color-primary-5) 6%
+    ) !important;
+    box-shadow: 0 6px 16px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 85%) !important;
+    transform: translateY(-1px);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr:hover {
+    border-color: var(--orca-color-primary-5) !important;
+    box-shadow: 0 0 8px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 70%) !important;
+    transform: scaleX(1.01);
+}
+
+#main .orca-table-row {
+    transition:
+        background-color 0.16s ease,
+        box-shadow 0.16s ease;
+}
+#main .orca-table-row:hover {
+    box-shadow: inset 0 0 0 1px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 75%) !important;
+}
+#main :is(.orca-repr-main-content, .orca-repr-main-none-editable) table tr {
+    transition:
+        background-color 0.16s ease,
+        box-shadow 0.16s ease;
+}
+#main
+    :is(.orca-repr-main-content, .orca-repr-main-none-editable)
+    table
+    tr:hover {
+    background-color: color-mix(
+        in srgb,
+        var(--orca-color-primary-5),
+        transparent 90%
+    ) !important;
+    box-shadow: inset 0 0 0 1px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 75%) !important;
+}
+
+/* ===== 行内代码样式 ===== */
 .orca-inline-code {
     background-color: var(--tokyo-night-bg-night) !important;
     color: var(--tokyo-night-white) !important;
@@ -417,30 +227,443 @@ ol > li > ol > li > ol > li > ol > li::marker {
     padding: 0 0.25em !important;
 }
 
-.orca-block-handle {
-    /* Color default removed to allow list level overrides */
-    background-color: transparent !important;
-    transition:
-        color 0.2s ease,
-        background-color 0.2s ease;
-    &:hover {
-        color: var(--orca-color-text-1) !important;
-        background-color: var(--tokyo-night-terminal-black) !important;
-        border-radius: var(--orca-radius-sm);
-    }
+/* ===== 标题颜色层次 (H1-H6) ===== */
+/* 默认使用正文颜色，hover 时着色 */
+.orca-panels-container h1 {
+    font-size: 1.6em !important;
+    color: var(--orca-color-text-1) !important;
+    font-weight: 600 !important;
+    transition: color 0.3s ease;
+}
+.orca-panels-container h2 {
+    font-size: 1.4em !important;
+    color: var(--orca-color-text-1) !important;
+    font-weight: 600 !important;
+    transition: color 0.3s ease;
+}
+.orca-panels-container h3 {
+    font-size: 1.25em !important;
+    color: var(--orca-color-text-1) !important;
+    font-weight: 600 !important;
+    transition: color 0.3s ease;
+}
+.orca-panels-container h4 {
+    color: var(--orca-color-text-1) !important;
+    font-weight: 600 !important;
+    transition: color 0.3s ease;
+}
+.orca-panels-container h5 {
+    color: var(--orca-color-text-1) !important;
+    font-weight: 600 !important;
+    font-size: 1em !important;
+    transition: color 0.3s ease;
+}
+.orca-panels-container h6 {
+    color: var(--orca-color-text-1) !important;
+    font-weight: 600 !important;
+    font-size: 1em !important;
+    transition: color 0.3s ease;
 }
 
-/* ==========================================================================
-   9. UI Components: Buttons, Inputs, Menus
-   ========================================================================== */
-/* Buttons */
+/* ===== Content hover motion (text-level) ===== */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    a {
+    transition:
+        color 0.16s ease,
+        text-shadow 0.16s ease,
+        background-color 0.16s ease,
+        transform 0.16s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    a:hover {
+    color: var(--orca-color-primary-5) !important;
+    background-color: color-mix(
+        in srgb,
+        var(--orca-color-primary-5),
+        transparent 90%
+    ) !important;
+    text-shadow: 0 0 6px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 70%);
+    transform: translateY(-1px);
+}
+
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline-code {
+    transition:
+        transform 0.16s ease,
+        box-shadow 0.16s ease,
+        border-color 0.16s ease,
+        background-color 0.16s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline-code:hover {
+    transform: translateY(-1px) scale(1.02);
+    border-color: var(--orca-color-primary-5) !important;
+    background-color: color-mix(
+        in srgb,
+        var(--tokyo-night-bg-night),
+        var(--orca-color-primary-5) 12%
+    ) !important;
+    box-shadow: 0 0 8px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 70%) !important;
+}
+
+/* ===== 列表符号样式 ===== */
+/* 无序列表 - 一级 */
+.orca-panels-container
+    .orca-repr-main-content[contenteditable="false"]
+    ul
+    li::marker,
+.orca-panels-container .orca-repr-main-content ul li::marker,
+.orca-panels-container .orca-repr-main-none-editable ul li::marker,
+.orca-panels-container ul li::marker {
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+}
+
+/* 有序列表 - 一级 */
+.orca-panels-container
+    .orca-repr-main-content[contenteditable="false"]
+    ol
+    li::marker,
+.orca-panels-container .orca-repr-main-content ol li::marker,
+.orca-panels-container .orca-repr-main-none-editable ol li::marker,
+.orca-panels-container ol li::marker {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+
+/* Orca 列表容器伪元素 */
+.orca-panels-container .orca-repr-ul-content::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ul-content::before {
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ol-content::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ol-content::before {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ul::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ul::before {
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ol::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ol::before {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+
+/* 无序列表 - 多级颜色 */
+.orca-panels-container ul ul li::marker {
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container ul ul ul li::marker {
+    color: var(--tokyo-night-spring-green) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container ul ul ul ul li::marker {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+
+.orca-panels-container .orca-repr-main-none-editable ul ul li .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable ul ul li .ti-point,
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    li
+    .ti-circle-filled {
+    color: var(--tokyo-night-cyan) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    ul
+    li
+    .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable ul ul ul li .ti-point,
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    ul
+    li
+    .ti-circle-filled {
+    color: var(--tokyo-night-spring-green) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    ul
+    ul
+    li
+    .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable ul ul ul ul li .ti-point,
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    ul
+    ul
+    li
+    .ti-circle-filled {
+    color: var(--tokyo-night-magenta) !important;
+}
+
+.orca-panels-container .orca-repr-ul-content .orca-repr-ul-content::before {
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container
+    .orca-repr-ul-content
+    .orca-repr-ul-content
+    .orca-repr-ul-content::before {
+    color: var(--tokyo-night-spring-green) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container
+    .orca-repr-ul-content
+    .orca-repr-ul-content
+    .orca-repr-ul-content
+    .orca-repr-ul-content::before {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-cyan) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    ul
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-spring-green) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    ul
+    ul
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-magenta) !important;
+}
+
+.orca-panels-container ul ul li .ti-point-filled,
+.orca-panels-container ul ul li .ti-point,
+.orca-panels-container ul ul li .ti-circle,
+.orca-panels-container ul ul li .ti-circle-filled {
+    color: var(--tokyo-night-cyan) !important;
+}
+.orca-panels-container ul ul ul li .ti-point-filled,
+.orca-panels-container ul ul ul li .ti-point,
+.orca-panels-container ul ul ul li .ti-circle,
+.orca-panels-container ul ul ul li .ti-circle-filled {
+    color: var(--tokyo-night-spring-green) !important;
+}
+.orca-panels-container ul ul ul ul li .ti-point-filled,
+.orca-panels-container ul ul ul ul li .ti-point,
+.orca-panels-container ul ul ul ul li .ti-circle,
+.orca-panels-container ul ul ul ul li .ti-circle-filled {
+    color: var(--tokyo-night-magenta) !important;
+}
+
+/* 有序列表 - 多级颜色 */
+.orca-panels-container ol ol li::marker {
+    color: var(--tokyo-night-blue) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container ol ol ol li::marker {
+    color: var(--tokyo-night-yellow) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container ol ol ol ol li::marker {
+    color: var(--tokyo-night-red) !important;
+    font-weight: 700 !important;
+}
+
+.orca-panels-container .orca-repr-ol-content .orca-repr-ol-content::before {
+    color: var(--tokyo-night-blue) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container
+    .orca-repr-ol-content
+    .orca-repr-ol-content
+    .orca-repr-ol-content::before {
+    color: var(--tokyo-night-yellow) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container
+    .orca-repr-ol-content
+    .orca-repr-ol-content
+    .orca-repr-ol-content
+    .orca-repr-ol-content::before {
+    color: var(--tokyo-night-red) !important;
+    font-weight: 700 !important;
+}
+
+.orca-panels-container .orca-repr-ol .orca-repr-ol::before {
+    color: var(--tokyo-night-blue) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ol .orca-repr-ol .orca-repr-ol::before {
+    color: var(--tokyo-night-yellow) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container
+    .orca-repr-ol
+    .orca-repr-ol
+    .orca-repr-ol
+    .orca-repr-ol::before {
+    color: var(--tokyo-night-red) !important;
+    font-weight: 700 !important;
+}
+
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ol
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-magenta) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ol
+    ol
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-blue) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ol
+    ol
+    ol
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-yellow) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ol
+    ol
+    ol
+    ol
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-red) !important;
+}
+
+/* 列表降级方案 */
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ul {
+    list-style: disc outside !important;
+}
+.orca-panels-container
+    .orca-repr-main-content[contenteditable="false"]
+    ul
+    li::before {
+    content: "•" !important;
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ol {
+    list-style: decimal outside !important;
+    counter-reset: item !important;
+}
+.orca-panels-container
+    .orca-repr-main-content[contenteditable="false"]
+    ol
+    li::before {
+    content: counters(item, ".") "." !important;
+    counter-increment: item !important;
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+
+/* none-editable 容器与图标子弹 */
+.orca-panels-container .orca-repr-main-none-editable ul {
+    list-style: disc outside !important;
+}
+.orca-panels-container .orca-repr-main-none-editable li .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable li .ti-point,
+.orca-panels-container .orca-repr-main-none-editable li .ti-circle-filled {
+    color: var(--tokyo-night-orange) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    li:not(:has(.ti))::before {
+    content: "•" !important;
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+.orca-panels-container .orca-repr-main-none-editable ol {
+    list-style: decimal outside !important;
+    counter-reset: item !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ol
+    li:not(:has(.ti))::before {
+    content: counters(item, ".") "." !important;
+    counter-increment: item !important;
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+
+.orca-panels-container .orca-repr-main-content ul {
+    list-style: none !important;
+    padding-left: 1.2em !important;
+}
+.orca-panels-container .orca-repr-main-content ul li::before {
+    content: "•" !important;
+    display: inline-block !important;
+    width: 1.2em !important;
+    margin-left: -1.2em !important;
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: 700 !important;
+}
+
+/* ===== 按钮样式 ===== */
 .orca-button.primary {
     background-color: var(--orca-color-primary-5) !important;
     color: var(--tokyo-night-bg-night) !important;
     border: 1px solid var(--tokyo-night-terminal-black) !important;
-    &:hover {
-        filter: brightness(1.05) !important;
-    }
+}
+.orca-button.primary:hover {
+    filter: brightness(1.05) !important;
 }
 .orca-button.dangerous {
     background-color: var(--orca-color-dangerous-5) !important;
@@ -464,12 +687,12 @@ ol > li > ol > li > ol > li > ol > li::marker {
 }
 .orca-button.plain {
     color: var(--tokyo-night-white) !important;
-    .ti {
-        color: var(--tokyo-night-white) !important;
-    }
+}
+.orca-button.plain .ti {
+    color: var(--tokyo-night-white) !important;
 }
 
-/* Inputs */
+/* ===== 输入框样式 ===== */
 .orca-input-input:focus-within {
     border-color: var(--orca-color-primary-5) !important;
     box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.35) !important;
@@ -478,7 +701,7 @@ ol > li > ol > li > ol > li > ol > li::marker {
     outline: none !important;
 }
 
-/* Tables */
+/* ===== 表格样式 ===== */
 .orca-table-row:hover {
     background-color: var(--tokyo-night-terminal-black) !important;
 }
@@ -487,45 +710,603 @@ ol > li > ol > li > ol > li > ol > li::marker {
     color: var(--tokyo-night-bg-night) !important;
 }
 
-/* Menus & Popups */
-.orca-menu,
-.orca-popup {
+/* ===== 菜单样式 ===== */
+.orca-menu {
     background-color: var(--tokyo-night-bg-storm) !important;
     color: var(--orca-color-text-1) !important;
     border: 1px solid var(--tokyo-night-terminal-black) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
 }
-.orca-menu .orca-menu-item:hover,
-.orca-popup .item:hover {
+.orca-menu .orca-menu-item:hover {
     background-color: var(--tokyo-night-terminal-black) !important;
     color: var(--tokyo-night-white) !important;
-    .ti {
-        color: var(--tokyo-night-white) !important;
-    }
 }
+.orca-menu .orca-menu-item.selected {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+/* ===== 工具提示样式 ===== */
 .orca-tooltip {
     background-color: var(--tokyo-night-bg-night) !important;
     color: var(--tokyo-night-white) !important;
     border: 1px solid var(--tokyo-night-terminal-black) !important;
 }
 
-/* Sidebar & Navigation (simplified) */
+/* ===== 块操作手柄 ===== */
+.orca-block-handle {
+    color: var(--orca-color-text-2) !important;
+    background-color: transparent !important;
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+}
+.orca-block-handle:hover {
+    color: var(--orca-color-text-1) !important;
+    background-color: var(--tokyo-night-terminal-black) !important;
+    border-radius: var(--orca-radius-sm);
+}
+
+/* ===== 弹出层样式 ===== */
+.orca-popup {
+    background-color: var(--tokyo-night-bg-storm) !important;
+    opacity: 1 !important;
+    z-index: 501 !important;
+}
+#main .orca-panel.active > .orca-hideable.no-pointer > .orca-popup.orca-hideable-content {
+    background: var(--tokyo-night-bg-storm) !important;
+}
+.orca-popup .item,
+.orca-popup .menu-item,
+.orca-popup button {
+    color: var(--tokyo-night-foreground) !important;
+}
+.orca-popup .item:hover,
+.orca-popup .menu-item:hover,
+.orca-popup button:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+.orca-popup .item .ti,
+.orca-popup .menu-item .ti,
+.orca-popup button .ti {
+    color: var(--tokyo-night-foreground) !important;
+}
+.orca-popup .item:hover .ti,
+.orca-popup .menu-item:hover .ti,
+.orca-popup button:hover .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+/* ===== 模态框和对话框 ===== */
+.orca-modal,
+.orca-dialog {
+    background-color: var(--tokyo-night-bg-storm) !important;
+    color: var(--orca-color-text-1) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+/* ===== 滚动条样式 ===== */
+*::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+*::-webkit-scrollbar-track {
+    background: var(--tokyo-night-bg-night);
+}
+*::-webkit-scrollbar-thumb {
+    background-color: var(--tokyo-night-terminal-black);
+    border-radius: 6px;
+    border: 2px solid var(--tokyo-night-bg-night);
+}
+
+/* ===== 查询构建器 ===== */
+.orca-query-conditions {
+    border-radius: var(--orca-radius-sm) !important;
+    padding: var(--orca-spacing-md) !important;
+}
+.orca-query-conditions .orca-query-conditions-reset.orca-button {
+    background-color: var(--tokyo-night-bg-float) !important;
+    color: var(--tokyo-night-white) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+.orca-query-conditions .orca-query-conditions-reset.orca-button:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+}
+
+/* ===== 查询编辑器标签页 ===== */
+.orca-block-editor-query-tabs .orca-segmented-item {
+    color: var(--orca-color-gray-6) !important;
+}
+.orca-block-editor-query-tabs .orca-segmented-item .ti {
+    color: var(--orca-color-gray-6) !important;
+}
+.orca-block-editor-query-tabs .orca-segmented-item.orca-selected {
+    color: var(--tokyo-night-white) !important;
+    border-bottom-color: var(--orca-color-tab) !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+.orca-block-editor-query-tabs .orca-segmented-item.orca-selected .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+/* ===== 侧边栏样式 ===== */
 nav#sidebar {
+    color: var(--tokyo-night-foreground) !important;
+    border-right: none !important;
+    box-shadow: none !important;
+}
+nav#sidebar .orca-select-button-text {
+    color: var(--tokyo-night-red) !important;
+    font-weight: 600 !important;
+}
+
+/* 侧边栏文本颜色 */
+nav#sidebar .item,
+nav#sidebar a,
+nav#sidebar .orca-tags-tag-name,
+nav#sidebar .day,
+nav#sidebar .title,
+nav#sidebar span {
+    color: var(--tokyo-night-foreground) !important;
+}
+
+nav#sidebar .item:hover,
+nav#sidebar a:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+nav#sidebar .item:hover .ti,
+nav#sidebar a:hover .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+nav#sidebar .item.active,
+nav#sidebar a.active {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+nav#sidebar .item.active .ti,
+nav#sidebar a.active .ti {
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+/* 侧边栏搜索框 */
+nav#sidebar .orca-input-input,
+nav#sidebar .search-box .orca-input-input {
+    background-color: var(--tokyo-night-bg-night) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    border-radius: var(--orca-radius-md) !important;
+    box-shadow: none !important;
+}
+nav#sidebar .orca-input-input input,
+nav#sidebar .search-box .orca-input-input input,
+nav#sidebar input.orca-input-actualinput {
+    color: var(--tokyo-night-foreground) !important;
+    background-color: transparent !important;
+}
+nav#sidebar .orca-input-input .ti,
+nav#sidebar .search-box .orca-input-input .ti {
+    color: var(--orca-color-gray-6) !important;
+}
+nav#sidebar .orca-input-input:focus-within,
+nav#sidebar .search-box .orca-input-input:focus-within {
+    border-color: var(--orca-color-primary-5) !important;
+    box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.35) !important;
+}
+
+/* 侧边栏标签页选项 */
+.orca-sidebar-tab-options {
+    background-color: transparent !important;
+    border: none !important;
+}
+.orca-sidebar-tab-options .orca-segmented-item {
+    color: var(--tokyo-night-comment) !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.orca-sidebar-tab-options .orca-segmented-item .ti {
+    color: var(--tokyo-night-comment) !important;
+}
+.orca-sidebar-tab-options .orca-segmented-item.orca-selected {
+    background-color: transparent !important;
+    color: var(--orca-color-primary-5) !important;
+    font-weight: bold !important;
+}
+.orca-sidebar-tab-options .orca-segmented-item.orca-selected .ti {
+    color: var(--orca-color-primary-5) !important;
+}
+
+/* 侧边栏收藏夹图标 */
+nav#sidebar .orca-fav-item-icon {
+    background-color: var(--orca-color-gray-7) !important;
+}
+
+/* 侧边栏图标颜色 */
+nav#sidebar .ti:not([style*="color"]),
+nav#sidebar .search-box .ti:not([style*="color"]),
+nav#sidebar .toolbar .ti:not([style*="color"]) {
+    color: var(--orca-color-text-2) !important;
+}
+nav#sidebar .search-box .ti.ti-reload,
+nav#sidebar .search-box .ti.ti-x {
+    color: var(--orca-color-text-2) !important;
+}
+nav#sidebar .search-box .ti.ti-reload:hover,
+nav#sidebar .search-box .ti.ti-x:hover {
+    color: var(--tokyo-night-white) !important;
+}
+nav#sidebar .item:hover .ti,
+nav#sidebar a:hover .ti,
+nav#sidebar .ti:hover {
+    color: var(--tokyo-night-white) !important;
+}
+nav#sidebar .item.active .ti,
+nav#sidebar a.active .ti {
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+/* ===== 日历组件 ===== */
+nav#sidebar .vc-title,
+nav#sidebar .title {
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: 600 !important;
+}
+nav#sidebar .choosen-year {
+    color: var(--tokyo-night-blue) !important;
+    font-weight: 600 !important;
+}
+nav#sidebar .choosen-month,
+nav#sidebar .go-now {
+    color: var(--tokyo-night-foreground) !important;
+    font-weight: 600 !important;
+}
+nav#sidebar .vc-arrow,
+nav#sidebar .arrow {
+    color: var(--orca-color-text-2) !important;
+}
+nav#sidebar .vc-arrow:hover,
+nav#sidebar .arrow:hover {
+    color: var(--tokyo-night-blue) !important;
+}
+nav#sidebar .vc-weekday,
+nav#sidebar .weekday,
+nav#sidebar .weekdays,
+nav#sidebar th {
+    color: var(--tokyo-night-comment) !important;
+    font-weight: normal !important;
+}
+nav#sidebar .vc-day,
+nav#sidebar .day {
+    color: var(--tokyo-night-foreground) !important;
+}
+nav#sidebar .vc-day.is-not-in-month,
+nav#sidebar .day.prev-month,
+nav#sidebar .day.next-month {
+    color: var(--tokyo-night-terminal-black) !important;
+    opacity: 0.5 !important;
+}
+nav#sidebar .vc-day.is-today .vc-day-content,
+nav#sidebar .day.today {
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: bold !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+nav#sidebar .vc-day.is-selected .vc-day-content,
+nav#sidebar .day.selected,
+nav#sidebar .day.value {
+    background-color: transparent !important;
+    color: var(--tokyo-night-red) !important;
+    font-weight: bold !important;
+    border: none !important;
+}
+
+/* 年份和月份选择网格 */
+nav#sidebar .months .month,
+nav#sidebar .years .year {
+    color: var(--tokyo-night-foreground) !important;
+    border-radius: 6px !important;
+    transition:
+        background-color 0.2s,
+        color 0.2s !important;
+}
+nav#sidebar .months .month:hover,
+nav#sidebar .years .year:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+nav#sidebar .months .month.value,
+nav#sidebar .years .year.value,
+nav#sidebar .months .month.selected,
+nav#sidebar .years .year.selected {
+    background-color: transparent !important;
+    border: none !important;
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: bold !important;
+}
+
+/* ===== 设置模态框样式 ===== */
+div.orca-settings {
+    background-color: var(--tokyo-night-bg-storm) !important;
+    color: var(--orca-color-text-1) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3) !important;
+    border-radius: var(--orca-radius-lg) !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+}
+
+.orca-settings > .headbar,
+.orca-settings > .header,
+.orca-settings > .head {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--orca-color-text-1) !important;
+    border-bottom: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+/* 设置左侧导航区 */
+.orca-settings > .sections {
+    background-color: var(--tokyo-night-bg-dark) !important;
+    border-right: 1px solid var(--tokyo-night-terminal-black) !important;
+    border-top-left-radius: var(--orca-radius-lg) !important;
+    border-bottom-left-radius: var(--orca-radius-lg) !important;
+    overflow: hidden !important;
+    padding-top: 0 !important;
+    margin: 0 !important;
+}
+
+.orca-settings > .sections .headbar,
+.orca-settings > .sections .header,
+.orca-settings > .sections .head,
+.orca-settings > .sections .title {
+    background-color: var(--tokyo-night-bg-dark) !important;
+    border-bottom: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+.orca-settings > .sections .headbar *,
+.orca-settings > .sections .header *,
+.orca-settings > .sections .head *,
+.orca-settings > .sections .title * {
+    background-color: transparent !important;
+}
+
+.orca-settings > .sections .item,
+.orca-settings > .sections .plugin-item {
+    color: var(--orca-color-text-1) !important;
+    padding: var(--orca-spacing-sm) var(--orca-spacing-md) !important;
+    border-radius: var(--orca-radius-md) !important;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+.orca-settings > .sections .item .ti,
+.orca-settings > .sections .plugin-item .ti {
+    color: var(--orca-color-text-1) !important;
+}
+
+.orca-settings > .sections .item:hover,
+.orca-settings > .sections .plugin-item:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+.orca-settings > .sections .item:hover .ti,
+.orca-settings > .sections .plugin-item:hover .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+.orca-settings > .sections .item.selected,
+.orca-settings > .sections .plugin-item.selected {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+.orca-settings > .sections .item.selected .ti,
+.orca-settings > .sections .plugin-item.selected .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+/* 设置右侧内容视图区 */
+.orca-settings > .views {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--orca-color-text-1) !important;
+    border-top-right-radius: var(--orca-radius-lg) !important;
+    border-bottom-right-radius: var(--orca-radius-lg) !important;
+}
+
+.orca-settings > .views h1,
+.orca-settings > .views h2,
+.orca-settings > .views h3,
+.orca-settings > .views .settings-group-title {
+    color: var(--tokyo-night-white) !important;
+    border-bottom: 1px solid var(--tokyo-night-terminal-black) !important;
+    padding-bottom: 0.5em !important;
+    margin-bottom: 1em !important;
+}
+.orca-settings > .views h2 {
+    background-color: var(--tokyo-night-bg-night) !important;
+}
+
+.orca-settings > .views .setting-item-label {
+    color: var(--tokyo-night-white) !important;
+}
+.orca-settings > .views div.desc {
+    color: var(--tokyo-night-comment) !important;
+    font-size: var(--orca-fontsize-xs) !important;
+}
+
+/* 设置界面按钮 */
+.orca-settings > .views button:not(.orca-switch),
+.orca-settings button:not(.orca-switch) {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+    border: 1px solid var(--tokyo-night-comment) !important;
+    padding: 0.5em 1em !important;
+    border-radius: 4px !important;
+}
+.orca-settings > .views button:not(.orca-switch):hover,
+.orca-settings button:not(.orca-switch):hover {
+    background-color: var(--tokyo-night-comment) !important;
+}
+.orca-settings > .views button:not(.orca-switch) .ti,
+.orca-settings button:not(.orca-switch) .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+/* 快捷方式设置按钮 */
+.orca-settings > .views .shortcut-input button.orca-button.plain {
+    padding: var(--orca-spacing-xs) var(--orca-spacing-sm) !important;
+    color: var(--tokyo-night-white) !important;
+    background-color: var(--tokyo-night-terminal-black) !important;
+    border: 1px solid var(--tokyo-night-comment) !important;
+}
+.orca-settings > .views .shortcut-input button.orca-button.plain:hover {
+    background-color: var(--tokyo-night-comment) !important;
+}
+.orca-settings > .views .shortcut-input button.orca-button.plain .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+/* 设置界面输入框 */
+.orca-settings > .views .orca-input-input,
+.orca-settings .orca-input-input {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--orca-color-text-1) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    padding: var(--orca-spacing-sm) var(--orca-spacing-md) !important;
+    border-radius: var(--orca-radius-sm) !important;
+}
+.orca-settings > .views .orca-input-input:focus-within,
+.orca-settings .orca-input-input:focus-within {
+    border-color: var(--orca-color-primary-5) !important;
+    box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.35) !important;
+    outline: none !important;
+}
+
+.orca-settings > .views .orca-input-input .orca-input-actualinput,
+.orca-settings .orca-input-input .orca-input-actualinput {
+    background-color: transparent !important;
+    color: var(--orca-color-text-1) !important;
+}
+.orca-settings > .views .orca-input-input .orca-input-actualinput:focus,
+.orca-settings .orca-input-input .orca-input-actualinput:focus {
+    outline: none !important;
+}
+
+.orca-settings > .views .orca-input-input[type="color"],
+.orca-settings .orca-input-input[type="color"] {
+    padding: 0 var(--orca-spacing-xs) !important;
+    background-color: var(--tokyo-night-bg-night) !important;
+}
+
+/* 通用输入控件备用样式 */
+.orca-settings > .views input[type="text"],
+.orca-settings > .views input[type="password"],
+.orca-settings > .views textarea,
+.orca-settings > .views select {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--orca-color-text-1) !important;
+    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    padding: 0.5em !important;
+    border-radius: 4px !important;
+}
+
+/* 设置界面开关组件 */
+.orca-settings .orca-switch {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    transition: background-color 0.2s ease !important;
+}
+.orca-settings .orca-switch .orca-switch-toggle {
+    background-color: var(--orca-color-text-1) !important;
+    transition:
+        background-color 0.2s ease,
+        transform 0.1s ease-in-out !important;
+}
+.orca-settings .orca-switch.orca-switch-on {
+    background-color: var(--orca-color-primary-5) !important;
+}
+.orca-settings .orca-switch.orca-switch-on .orca-switch-toggle {
+    background-color: var(--tokyo-night-white) !important;
+}
+
+/* 设置界面分段控件 */
+.orca-settings > .views .orca-segmented {
+    background-color: var(--tokyo-night-bg-night) !important;
+    border-radius: var(--orca-radius-md) !important;
+    padding: 3px !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item {
+    color: var(--orca-color-text-1) !important;
+    height: var(--orca-height-segmented, 22px) !important;
+    line-height: var(--orca-height-segmented, 22px) !important;
+    border-radius: var(--orca-radius-sm) !important;
+    transition:
+        color 0.1s ease-in-out,
+        background-color 0.1s ease-in-out !important;
+    background-color: transparent !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item .ti {
+    color: var(--orca-color-text-1) !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item:hover .ti {
+    color: var(--tokyo-night-white) !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item.orca-selected {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    box-shadow: var(
+        --orca-shadow-segmented,
+        0 1px 3px rgba(0, 0, 0, 0.1)
+    ) !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item.orca-selected .ti {
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+/* 设置界面表格头部 */
+.orca-settings > .views .orca-table-header-cell,
+.orca-settings .orca-table-header-cell,
+.orca-settings > .views .orca-settings-shortcuts-header,
+.orca-settings .orca-settings-shortcuts-header {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--tokyo-night-white) !important;
+    border-bottom: 1px solid var(--tokyo-night-terminal-black) !important;
+}
+
+.orca-settings .orca-table-row:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+}
+.orca-settings .orca-table-row.selected {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+/* ===== 悬浮圆角容器样式 ===== */
+:root {
+    --tokyo-shadow-floating: rgba(0, 0, 0, 0.3) 0 8px 32px;
+    --tokyo-floating-radius: 16px;
+    --tokyo-glass-bg: rgba(18, 20, 29, 0.95);
+    --tokyo-glass-blur: 8px;
+}
+
+/* 侧边栏透明，与窗体融合 */
+#sidebar {
     background-color: transparent !important;
     -webkit-backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
     backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
-    color: var(--tokyo-night-foreground) !important;
-    border-right: none !important;
 }
-nav#sidebar .item.active {
-    background-color: var(--orca-color-primary-5) !important;
-    color: var(--tokyo-night-bg-night) !important;
-    .ti {
-        color: var(--tokyo-night-bg-night) !important;
-    }
+/* backdrop-filter 会创建新的层叠上下文，需确保弹出层容器在 body 内容之上 */
+.t-tokyo-night .orca-vibrant {
+    overflow: visible !important;
+    position: relative;
+    z-index: 600;
 }
 
-/* Floating Layout */
+/* 主编辑区悬浮容器 */
 #main {
     border-radius: var(--tokyo-floating-radius) !important;
     margin: 8px !important;
@@ -535,83 +1316,815 @@ nav#sidebar .item.active {
     -webkit-backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
     backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
     background-color: var(--tokyo-glass-bg) !important;
-    &::before {
-        content: "";
-        background: var(--orca-color-bg-1) !important;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-    }
 }
-.sidebar-closed #main {
+
+/* 侧边栏关闭时的边距 */
+.sidebar-closed #main,
+.sidebar-closing #main {
     margin-left: 8px !important;
 }
+
+/* 编辑区背景 */
+#main::before {
+    content: "";
+    background: var(--orca-color-bg-1) !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* 编辑器顶部间距 */
 .orca-block-editor-main {
     padding-top: var(--orca-spacing-xl) !important;
 }
+
+/* 拖拽手柄位置调整 */
 .orca-panel-drag-handle {
     top: var(--orca-spacing-xl) !important;
 }
+
+/* 侧边工具栏位置调整 */
 .orca-block-editor-sidetools {
     top: calc(50px + var(--orca-spacing-xl)) !important;
 }
 
-/* ==========================================================================
-   10. Syntax Highlighting
-   ========================================================================== */
-.token.keyword,
-.cm-keyword,
-.hljs-keyword {
-    color: var(--tokyo-night-magenta) !important;
-    font-style: italic !important;
+/* ===== Phycat 风格动效 ===== */
+
+/* 波浪下划线流动动画 */
+@keyframes waveFlow {
+    0% {
+        mask-position-x: 0;
+        -webkit-mask-position-x: 0;
+    }
+    100% {
+        mask-position-x: 12px;
+        -webkit-mask-position-x: 12px;
+    }
 }
-.token.comment,
-.cm-comment,
-.hljs-comment {
-    color: var(--tokyo-night-comment) !important;
-    font-style: italic !important;
+
+/* H1 玻璃按钮质感效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h1 {
+    display: inline-block;
+    position: relative;
+    transition: all 0.4s ease;
 }
-.token.string,
-.cm-string,
-.hljs-string {
-    color: var(--tokyo-night-green) !important;
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h1 > span:first-child {
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.02);
+    background-image: radial-gradient(
+        ellipse at center bottom,
+        color-mix(in srgb, var(--tokyo-night-red), transparent 85%),
+        transparent 70%
+    );
+    background-repeat: no-repeat;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s ease;
 }
-.token.function,
-.cm-function,
-.hljs-title.function_ {
-    color: var(--tokyo-night-blue) !important;
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h1:hover > span:first-child {
+    color: var(--tokyo-night-red);
+    text-shadow: 0 0 12px
+        color-mix(in srgb, var(--tokyo-night-red), transparent 40%);
+    background-image: radial-gradient(
+        ellipse at center bottom,
+        color-mix(in srgb, var(--tokyo-night-red), transparent 50%),
+        transparent 70%
+    );
 }
-.token.number,
-.token.boolean,
-.cm-number,
-.hljs-number {
+
+/* H2 下划线展开效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h2 {
+    position: relative;
+    display: inline-block;
+    background: transparent !important;
+    transition:
+        transform 0.3s ease,
+        text-shadow 0.3s ease,
+        color 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h2:hover {
     color: var(--tokyo-night-orange) !important;
+    text-shadow: 0 0 10px
+        color-mix(in srgb, var(--tokyo-night-orange), transparent 60%);
 }
-.token.operator,
-.cm-operator,
-.hljs-operator {
+/* H2 下划线 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 30%;
+    height: 2px;
+    background: var(--tokyo-night-orange);
+    transition:
+        width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+        box-shadow 0.3s ease;
+    border-radius: 2px;
+    opacity: 0.7;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h2:hover::before {
+    width: 100%;
+    opacity: 1;
+    box-shadow: 0 0 10px var(--tokyo-night-orange);
+}
+/* H2 后方装饰图标 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h2::after {
+    content: "";
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    margin-left: 6px;
+    vertical-align: middle;
+    background-color: var(--tokyo-night-orange);
+    opacity: 0.7;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286z'/></svg>");
+    mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286z'/></svg>");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transition: opacity 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h2:hover::after {
+    opacity: 1;
+}
+
+/* H3 左边框扩展效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h3 {
+    position: relative;
+    padding-left: 14px;
+    background: transparent !important;
+    transition:
+        padding-left 0.3s ease,
+        text-shadow 0.3s ease,
+        color 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 40%;
+    background: var(--tokyo-night-yellow);
+    border-radius: 2px;
+    opacity: 0.6;
+    transition:
+        height 0.3s ease,
+        opacity 0.3s ease,
+        box-shadow 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h3:hover {
+    padding-left: 20px;
+    color: var(--tokyo-night-yellow) !important;
+    text-shadow: 0 0 8px
+        color-mix(in srgb, var(--tokyo-night-yellow), transparent 60%);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h3:hover::before {
+    height: 70%;
+    opacity: 1;
+    box-shadow: 0 0 8px var(--tokyo-night-yellow);
+}
+/* H3 后方装饰图标 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h3::after {
+    content: "";
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    margin-left: 6px;
+    vertical-align: middle;
+    background-color: var(--tokyo-night-yellow);
+    opacity: 0.7;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M4.571 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286z'/></svg>");
+    mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M4.571 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286z'/></svg>");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transition: opacity 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h3:hover::after {
+    opacity: 1;
+}
+
+/* H4 实心圆点装饰效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h4 {
+    display: flex;
+    align-items: center;
+    background: transparent !important;
+    transition:
+        transform 0.3s ease,
+        text-shadow 0.3s ease,
+        color 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h4::before {
+    content: "";
+    margin-right: 10px;
+    display: inline-block;
+    background-color: var(--tokyo-night-green);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h4:hover {
+    color: var(--tokyo-night-green) !important;
+    text-shadow: 0 0 8px
+        color-mix(in srgb, var(--tokyo-night-green), transparent 60%);
+    transform: translateX(5px);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h4:hover::before {
+    transform: scale(1.3);
+    box-shadow: 0 0 8px var(--tokyo-night-green);
+}
+/* H4 后方装饰图标 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h4::after {
+    content: "";
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    margin-left: 6px;
+    vertical-align: middle;
+    background-color: var(--tokyo-night-green);
+    opacity: 0.7;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M4.571 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 22.857c1.257 0 2.286-1.029 2.286-2.286s-1.029-2.286-2.286-2.286-2.286 1.029-2.286 2.286 1.029 2.286 2.286 2.286z'/></svg>");
+    mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M4.571 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 22.857c1.257 0 2.286-1.029 2.286-2.286s-1.029-2.286-2.286-2.286-2.286 1.029-2.286 2.286 1.029 2.286 2.286 2.286z'/></svg>");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transition: opacity 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h4:hover::after {
+    opacity: 1;
+}
+
+/* H5 空心圆点装饰效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h5 {
+    display: flex;
+    align-items: center;
+    background: transparent !important;
+    transition:
+        transform 0.3s ease,
+        text-shadow 0.3s ease,
+        color 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h5::before {
+    content: "";
+    margin-right: 10px;
+    display: inline-block;
+    background-color: transparent;
+    border: 1.5px solid var(--tokyo-night-cyan);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h5:hover {
     color: var(--tokyo-night-cyan) !important;
+    text-shadow: 0 0 8px
+        color-mix(in srgb, var(--tokyo-night-cyan), transparent 60%);
+    transform: translateX(5px);
 }
-.token.class-name,
-.cm-variable-2,
-.hljs-type {
-    color: var(--tokyo-night-yellow) !important;
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h5:hover::before {
+    transform: scale(1.3);
+    box-shadow: 0 0 8px var(--tokyo-night-cyan);
 }
-.token.variable,
-.cm-variable,
-.hljs-variable {
-    color: var(--tokyo-night-white) !important;
+/* H5 后方装饰图标 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h5::after {
+    content: "";
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    margin-left: 6px;
+    vertical-align: middle;
+    background-color: var(--tokyo-night-cyan);
+    opacity: 0.7;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 22.857c1.257 0 2.286-1.029 2.286-2.286s-1.029-2.286-2.286-2.286-2.286 1.029-2.286 2.286 1.029 2.286 2.286 2.286zM4.571 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 11.429c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286z'/></svg>");
+    mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 22.857c1.257 0 2.286-1.029 2.286-2.286s-1.029-2.286-2.286-2.286-2.286 1.029-2.286 2.286 1.029 2.286 2.286 2.286zM4.571 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 11.429c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286z'/></svg>");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transition: opacity 0.3s ease;
 }
-.token.tag,
-.cm-tag,
-.hljs-tag {
-    color: var(--tokyo-night-red) !important;
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h5:hover::after {
+    opacity: 1;
 }
-.token.attr-name,
-.cm-attribute,
-.hljs-attr {
-    color: var(--tokyo-night-yellow) !important;
+
+/* H6 短横线装饰效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h6 {
+    display: flex;
+    align-items: center;
+    background: transparent !important;
+    transition:
+        transform 0.3s ease,
+        text-shadow 0.3s ease,
+        color 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h6::before {
+    content: "-";
+    color: var(--tokyo-night-magenta);
+    margin-right: 7px;
+    display: inline-block;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h6:hover {
+    color: var(--tokyo-night-magenta) !important;
+    text-shadow: 0 0 8px
+        color-mix(in srgb, var(--tokyo-night-magenta), transparent 60%);
+    transform: translateX(5px);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h6:hover::before {
+    text-shadow: 0 0 8px var(--tokyo-night-magenta);
+    transform: scaleX(1.5);
+}
+/* H6 后方装饰图标 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h6::after {
+    content: "";
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    margin-left: 6px;
+    vertical-align: middle;
+    background-color: var(--tokyo-night-magenta);
+    opacity: 0.7;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M4.571 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 11.429c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 16c1.257 0 2.286-1.029 2.286-2.286s-1.029-2.286-2.286-2.286-2.286 1.029-2.286 2.286 1.029 2.286 2.286 2.286z'/></svg>");
+    mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M4.571 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 11.429c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 16c1.257 0 2.286-1.029 2.286-2.286s-1.029-2.286-2.286-2.286-2.286 1.029-2.286 2.286 1.029 2.286 2.286 2.286z'/></svg>");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transition: opacity 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h6:hover::after {
+    opacity: 1;
+}
+
+/* Strong 弹跳缩放效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    strong,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.b,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="b"] {
+    display: inline-block;
+    color: var(--orca-color-primary-5) !important;
+    font-weight: 700;
+    transition:
+        transform 0.2s cubic-bezier(0.5, 1.5, 0.5, 1),
+        text-shadow 0.2s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    strong:hover,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.b:hover,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="b"]:hover {
+    transform: translateY(-2px) scale(1.08);
+    text-shadow: 0 0 10px var(--orca-color-primary-5);
+}
+
+/* Em 波浪下划线效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    em,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.i,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="i"] {
+    font-style: italic;
+    color: var(--tokyo-night-spring-green) !important;
+    position: relative;
+    padding: 0 2px 2px;
+    transition:
+        color 0.3s ease,
+        text-shadow 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    em::after,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.i::after,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="i"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4'%3E%3Cpath fill='none' stroke='black' stroke-width='2' d='M0 3.5c5 0 5-3 10-3s5 3 10 3 5-3 10-3 5 3 10 3'/%3E%3C/svg%3E");
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4'%3E%3Cpath fill='none' stroke='black' stroke-width='2' d='M0 3.5c5 0 5-3 10-3s5 3 10 3 5-3 10-3 5 3 10 3'/%3E%3C/svg%3E");
+    mask-repeat: repeat-x;
+    -webkit-mask-repeat: repeat-x;
+    mask-size: 12px 4px;
+    -webkit-mask-size: 12px 4px;
+    background-color: var(--tokyo-night-spring-green);
+    z-index: -1;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    em:hover,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.i:hover,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="i"]:hover {
+    text-shadow: 0 0 5px
+        color-mix(in srgb, var(--tokyo-night-spring-green), transparent 60%);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    em:hover::after,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.i:hover::after,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="i"]:hover::after {
+    animation: waveFlow 1s linear infinite;
+}
+
+/* Mark 发光效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    mark,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-highlight {
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    mark:hover,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-highlight:hover {
+    background-color: var(--tokyo-night-red) !important;
+    color: #fff !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 12px
+        color-mix(in srgb, var(--tokyo-night-red), transparent 50%);
+}
+
+/* 链接悬停增强 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    a {
+    display: inline-block;
+    border-radius: 3px;
+    padding: 0 3px;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    a:hover {
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* 引用块悬停增强 - 添加缩放 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    blockquote:hover {
+    transform: translateY(-1px) scale(1.01);
+}
+
+.orca-headbar-global-tools {
+    background-color: var(--tokyo-night-bg-night);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6px), linear-gradient(to top, transparent, black 6px);
+    mask-image: linear-gradient(to right, transparent, black 6px), linear-gradient(to top, transparent, black 6px);
+    -webkit-mask-composite: intersect;
+    mask-composite: intersect;
 }

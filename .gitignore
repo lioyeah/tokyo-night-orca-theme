@@ -60,3 +60,14 @@ Thumbs.db
 
 # 部署产物
 .deploy/
+
+# Claude/AI 工具配置
+.claude/settings.local.json
+.ccb_config/
+.sisyphus/
+
+# 编辑器配置
+.zed/
+
+# 临时文件夹
+%TMPDIR%/
