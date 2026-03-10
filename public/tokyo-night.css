@@ -104,6 +104,303 @@ mark,
     border-radius: 0 !important;
 }
 
+/* ===== Callout 提示框样式（复刻 phycat-abyss） ===== */
+/* 基础 Callout 样式 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-"] {
+    padding: 12px 16px !important;
+    margin: 0.75em 0 !important;
+    border: 1px solid transparent !important;
+    border-radius: 12px !important;
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease !important;
+}
+
+/* 右下角 Emoji 图标 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-"]::after {
+    content: "";
+    position: absolute;
+    right: -10px;
+    bottom: -15px;
+    font-family: "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+    font-size: 64px;
+    line-height: 1;
+    opacity: 0.15;
+    transform: rotate(-15deg);
+    pointer-events: none;
+    z-index: 0;
+    filter: grayscale(100%);
+    text-shadow: 0 0 10px currentColor;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease,
+        right 0.4s ease, bottom 0.4s ease, filter 0.4s ease, text-shadow 0.4s ease;
+}
+
+/* 悬停效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-"]:hover {
+    transform: scale(1.01) translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+    z-index: 1 !important;
+}
+
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-"]:hover::after {
+    transform: rotate(0) scale(1.1);
+    opacity: 0.25;
+    right: 5px;
+    bottom: -5px;
+    filter: grayscale(0);
+    text-shadow: 0 0 25px currentColor;
+}
+
+/* Note - 紫色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-note"] {
+    border-color: rgba(187, 154, 247, 0.3) !important;
+    background-color: rgba(187, 154, 247, 0.05) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-note"]::after {
+    content: "📝";
+    color: var(--tokyo-night-magenta);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-note"]:hover {
+    box-shadow: 0 4px 20px rgba(187, 154, 247, 0.15) !important;
+    border-color: var(--tokyo-night-magenta) !important;
+}
+
+/* Tip - 青色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-tip"] {
+    border-color: rgba(125, 207, 255, 0.3) !important;
+    background-color: rgba(125, 207, 255, 0.05) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-tip"]::after {
+    content: "💡";
+    color: var(--tokyo-night-cyan);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-tip"]:hover {
+    box-shadow: 0 4px 20px rgba(125, 207, 255, 0.15) !important;
+    border-color: var(--tokyo-night-cyan) !important;
+}
+
+/* Warning - 橙色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-warning"] {
+    border-color: rgba(255, 158, 100, 0.3) !important;
+    background-color: rgba(255, 158, 100, 0.05) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-warning"]::after {
+    content: "⚠️";
+    color: var(--tokyo-night-orange);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-warning"]:hover {
+    box-shadow: 0 4px 20px rgba(255, 158, 100, 0.15) !important;
+    border-color: var(--tokyo-night-orange) !important;
+}
+
+/* Important - 红色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-important"] {
+    border-color: rgba(247, 118, 142, 0.3) !important;
+    background-color: rgba(247, 118, 142, 0.05) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-important"]::after {
+    content: "🔥";
+    color: var(--tokyo-night-red);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-important"]:hover {
+    box-shadow: 0 4px 20px rgba(247, 118, 142, 0.15) !important;
+    border-color: var(--tokyo-night-red) !important;
+}
+
+/* Error - 深红色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-error"] {
+    border-color: rgba(214, 48, 49, 0.3) !important;
+    background-color: rgba(214, 48, 49, 0.05) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-error"]::after {
+    content: "💀";
+    color: #d63031;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-error"]:hover {
+    box-shadow: 0 4px 20px rgba(214, 48, 49, 0.15) !important;
+    border-color: #d63031 !important;
+}
+
+/* Info - 蓝色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-info"] {
+    border-color: rgba(122, 162, 247, 0.3) !important;
+    background-color: rgba(122, 162, 247, 0.05) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-info"]::after {
+    content: "ℹ️";
+    color: var(--tokyo-night-blue);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-info"]:hover {
+    box-shadow: 0 4px 20px rgba(122, 162, 247, 0.15) !important;
+    border-color: var(--tokyo-night-blue) !important;
+}
+
+/* Quote - 默认灰色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-quote"] {
+    border-color: rgba(86, 95, 137, 0.3) !important;
+    background-color: rgba(86, 95, 137, 0.05) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-quote"]::after {
+    content: "💬";
+    color: var(--tokyo-night-comment);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    [class*="orca-repr-quote2-quote"]:hover {
+    box-shadow: 0 4px 20px rgba(86, 95, 137, 0.15) !important;
+    border-color: var(--tokyo-night-comment) !important;
+}
+
 /* ===== 代码块卡片风格 ===== */
 .orca-panels-container pre,
 .orca-panels-container .orca-code-wrapper {
