@@ -1309,8 +1309,8 @@ div.orca-settings {
 /* 主编辑区悬浮容器 */
 #main {
     border-radius: var(--tokyo-floating-radius) !important;
-    margin: 8px !important;
-    margin-left: 0 !important;
+    /* 上边距设为工具栏高度，使编辑区上边界与工具栏下边界对齐 */
+    margin: var(--orca-height-headbar) 8px 8px 0 !important;
     box-shadow: var(--tokyo-shadow-floating) !important;
     overflow: hidden !important;
     -webkit-backdrop-filter: blur(var(--tokyo-glass-blur)) !important;
@@ -1338,7 +1338,7 @@ div.orca-settings {
 
 /* 编辑器顶部间距 */
 .orca-block-editor-main {
-    padding-top: var(--orca-spacing-xl) !important;
+    padding-top: var(--orca-spacing-md) !important;
 }
 
 /* 拖拽手柄位置调整 */
@@ -2121,10 +2121,14 @@ div.orca-settings {
     transform: translateY(-1px) scale(1.01);
 }
 
+/* ===== 顶部工具栏样式 ===== */
 .orca-headbar-global-tools {
-    background-color: var(--tokyo-night-bg-night);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 6px), linear-gradient(to top, transparent, black 6px);
-    mask-image: linear-gradient(to right, transparent, black 6px), linear-gradient(to top, transparent, black 6px);
-    -webkit-mask-composite: intersect;
-    mask-composite: intersect;
+    /* 与窗体控制按钮一致的背景色 */
+    background-color: var(--tokyo-night-bg-night) !important;
+    
+    /* 移除影响子元素的 mask-image */
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    
+    /* 移除底部边框线 */
 }
