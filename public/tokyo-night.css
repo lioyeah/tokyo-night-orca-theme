@@ -326,13 +326,23 @@ mark,
         color-mix(in srgb, var(--orca-color-primary-5), transparent 75%) !important;
 }
 
-/* ===== 行内代码样式 ===== */
-.orca-inline-code {
-    background-color: var(--tokyo-night-bg-night) !important;
+/* ===== 行内代码样式（键盘按键效果，复刻自 phycat-abyss） ===== */
+.orca-inline.c, [class*="orca-inline c"] {
+    background-color: #414868 !important;
     color: var(--tokyo-night-white) !important;
-    border: 1px solid var(--tokyo-night-terminal-black) !important;
-    border-radius: var(--orca-radius-sm) !important;
-    padding: 0 0.25em !important;
+    border: 1px solid #565f89 !important;
+    border-top-color: #787c99 !important;
+    border-bottom-color: #292e42 !important;
+    border-radius: 6px !important;
+    padding: 4px 8px !important;
+    font-family: "Cascadia Code", "Fira Code", Consolas, Monaco, "Courier New", monospace !important;
+    font-size: 0.9em !important;
+    line-height: 1 !important;
+    box-shadow: 0 4px 0 #24283b, 0 5px 5px rgba(0, 0, 0, 0.4) !important;
+    transition: all 0.1s ease !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 4px !important;
 }
 
 /* ===== 标题颜色层次 (H1-H6) ===== */
@@ -411,12 +421,8 @@ mark,
         .orca-repr-main-content,
         .orca-repr-main-none-editable
     )
-    .orca-inline-code {
-    transition:
-        transform 0.16s ease,
-        box-shadow 0.16s ease,
-        border-color 0.16s ease,
-        background-color 0.16s ease;
+    .orca-inline.c, [class*="orca-inline c"] {
+    transition: all 0.1s ease !important;
 }
 #main
     :is(
@@ -424,16 +430,11 @@ mark,
         .orca-repr-main-content,
         .orca-repr-main-none-editable
     )
-    .orca-inline-code:hover {
-    transform: translateY(-1px) scale(1.02);
+    .orca-inline.c:hover, [class*="orca-inline c"]:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #24283b, 0 3px 3px rgba(0, 0, 0, 0.4) !important;
+    color: var(--orca-color-primary-5) !important;
     border-color: var(--orca-color-primary-5) !important;
-    background-color: color-mix(
-        in srgb,
-        var(--tokyo-night-bg-night),
-        var(--orca-color-primary-5) 12%
-    ) !important;
-    box-shadow: 0 0 8px
-        color-mix(in srgb, var(--orca-color-primary-5), transparent 70%) !important;
 }
 
 /* ===== 列表符号样式 ===== */
