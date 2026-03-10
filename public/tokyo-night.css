@@ -191,6 +191,114 @@ mark,
     transform: scaleX(1.01);
 }
 
+/* ===== 分割线动效（复刻自 phycat-abyss） ===== */
+/* Orca 的分割线由两条 hr 组成，中间可以输入文字 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line {
+    border: none !important;
+    height: 1px !important;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--orca-color-primary-5),
+        transparent
+    ) !important;
+    margin: 40px 0 !important;
+    position: relative !important;
+    overflow: visible !important;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+/* 第一个（左侧）hr 的菱形 - 偏左 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(1)::after {
+    content: "";
+    position: absolute;
+    left: 8%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    border: 2px solid var(--orca-color-primary-5);
+    background: var(--orca-color-bg-1);
+    transition: all 0.3s ease;
+}
+
+/* 第二个（右侧）hr 的菱形 - 偏右 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(2)::after {
+    content: "";
+    position: absolute;
+    left: 92%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    border: 2px solid var(--orca-color-primary-5);
+    background: var(--orca-color-bg-1);
+    transition: all 0.3s ease;
+}
+
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:hover {
+    opacity: 1;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--orca-color-primary-5),
+        transparent
+    ) !important;
+}
+
+/* 悬停时左侧菱形动效 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(1):hover::after {
+    border-color: var(--orca-color-primary-5);
+    background-color: var(--orca-color-primary-5);
+    box-shadow: 0 0 10px var(--orca-color-primary-5);
+    transform: translate(-50%, -50%) rotate(225deg) scale(1.5);
+}
+
+/* 悬停时右侧菱形动效 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(2):hover::after {
+    border-color: var(--orca-color-primary-5);
+    background-color: var(--orca-color-primary-5);
+    box-shadow: 0 0 10px var(--orca-color-primary-5);
+    transform: translate(-50%, -50%) rotate(225deg) scale(1.5);
+}
+
 #main .orca-table-row {
     transition:
         background-color 0.16s ease,
