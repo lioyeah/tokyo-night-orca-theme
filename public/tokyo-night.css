@@ -104,6 +104,285 @@ mark,
     border-radius: 0 !important;
 }
 
+/* ===== Callout 提示框样式（复刻 phycat-abyss）===== */
+/* 基础 Callout 样式 - 渐变背景 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2 {
+    border: none !important;
+    border-radius: 8px !important;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transition: box-shadow 0.2s ease !important;
+}
+
+/* 右下角 Emoji 图标 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2::after {
+    content: "";
+    position: absolute;
+    right: -10px;
+    bottom: -15px;
+    font-family: "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+    font-size: 64px;
+    line-height: 1;
+    opacity: 0.15;
+    transform: rotate(-15deg);
+    pointer-events: none;
+    z-index: 0;
+    filter: grayscale(100%);
+    text-shadow: 0 0 10px currentColor;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease,
+        right 0.4s ease, bottom 0.4s ease, filter 0.4s ease, text-shadow 0.4s ease;
+}
+
+/* 悬停效果 - 增强阴影 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+    z-index: 1 !important;
+}
+
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2:hover::after {
+    transform: rotate(0) scale(1.05);
+    opacity: 0.25;
+    right: 5px;
+    bottom: -5px;
+    filter: grayscale(0);
+    text-shadow: 0 0 20px currentColor;
+}
+
+/* Note - 青色 (#1597b0) */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-note {
+    background: linear-gradient(90deg, transparent 0%, rgba(21, 151, 176, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-note::after {
+    content: "📝";
+    color: #1597b0;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-note:hover {
+    box-shadow: 0 4px 20px rgba(21, 151, 176, 0.2) !important;
+}
+
+/* Tip - 绿色 (#61b685) */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-tip {
+    background: linear-gradient(90deg, transparent 0%, rgba(97, 182, 133, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-tip::after {
+    content: "💡";
+    color: #61b685;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-tip:hover {
+    box-shadow: 0 4px 20px rgba(97, 182, 133, 0.2) !important;
+}
+
+/* Warning - 橙色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-warning {
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 158, 100, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-warning::after {
+    content: "⚠️";
+    color: var(--tokyo-night-orange);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-warning:hover {
+    box-shadow: 0 4px 20px rgba(255, 158, 100, 0.2) !important;
+}
+
+/* Important - 紫色 (#b794f0) */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-important {
+    background: linear-gradient(90deg, transparent 0%, rgba(183, 148, 240, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-important::after {
+    content: "🔥";
+    color: #b794f0;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-important:hover {
+    box-shadow: 0 4px 20px rgba(183, 148, 240, 0.2) !important;
+}
+
+/* Error - 深红色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-error {
+    background: linear-gradient(90deg, transparent 0%, rgba(214, 48, 49, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-error::after {
+    content: "💀";
+    color: #d63031;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-error:hover {
+    box-shadow: 0 4px 20px rgba(214, 48, 49, 0.2) !important;
+}
+
+/* Info - 蓝色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-info {
+    background: linear-gradient(90deg, transparent 0%, rgba(122, 162, 247, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-info::after {
+    content: "ℹ️";
+    color: var(--tokyo-night-blue);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-info:hover {
+    box-shadow: 0 4px 20px rgba(122, 162, 247, 0.2) !important;
+}
+
+/* Quote - 默认灰色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-quote {
+    background: linear-gradient(90deg, transparent 0%, rgba(86, 95, 137, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-quote::after {
+    content: "💬";
+    color: var(--tokyo-night-comment);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-quote:hover {
+    box-shadow: 0 4px 20px rgba(86, 95, 137, 0.2) !important;
+}
+
 /* ===== 代码块卡片风格 ===== */
 .orca-panels-container pre,
 .orca-panels-container .orca-code-wrapper {
@@ -191,6 +470,134 @@ mark,
     transform: scaleX(1.01);
 }
 
+/* ===== 分割线动效（复刻 phycat-abyss）===== */
+/* Orca 的分割线由两个 hr 组成，中间可以输入文字 */
+/* 基础样式 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line {
+    border: none !important;
+    height: 1px !important;
+    margin: 40px 0 !important;
+    position: relative !important;
+    overflow: visible !important;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+/* 扩大悬停区域 - 使用伪元素，并扩展到覆盖相邻区域 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(1)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 200%; /* 扩展到右侧hr区域 */
+    height: 24px;
+    cursor: pointer;
+}
+
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(2)::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 200%; /* 扩展到左侧hr区域 */
+    height: 24px;
+    cursor: pointer;
+}
+
+/* 左侧 hr：从左透明渐变到中间主色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(1) {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--orca-color-primary-5) 50%,
+        var(--orca-color-primary-5) 100%
+    ) !important;
+}
+
+/* 右侧 hr：从中间主色渐变到右透明 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(2) {
+    background: linear-gradient(
+        90deg,
+        var(--orca-color-primary-5) 0%,
+        var(--orca-color-primary-5) 50%,
+        transparent 100%
+    ) !important;
+}
+
+/*
+ * 悬停点亮效果 - 通过扩大悬停区域实现联动
+ * hover 左侧 hr 或其扩展区域时，点亮左侧，并通过兄弟选择器点亮右侧
+ * hover 右侧 hr 或其扩展区域时，点亮右侧，并通过父容器 :has() 点亮左侧
+ */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(1):hover,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(1):hover ~ hr.orca-hr-line:nth-of-type(2) {
+    opacity: 1;
+}
+
+/* 使用 :has() 实现 hover 右侧时联动左侧（现代浏览器支持） */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    ):has(hr.orca-hr-line:nth-of-type(2):hover)
+    hr.orca-hr-line:nth-of-type(1),
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(2):hover {
+    opacity: 1;
+}
+
+
+
 #main .orca-table-row {
     transition:
         background-color 0.16s ease,
@@ -218,13 +625,42 @@ mark,
         color-mix(in srgb, var(--orca-color-primary-5), transparent 75%) !important;
 }
 
-/* ===== 行内代码样式 ===== */
-.orca-inline-code {
-    background-color: var(--tokyo-night-bg-night) !important;
+/* ===== 行内代码样式 - 按键外观 ===== */
+.orca-inline.c, [class*="orca-inline c"] {
+    background-color: #414868 !important;
     color: var(--tokyo-night-white) !important;
-    border: 1px solid var(--tokyo-night-terminal-black) !important;
-    border-radius: var(--orca-radius-sm) !important;
-    padding: 0 0.25em !important;
+    border: 1px solid #565f89 !important;
+    border-top-color: #787c99 !important;
+    border-bottom-color: #292e42 !important;
+    border-radius: 6px !important;
+    padding: 4px 8px !important;
+    font-family: "Cascadia Code", "Fira Code", Consolas, Monaco, "Courier New", monospace !important;
+    font-size: 0.9em !important;
+    line-height: 1 !important;
+    box-shadow: 0 4px 0 #24283b, 0 5px 5px rgba(0, 0, 0, 0.4) !important;
+    transition: all 0.1s ease !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 4px !important;
+}
+
+/* 按键按下效果 */
+.orca-inline.c:hover, [class*="orca-inline c"]:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #24283b, 0 3px 3px rgba(0, 0, 0, 0.4) !important;
+    color: var(--orca-color-primary-5) !important;
+    border-color: var(--orca-color-primary-5) !important;
+}
+
+/* 编辑器内行内代码过渡效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.c, [class*="orca-inline c"] {
+    transition: all 0.1s ease !important;
 }
 
 /* ===== 标题颜色层次 (H1-H6) ===== */
@@ -297,36 +733,6 @@ mark,
     transform: translateY(-1px);
 }
 
-#main
-    :is(
-        .orca-block-editor-main,
-        .orca-repr-main-content,
-        .orca-repr-main-none-editable
-    )
-    .orca-inline-code {
-    transition:
-        transform 0.16s ease,
-        box-shadow 0.16s ease,
-        border-color 0.16s ease,
-        background-color 0.16s ease;
-}
-#main
-    :is(
-        .orca-block-editor-main,
-        .orca-repr-main-content,
-        .orca-repr-main-none-editable
-    )
-    .orca-inline-code:hover {
-    transform: translateY(-1px) scale(1.02);
-    border-color: var(--orca-color-primary-5) !important;
-    background-color: color-mix(
-        in srgb,
-        var(--tokyo-night-bg-night),
-        var(--orca-color-primary-5) 12%
-    ) !important;
-    box-shadow: 0 0 8px
-        color-mix(in srgb, var(--orca-color-primary-5), transparent 70%) !important;
-}
 
 /* ===== 列表符号样式 ===== */
 /* 无序列表 - 一级 */
@@ -2127,4 +2533,64 @@ div.orca-settings {
     mask-image: linear-gradient(to right, transparent, black 6px), linear-gradient(to top, transparent, black 6px);
     -webkit-mask-composite: intersect;
     mask-composite: intersect;
+}
+
+/* ===== 块展开/收起圆点视觉区分度增强 ===== */
+/* 注意：此样式仅针对普通文本块，不触及列表类（orca-repr-ul/orca-repr-ol） */
+/* 列表颜色设置保持原有 703-1029 行的样式不变 */
+
+/* 液体变形动画关键帧 */
+@keyframes liquidMorph {
+    0% {
+        border-radius: 50%;
+        transform: scale(1, 1);
+    }
+    25% {
+        border-radius: 40% 60% 60% 40% / 50% 40% 60% 50%;
+        transform: scale(1.3, 0.8);
+    }
+    50% {
+        border-radius: 60% 40% 40% 60% / 40% 50% 50% 60%;
+        transform: scale(0.9, 1.2);
+    }
+    75% {
+        border-radius: 45% 55% 55% 45% / 55% 45% 55% 45%;
+        transform: scale(1.1, 0.9);
+    }
+    100% {
+        border-radius: 50%;
+        transform: scale(1, 1);
+    }
+}
+
+/*
+ * 普通文本块展开状态 - 使用半透明注释色
+ * 选择器边界：仅匹配没有列表类的情况
+ */
+.orca-repr-main:not(.orca-repr-ul):not(.orca-repr-ol) .orca-block-handle.ti-point-filled,
+.orca-repr-main:not(.orca-repr-ul):not(.orca-repr-ol) .orca-block-handle.ti-point {
+    color: var(--tokyo-night-comment) !important;
+    opacity: 0.5 !important;
+}
+
+/*
+ * 普通文本块收起状态 - 使用主题主色蓝色
+ * 选择器边界：仅匹配没有列表类的情况
+ */
+.orca-repr-main-collapsed:not(.orca-repr-ul):not(.orca-repr-ol) .orca-block-handle.orca-block-handle-collapsed,
+.orca-repr-main-collapsed:not(.orca-repr-ul):not(.orca-repr-ol) .orca-block-handle.ti-point-filled,
+.orca-repr-main-collapsed:not(.orca-repr-ul):not(.orca-repr-ol) .orca-block-handle.ti-point {
+    color: var(--tokyo-night-blue) !important;
+    opacity: 1 !important;
+    text-shadow: 0 0 6px color-mix(in srgb, var(--tokyo-night-blue), transparent 60%);
+    /* 切换时触发液体变形动画 */
+    animation: liquidMorph 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Callout 块内圆点隐藏 ===== */
+/* 避免与左侧装饰线发生干涉 */
+.orca-repr-quote2 .orca-block-handle,
+.orca-repr-quote2.orca-repr-main .orca-block-handle,
+.orca-repr-quote2.orca-repr-main-collapsed .orca-block-handle {
+    display: none !important;
 }
