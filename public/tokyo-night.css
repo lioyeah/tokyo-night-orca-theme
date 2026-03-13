@@ -6,55 +6,104 @@
  * Safe to tweak for global tone and contrast.
  */
 :root {
-    /* ===== Tokyo Night 核心调色板 ===== */
-    --tokyo-night-red: #f7768e;
-    --tokyo-night-orange: #ff9e64;
-    --tokyo-night-yellow: #e0af68;
-    --tokyo-night-green: #9ece6a;
-    --tokyo-night-spring-green: #73daca;
-    --tokyo-night-cyan: #7dcfff;
-    --tokyo-night-blue: #7aa2f7;
-    --tokyo-night-magenta: #bb9af7;
-    --tokyo-night-white: #c0caf5;
-    --tokyo-night-foreground: #a9b1d6;
-    --tokyo-night-comment: #565f89;
-    --tokyo-night-bg-night: #1a1b26;
-    --tokyo-night-bg-storm: #24283b;
-    --tokyo-night-bg-dark: #16161e;
-    --tokyo-night-bg-float: #1f2335;
-    --tokyo-night-terminal-black: #414868;
+    color-scheme: light;
+
+    /* ===== Tokyo Night Light 核心语义 token ===== */
+    --tn-bg-1: #e6e7ed;
+    --tn-bg-2: #d6d8df;
+    --tn-bg-3: #dcdee3;
+    --tn-text-1: #363c4d;
+    --tn-text-2: #707280;
+    --tn-border: #c1c2c7;
+    --tn-accent: #2959aa;
+    --tn-accent-hover: #0f4b6e;
+    --tn-accent-soft: #9aa5ce33;
+    --tn-selection: #acb0bf40;
+    --tn-success: #33635c;
+    --tn-warn: #8f5e15;
+    --tn-danger: #bd4040;
+    --tn-info: #0da0ba;
+    --tn-magenta: #65359d;
+    --tn-muted: #9da0ab;
+    --tn-bright: #343b58;
+
+    /* ===== 兼容旧 token 命名 ===== */
+    --tokyo-night-red: var(--tn-danger);
+    --tokyo-night-orange: #965027;
+    --tokyo-night-yellow: var(--tn-warn);
+    --tokyo-night-green: var(--tn-success);
+    --tokyo-night-spring-green: var(--tn-success);
+    --tokyo-night-cyan: var(--tn-info);
+    --tokyo-night-blue: var(--tn-accent);
+    --tokyo-night-magenta: var(--tn-magenta);
+    --tokyo-night-white: var(--tn-bright);
+    --tokyo-night-foreground: var(--tn-text-1);
+    --tokyo-night-comment: var(--tn-muted);
+    --tokyo-night-bg-night: var(--tn-bg-1);
+    --tokyo-night-bg-storm: var(--tn-bg-2);
+    --tokyo-night-bg-dark: var(--tn-bg-2);
+    --tokyo-night-bg-float: var(--tn-bg-3);
+    --tokyo-night-terminal-black: var(--tn-border);
 
     /* ===== Orca 变量覆盖 ===== */
-    /* 基础背景和文字颜色 */
-    --orca-color-bg-1: #1a1b26 !important;
-    --orca-color-bg-2: #16161e !important;
-    --orca-color-text-1: #a9b1d6 !important;
-    --orca-color-text-2: #9aa5ce !important;
-    --orca-color-placeholder: #565f89 !important;
+    --orca-color-bg-1: var(--tn-bg-1) !important;
+    --orca-color-bg-2: var(--tn-bg-2) !important;
+    --orca-color-bg-3: var(--tn-bg-3) !important;
+    --orca-color-text-1: var(--tn-text-1) !important;
+    --orca-color-text-2: var(--tn-text-2) !important;
+    --orca-color-placeholder: var(--tn-muted) !important;
 
-    /* 边框和分隔线 */
-    --orca-color-border: #292e42 !important;
-    --orca-border-general: 1px solid #292e42 !important;
-    --orca-color-separator: #292e42 !important;
+    --orca-color-border: var(--tn-border) !important;
+    --orca-border-general: 1px solid var(--tn-border) !important;
+    --orca-color-separator: var(--tn-border) !important;
 
-    /* 主题强调色 */
-    --orca-color-primary-5: #7aa2f7 !important;
-    --orca-color-primary-4: #7aa2f7 !important;
-    --orca-color-tab: #7aa2f7 !important;
+    --orca-color-primary-5: var(--tn-accent) !important;
+    --orca-color-primary-4: color-mix(in oklab, var(--tn-accent) 85%, var(--tn-bg-1)) !important;
+    --orca-color-primary-3: color-mix(in oklab, var(--tn-accent) 65%, var(--tn-bg-1)) !important;
+    --orca-color-primary-2: color-mix(in oklab, var(--tn-accent) 40%, var(--tn-bg-1)) !important;
+    --orca-color-primary-1: color-mix(in oklab, var(--tn-accent) 15%, var(--tn-bg-1)) !important;
+    --orca-color-tab: var(--orca-color-primary-4) !important;
 
-    /* 状态颜色 */
-    --orca-color-selection: oklch(from var(--orca-color-primary-5) l c h / 50%);
-    --orca-color-success-5: #9ece6a;
-    --orca-color-warn-5: #ff9e64;
-    --orca-color-dangerous-5: #f7768e;
-    --orca-color-info-5: #7dcfff;
-    --orca-color-link: #73daca;
+    --orca-color-selection: var(--tn-selection);
+    --orca-color-success-5: var(--tn-success);
+    --orca-color-warn-5: var(--tn-warn);
+    --orca-color-dangerous-5: var(--tn-danger);
+    --orca-color-info-5: var(--tn-info);
+    --orca-color-link: var(--tn-accent);
+    --orca-color-win-scrollbar: color-mix(in srgb, var(--tn-text-2), var(--tn-border) 72%);
 
-    /* 灰色调映射 */
-    --orca-color-gray-7: #292e42 !important;
-    --orca-color-gray-6: #565f89 !important;
-    --orca-color-gray-5: #565f89 !important;
-    --orca-color-gray-4: #565f89 !important;
+    --orca-color-gray-7: var(--tn-text-2) !important;
+    --orca-color-gray-6: var(--tn-muted) !important;
+    --orca-color-gray-5: var(--tn-border) !important;
+    --orca-color-gray-4: color-mix(in oklab, var(--tn-border) 80%, var(--tn-bg-1)) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+
+        --tn-bg-1: #1a1b26;
+        --tn-bg-2: #16161e;
+        --tn-bg-3: #1f2335;
+        --tn-text-1: #a9b1d6;
+        --tn-text-2: #9aa5ce;
+        --tn-border: #292e42;
+        --tn-accent: #7aa2f7;
+        --tn-accent-hover: #91b2ff;
+        --tn-accent-soft: #9aa5ce33;
+        --tn-selection: oklch(from var(--tn-accent) l c h / 50%);
+        --tn-success: #9ece6a;
+        --tn-warn: #ff9e64;
+        --tn-danger: #f7768e;
+        --tn-info: #7dcfff;
+        --tn-magenta: #bb9af7;
+        --tn-muted: #565f89;
+        --tn-bright: #c0caf5;
+
+        --tokyo-night-orange: #ff9e64;
+        --tokyo-night-yellow: #e0af68;
+        --orca-color-win-scrollbar: #565f89;
+    }
 }
 
 /* ===== 基础页面和应用容器样式 ===== */
@@ -71,6 +120,7 @@ div#app {
 /* 全局光标颜色 */
 * {
     caret-color: var(--orca-color-primary-5) !important;
+    scrollbar-color: var(--orca-color-win-scrollbar) var(--orca-color-bg-1);
 }
 
 /* ===== 高亮样式 ===== */
@@ -178,7 +228,7 @@ mark,
     text-shadow: 0 0 20px currentColor;
 }
 
-/* Note - 青色 (#1597b0) */
+/* Note - 青色 (var(--tn-info)) */
 #main
     :is(
         .orca-block-editor-main,
@@ -196,7 +246,7 @@ mark,
     )
     .orca-repr.orca-repr-quote2.orca-repr-quote2-note::after {
     content: "📝";
-    color: #1597b0;
+    color: var(--tn-info);
 }
 #main
     :is(
@@ -208,7 +258,7 @@ mark,
     box-shadow: 0 4px 20px rgba(21, 151, 176, 0.2) !important;
 }
 
-/* Tip - 绿色 (#61b685) */
+/* Tip - 绿色 (var(--tn-success)) */
 #main
     :is(
         .orca-block-editor-main,
@@ -226,7 +276,7 @@ mark,
     )
     .orca-repr.orca-repr-quote2.orca-repr-quote2-tip::after {
     content: "💡";
-    color: #61b685;
+    color: var(--tn-success);
 }
 #main
     :is(
@@ -268,7 +318,7 @@ mark,
     box-shadow: 0 4px 20px rgba(255, 158, 100, 0.2) !important;
 }
 
-/* Important - 紫色 (#b794f0) */
+/* Important - 紫色 (var(--tn-magenta)) */
 #main
     :is(
         .orca-block-editor-main,
@@ -286,7 +336,7 @@ mark,
     )
     .orca-repr.orca-repr-quote2.orca-repr-quote2-important::after {
     content: "🔥";
-    color: #b794f0;
+    color: var(--tn-magenta);
 }
 #main
     :is(
@@ -316,7 +366,7 @@ mark,
     )
     .orca-repr.orca-repr-quote2.orca-repr-quote2-error::after {
     content: "💀";
-    color: #d63031;
+    color: var(--tn-danger);
 }
 #main
     :is(
@@ -632,17 +682,19 @@ mark,
 
 /* ===== 行内代码样式 - 按键外观 ===== */
 .orca-inline.c, [class*="orca-inline c"] {
-    background-color: #414868 !important;
+    background-color: var(--tokyo-night-terminal-black) !important;
     color: var(--tokyo-night-white) !important;
-    border: 1px solid #565f89 !important;
-    border-top-color: #787c99 !important;
-    border-bottom-color: #292e42 !important;
+    border: 1px solid var(--tokyo-night-comment) !important;
+    border-top-color: color-mix(in oklab, var(--tn-text-2) 80%, var(--tn-bg-1)) !important;
+    border-bottom-color: color-mix(in srgb, var(--tn-text-1), var(--tn-border) 70%) !important;
     border-radius: 6px !important;
     padding: 4px 8px !important;
     font-family: "Cascadia Code", "Fira Code", Consolas, Monaco, "Courier New", monospace !important;
     font-size: 0.9em !important;
     line-height: 1 !important;
-    box-shadow: 0 4px 0 #24283b, 0 5px 5px rgba(0, 0, 0, 0.4) !important;
+    box-shadow:
+        0 4px 0 color-mix(in srgb, var(--tn-text-1), var(--tn-bg-2) 78%),
+        0 5px 5px rgb(from var(--tn-text-1) r g b / 0.26) !important;
     transition: all 0.1s ease !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -652,7 +704,9 @@ mark,
 /* 按键按下效果 */
 .orca-inline.c:hover, [class*="orca-inline c"]:hover {
     transform: translateY(2px);
-    box-shadow: 0 2px 0 #24283b, 0 3px 3px rgba(0, 0, 0, 0.4) !important;
+    box-shadow:
+        0 2px 0 color-mix(in srgb, var(--tn-text-1), var(--tn-bg-2) 78%),
+        0 3px 3px rgb(from var(--tn-text-1) r g b / 0.24) !important;
     color: var(--orca-color-primary-5) !important;
     border-color: var(--orca-color-primary-5) !important;
 }
@@ -1127,7 +1181,7 @@ mark,
         var(--orca-color-primary-5),
         var(--tokyo-night-bg-storm) 56%
     ) !important;
-    color: #eef3ff !important;
+    color: var(--tokyo-night-white) !important;
     border-color: rgba(122, 162, 247, 0.3) !important;
     box-shadow: var(--tokyo-control-shadow-hover) !important;
 }
@@ -1138,7 +1192,7 @@ mark,
         var(--orca-color-primary-5),
         var(--tokyo-night-bg-storm) 82%
     ) !important;
-    color: #7f8ab3 !important;
+    color: var(--tokyo-night-comment) !important;
     border-color: rgba(122, 162, 247, 0.12) !important;
     box-shadow: none !important;
     opacity: 1 !important;
@@ -1272,16 +1326,107 @@ mark,
 
 /* ===== 滚动条样式 ===== */
 *::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 5px;
+    height: 5px;
 }
 *::-webkit-scrollbar-track {
-    background: var(--tokyo-night-bg-night);
+    background: transparent;
 }
 *::-webkit-scrollbar-thumb {
-    background-color: var(--tokyo-night-terminal-black);
-    border-radius: 6px;
-    border: 2px solid var(--tokyo-night-bg-night);
+    background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 20%);
+    border-radius: 999px;
+    border: 1px solid transparent;
+}
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable)::-webkit-scrollbar-track,
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable) *::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable),
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable) * {
+    scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 20%) transparent;
+}
+
+/* Main editor scrollbar: slimmer and visually merged with editor background. */
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable)::-webkit-scrollbar,
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable) *::-webkit-scrollbar {
+    width: 4px !important;
+    height: 4px !important;
+}
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable)::-webkit-scrollbar-track,
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable) *::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable)::-webkit-scrollbar-thumb,
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable) *::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
+    border-radius: 999px !important;
+    border: 1px solid transparent !important;
+}
+
+/* Target actual Orca editor scroller path to override any app default scrollbar skin. */
+#main .orca-block-editor.orca-hideable-editor,
+#main .orca-block-editor.orca-hideable-editor * {
+    scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) transparent !important;
+}
+#main .orca-block-editor.orca-hideable-editor::-webkit-scrollbar,
+#main .orca-block-editor.orca-hideable-editor *::-webkit-scrollbar {
+    width: 4px !important;
+    height: 4px !important;
+}
+#main .orca-block-editor.orca-hideable-editor::-webkit-scrollbar-track,
+#main .orca-block-editor.orca-hideable-editor *::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+#main .orca-block-editor.orca-hideable-editor::-webkit-scrollbar-thumb,
+#main .orca-block-editor.orca-hideable-editor *::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
+    border-radius: 999px !important;
+    border: 1px solid transparent !important;
+}
+
+/* Sidebar list scrollbar (targeting orca-aliased-list and sibling list containers). */
+#sidebar .orca-aliased-list,
+#sidebar .orca-tags-list,
+#sidebar .orca-fav-list,
+#sidebar .orca-page-list,
+#sidebar section > div:nth-child(3) > div > div {
+    scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) transparent !important;
+}
+#sidebar .orca-aliased-list::-webkit-scrollbar-track,
+#sidebar .orca-tags-list::-webkit-scrollbar-track,
+#sidebar .orca-fav-list::-webkit-scrollbar-track,
+#sidebar .orca-page-list::-webkit-scrollbar-track,
+#sidebar section > div:nth-child(3) > div > div::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+#sidebar .orca-aliased-list::-webkit-scrollbar-thumb,
+#sidebar .orca-tags-list::-webkit-scrollbar-thumb,
+#sidebar .orca-fav-list::-webkit-scrollbar-thumb,
+#sidebar .orca-page-list::-webkit-scrollbar-thumb,
+#sidebar section > div:nth-child(3) > div > div::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
+    border: 1px solid transparent !important;
+}
+
+/* Plugin marketplace grid scrollbar: force transparent track (host app often sets white track). */
+body > div.orca-modal-overlay.orca-modal-overlay-blurred > div > div.orca-plugin-marketplace-grid,
+.orca-modal-overlay .orca-plugin-marketplace-grid {
+    scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) transparent !important;
+}
+body > div.orca-modal-overlay.orca-modal-overlay-blurred > div > div.orca-plugin-marketplace-grid::-webkit-scrollbar,
+.orca-modal-overlay .orca-plugin-marketplace-grid::-webkit-scrollbar {
+    width: 5px !important;
+    height: 5px !important;
+}
+body > div.orca-modal-overlay.orca-modal-overlay-blurred > div > div.orca-plugin-marketplace-grid::-webkit-scrollbar-track,
+.orca-modal-overlay .orca-plugin-marketplace-grid::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+body > div.orca-modal-overlay.orca-modal-overlay-blurred > div > div.orca-plugin-marketplace-grid::-webkit-scrollbar-thumb,
+.orca-modal-overlay .orca-plugin-marketplace-grid::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
+    border-radius: 999px !important;
+    border: 1px solid transparent !important;
 }
 
 /* ===== 查询构建器 ===== */
@@ -1352,12 +1497,19 @@ nav#sidebar span {
 
 nav#sidebar .item:hover,
 nav#sidebar a:hover {
-    background-color: var(--tokyo-night-terminal-black) !important;
-    color: var(--tokyo-night-white) !important;
+    background-color: color-mix(in srgb, var(--tn-accent), transparent 86%) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+nav#sidebar :is(.orca-fav-item-item, .orca-tags-tag-item, .orca-aliased-block-item, .orca-page-item):hover {
+    background-color: color-mix(in srgb, var(--tn-accent), transparent 86%) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+nav#sidebar :is(.orca-fav-item-item, .orca-tags-tag-item, .orca-aliased-block-item, .orca-page-item):hover :is(span, .title, .orca-tags-tag-name, .orca-aliased-block-name) {
+    color: var(--tokyo-night-foreground) !important;
 }
 nav#sidebar .item:hover .ti,
 nav#sidebar a:hover .ti {
-    color: var(--tokyo-night-white) !important;
+    color: var(--tokyo-night-foreground) !important;
 }
 
 nav#sidebar .item.active,
@@ -1372,51 +1524,33 @@ nav#sidebar a.active .ti {
 
 /* Sidebar "new page" button: dedicated Tokyo Night accent style. */
 nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn {
-    background-color: #1c2240 !important;
+    background-color: color-mix(in srgb, #ffffff, var(--tn-bg-1) 18%) !important;
     background-image:
-        radial-gradient(
-            circle at 8% -145%,
-            rgba(216, 232, 255, 0.6) 0 18%,
-            rgba(216, 232, 255, 0.16) 23%,
-            transparent 30%
-        ),
-        radial-gradient(circle at 22% 76%, rgba(125, 207, 255, 0.22) 0 10%, transparent 18%),
-        radial-gradient(circle at 62% 82%, rgba(247, 118, 142, 0.2) 0 11%, transparent 20%),
-        linear-gradient(
-            90deg,
-            transparent 0 18%,
-            rgba(125, 207, 255, 0.2) 18% 22%,
-            transparent 22% 44%,
-            rgba(187, 154, 247, 0.18) 44% 48%,
-            transparent 48% 68%,
-            rgba(255, 158, 100, 0.18) 68% 72%,
-            transparent 72% 100%
-        ),
-        radial-gradient(circle at 26% 26%, rgba(200, 235, 255, 0.75) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 74% 30%, rgba(200, 235, 255, 0.65) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 88% 18%, rgba(200, 235, 255, 0.6) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 82% 20%, rgba(255, 194, 87, 0.92) 0 10%, rgba(255, 194, 87, 0.42) 15%, transparent 28%),
+        radial-gradient(circle at 82% 20%, rgba(255, 228, 154, 0.66) 0 6%, transparent 14%),
         linear-gradient(
             180deg,
-            transparent 0 64%,
-            rgba(44, 37, 82, 0.42) 64% 84%,
-            rgba(36, 31, 70, 0.56) 84% 100%
+            transparent 0 66%,
+            rgba(255, 181, 84, 0.18) 66% 74%,
+            rgba(255, 154, 76, 0.26) 74% 84%,
+            rgba(255, 143, 78, 0.32) 84% 100%
         ),
         linear-gradient(
             180deg,
-            color-mix(in srgb, var(--tokyo-night-magenta), transparent 84%) 0%,
-            color-mix(in srgb, var(--tokyo-night-blue), transparent 90%) 52%,
-            transparent 100%
+            color-mix(in srgb, #ffffff, var(--tn-bg-1) 8%) 0%,
+            color-mix(in srgb, var(--tn-bg-1), #ffffff 16%) 100%
         ) !important;
-    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 28%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100% !important;
-    background-position: 0 0, 0 0, 0 0, 0 100%, 0 0, 0 0, 0 0, 0 0, 0 0 !important;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100% !important;
+    background-position: 0 0, 0 0, 0 0, 0 0 !important;
     background-repeat: no-repeat !important;
-    color: #f5f7ff !important;
-    text-shadow: 0 1px 0 rgba(9, 11, 18, 0.45) !important;
+    color: var(--tn-text-1) !important;
+    text-shadow: 0 1px 0 rgb(from #ffffff r g b / 0.75) !important;
     border: none !important;
     border-radius: var(--orca-radius-sm) !important;
     box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.18),
-        inset 0 1px 0 color-mix(in srgb, #ffffff, transparent 90%) !important;
+        0 6px 12px rgb(from var(--tn-text-1) r g b / 0.12),
+        inset 0 1px 0 rgb(from #ffffff r g b / 0.82),
+        inset 0 -1px 0 rgb(from var(--tn-accent) r g b / 0.24) !important;
     transition:
         filter var(--tokyo-transition-ui),
         box-shadow var(--tokyo-transition-ui),
@@ -1424,14 +1558,14 @@ nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn {
 }
 
 nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover {
-    filter: brightness(1.06) !important;
+    filter: brightness(1.02) !important;
     box-shadow:
-        0 6px 14px rgba(0, 0, 0, 0.22),
-        inset 0 1px 0 color-mix(in srgb, #ffffff, transparent 86%) !important;
+        0 8px 16px rgb(from var(--tn-text-1) r g b / 0.16),
+        inset 0 1px 0 rgb(from #ffffff r g b / 0.86) !important;
 }
 
 nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn .ti.ti-plus {
-    color: color-mix(in srgb, var(--tokyo-night-cyan), #ffffff 12%) !important;
+    color: var(--tn-accent) !important;
     opacity: 0.96 !important;
     margin-right: 0.35em !important;
     transform: scale(1);
@@ -1463,11 +1597,11 @@ nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn > :is(
 
 nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover .ti.ti-plus {
     opacity: 1 !important;
-    color: #d9e7ff !important;
+    color: color-mix(in srgb, var(--tn-accent), var(--tn-accent-hover) 28%) !important;
     transform: scale(1.1);
     text-shadow:
-        0 0 8px rgba(125, 207, 255, 0.92),
-        0 0 14px rgba(187, 154, 247, 0.72);
+        0 0 8px rgb(from var(--tn-accent) r g b / 0.32),
+        0 0 14px rgb(from var(--tn-accent) r g b / 0.2);
 }
 
 nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover > :is(
@@ -1475,11 +1609,97 @@ nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover > :is(
     .orca-button-text,
     span:not(.ti)
 ) {
-    color: #e9f1ff !important;
+    color: var(--tn-text-1) !important;
     transform: scale(1.04);
     text-shadow:
-        0 0 8px rgba(125, 207, 255, 0.78),
-        0 0 16px rgba(187, 154, 247, 0.58);
+        0 0 8px rgb(from var(--tn-accent) r g b / 0.26),
+        0 0 16px rgb(from var(--tn-accent) r g b / 0.14);
+}
+
+@media (prefers-color-scheme: dark) {
+    nav#sidebar .item:hover,
+    nav#sidebar a:hover {
+        background-color: var(--tokyo-night-terminal-black) !important;
+        color: var(--tokyo-night-white) !important;
+    }
+    nav#sidebar .item:hover .ti,
+    nav#sidebar a:hover .ti {
+        color: var(--tokyo-night-white) !important;
+    }
+    nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn {
+        background-color: var(--tokyo-floating-bg-emphasis) !important;
+        background-image:
+            radial-gradient(
+                circle at 8% -145%,
+                rgba(216, 232, 255, 0.6) 0 18%,
+                rgba(216, 232, 255, 0.16) 23%,
+                transparent 30%
+            ),
+            radial-gradient(circle at 22% 76%, rgba(125, 207, 255, 0.22) 0 10%, transparent 18%),
+            radial-gradient(circle at 62% 82%, rgba(247, 118, 142, 0.2) 0 11%, transparent 20%),
+            linear-gradient(
+                90deg,
+                transparent 0 18%,
+                rgba(125, 207, 255, 0.2) 18% 22%,
+                transparent 22% 44%,
+                rgba(187, 154, 247, 0.18) 44% 48%,
+                transparent 48% 68%,
+                rgba(255, 158, 100, 0.18) 68% 72%,
+                transparent 72% 100%
+            ),
+            radial-gradient(circle at 26% 26%, rgba(200, 235, 255, 0.75) 0 1px, transparent 1.5px),
+            radial-gradient(circle at 74% 30%, rgba(200, 235, 255, 0.65) 0 1px, transparent 1.5px),
+            radial-gradient(circle at 88% 18%, rgba(200, 235, 255, 0.6) 0 1px, transparent 1.5px),
+            linear-gradient(
+                180deg,
+                transparent 0 64%,
+                rgba(44, 37, 82, 0.42) 64% 84%,
+                rgba(36, 31, 70, 0.56) 84% 100%
+            ),
+            linear-gradient(
+                180deg,
+                color-mix(in srgb, var(--tokyo-night-magenta), transparent 84%) 0%,
+                color-mix(in srgb, var(--tokyo-night-blue), transparent 90%) 52%,
+                transparent 100%
+            ) !important;
+        background-size: 100% 100%, 100% 100%, 100% 100%, 100% 28%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100% !important;
+        background-position: 0 0, 0 0, 0 0, 0 100%, 0 0, 0 0, 0 0, 0 0, 0 0 !important;
+        color: var(--tokyo-night-white) !important;
+        text-shadow: 0 1px 0 rgba(9, 11, 18, 0.45) !important;
+        border: none !important;
+        box-shadow:
+            0 4px 12px rgba(0, 0, 0, 0.18),
+            inset 0 1px 0 color-mix(in srgb, #ffffff, transparent 90%) !important;
+    }
+    nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover {
+        filter: brightness(1.06) !important;
+        box-shadow:
+            0 6px 14px rgba(0, 0, 0, 0.22),
+            inset 0 1px 0 color-mix(in srgb, #ffffff, transparent 86%) !important;
+    }
+    nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn .ti.ti-plus {
+        color: color-mix(in srgb, var(--tokyo-night-cyan), #ffffff 12%) !important;
+    }
+    nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover .ti.ti-plus,
+    nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover > :is(
+        .orca-select-button-text,
+        .orca-button-text,
+        span:not(.ti)
+    ) {
+        color: var(--tokyo-night-white) !important;
+    }
+    nav#sidebar :is(.orca-fav-item-item, .orca-tags-tag-item, .orca-aliased-block-item, .orca-page-item):hover {
+        background-color: var(--tokyo-night-terminal-black) !important;
+        color: var(--tokyo-night-white) !important;
+    }
+    nav#sidebar :is(.orca-fav-item-item, .orca-tags-tag-item, .orca-aliased-block-item, .orca-page-item):hover :is(span, .title, .orca-tags-tag-name, .orca-aliased-block-name) {
+        color: var(--tokyo-night-white) !important;
+    }
+    nav#sidebar .item:hover .ti,
+    nav#sidebar a:hover .ti,
+    nav#sidebar .ti:hover {
+        color: var(--tokyo-night-white) !important;
+    }
 }
 
 /* 侧边栏搜索框 - 现代阴影 */
@@ -1551,7 +1771,7 @@ nav#sidebar .search-box .ti.ti-x:hover {
 nav#sidebar .item:hover .ti,
 nav#sidebar a:hover .ti,
 nav#sidebar .ti:hover {
-    color: var(--tokyo-night-white) !important;
+    color: var(--tokyo-night-foreground) !important;
 }
 nav#sidebar .item.active .ti,
 nav#sidebar a.active .ti {
@@ -1928,67 +2148,96 @@ div.orca-settings {
  */
 /* ===== 现代阴影层级系统 ===== */
 :root {
-    /* 阴影层级 - 现代设计 */
-    --tokyo-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.1);
-    --tokyo-shadow-2: 0 4px 8px rgba(0, 0, 0, 0.25), 0 0 1px rgba(0, 0, 0, 0.15);
-    --tokyo-shadow-3: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.2);
-    --tokyo-shadow-4: 0 16px 48px rgba(0, 0, 0, 0.35), 0 0 2px rgba(0, 0, 0, 0.25);
+    /* 阴影层级 - light */
+    --tokyo-shadow-1: 0 1px 2px rgb(from var(--tn-text-1) r g b / 0.08), 0 0 1px rgb(from var(--tn-text-1) r g b / 0.05);
+    --tokyo-shadow-2: 0 4px 10px rgb(from var(--tn-text-1) r g b / 0.14), 0 0 1px rgb(from var(--tn-text-1) r g b / 0.07);
+    --tokyo-shadow-3: 0 8px 24px rgb(from var(--tn-text-1) r g b / 0.2), 0 0 1px rgb(from var(--tn-text-1) r g b / 0.1);
+    --tokyo-shadow-4: 0 16px 48px rgb(from var(--tn-text-1) r g b / 0.24), 0 0 2px rgb(from var(--tn-text-1) r g b / 0.14);
     --tokyo-shadow-floating:
-        0 10px 26px rgba(0, 0, 0, 0.26),
-        0 0 0 1px rgba(122, 162, 247, 0.06);
+        0 10px 26px rgb(from var(--tn-text-1) r g b / 0.18),
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.1);
     --tokyo-shadow-floating-strong:
-        0 14px 34px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(122, 162, 247, 0.08);
-    
+        0 14px 34px rgb(from var(--tn-text-1) r g b / 0.22),
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.14);
+
     /* 内阴影 - 用于凹陷感 */
-    --tokyo-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 0 1px rgba(0, 0, 0, 0.1);
-    
+    --tokyo-shadow-inset: inset 0 1px 2px rgb(from var(--tn-text-1) r g b / 0.1), inset 0 0 1px rgb(from var(--tn-text-1) r g b / 0.06);
+
     /* 发光效果 */
-    --tokyo-shadow-glow-primary: 0 0 0 1px rgba(122, 162, 247, 0.3), 0 0 20px rgba(122, 162, 247, 0.15);
-    --tokyo-shadow-glow-hover: 0 0 30px rgba(122, 162, 247, 0.25);
-    
+    --tokyo-shadow-glow-primary: 0 0 0 1px rgb(from var(--tn-accent) r g b / 0.28), 0 0 20px rgb(from var(--tn-accent) r g b / 0.14);
+    --tokyo-shadow-glow-hover: 0 0 30px rgb(from var(--tn-accent) r g b / 0.2);
+
     /* 保留原有变量兼容 */
     --tokyo-floating-radius: 16px;
-    --tokyo-glass-bg: rgba(18, 20, 29, 0.95);
+    --tokyo-glass-bg: rgb(from var(--tn-bg-2) r g b / 0.95);
     --tokyo-glass-blur: 0px;
-    --tokyo-floating-bg: rgba(27, 30, 44, 0.98);
-    --tokyo-floating-bg-subtle: rgba(30, 34, 49, 0.98);
-    --tokyo-floating-bg-emphasis: rgba(32, 36, 52, 0.99);
-    --tokyo-floating-outline: rgba(122, 162, 247, 0.1);
+    --tokyo-floating-bg: rgb(from var(--tn-bg-1) r g b / 0.98);
+    --tokyo-floating-bg-subtle: rgb(from var(--tn-bg-2) r g b / 0.98);
+    --tokyo-floating-bg-emphasis: rgb(from var(--tn-bg-3) r g b / 0.99);
+    --tokyo-floating-outline: rgb(from var(--tn-accent) r g b / 0.1);
     --tokyo-shadow-tooltip:
-        0 6px 14px rgba(0, 0, 0, 0.2),
-        0 0 0 1px rgba(122, 162, 247, 0.05);
-    --tokyo-control-bg: rgba(37, 41, 59, 0.92);
-    --tokyo-control-bg-hover: rgba(45, 51, 73, 0.94);
+        0 6px 14px rgb(from var(--tn-text-1) r g b / 0.15),
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.08);
+    --tokyo-control-bg: rgb(from var(--tn-bg-2) r g b / 0.92);
+    --tokyo-control-bg-hover: rgb(from var(--tn-bg-3) r g b / 0.94);
     --tokyo-control-shadow:
-        0 0 0 1px rgba(122, 162, 247, 0.08);
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.1);
     --tokyo-control-shadow-hover:
-        0 0 0 1px rgba(122, 162, 247, 0.12);
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.16);
     --tokyo-control-shadow-focus:
-        0 0 0 2px rgba(122, 162, 247, 0.32),
-        0 0 0 1px rgba(122, 162, 247, 0.16);
+        0 0 0 2px rgb(from var(--tn-accent) r g b / 0.32),
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.16);
     --tokyo-transition-ui: 0.18s ease;
     --tokyo-transition-fast: 0.14s ease-in-out;
     --tokyo-transition-micro: 0.1s ease-in-out;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --tokyo-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.1);
+        --tokyo-shadow-2: 0 4px 8px rgba(0, 0, 0, 0.25), 0 0 1px rgba(0, 0, 0, 0.15);
+        --tokyo-shadow-3: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.2);
+        --tokyo-shadow-4: 0 16px 48px rgba(0, 0, 0, 0.35), 0 0 2px rgba(0, 0, 0, 0.25);
+        --tokyo-shadow-floating:
+            0 10px 26px rgba(0, 0, 0, 0.26),
+            0 0 0 1px rgba(122, 162, 247, 0.06);
+        --tokyo-shadow-floating-strong:
+            0 14px 34px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(122, 162, 247, 0.08);
+        --tokyo-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 0 1px rgba(0, 0, 0, 0.1);
+        --tokyo-shadow-glow-primary: 0 0 0 1px rgba(122, 162, 247, 0.3), 0 0 20px rgba(122, 162, 247, 0.15);
+        --tokyo-shadow-glow-hover: 0 0 30px rgba(122, 162, 247, 0.25);
+
+        --tokyo-glass-bg: rgba(18, 20, 29, 0.95);
+        --tokyo-floating-bg: rgba(27, 30, 44, 0.98);
+        --tokyo-floating-bg-subtle: rgba(30, 34, 49, 0.98);
+        --tokyo-floating-bg-emphasis: rgba(32, 36, 52, 0.99);
+        --tokyo-floating-outline: rgba(122, 162, 247, 0.1);
+        --tokyo-shadow-tooltip:
+            0 6px 14px rgba(0, 0, 0, 0.2),
+            0 0 0 1px rgba(122, 162, 247, 0.05);
+        --tokyo-control-bg: rgba(37, 41, 59, 0.92);
+        --tokyo-control-bg-hover: rgba(45, 51, 73, 0.94);
+    }
 }
 
 /* ===== Excalidraw whiteboard theming ===== */
 /* Scoped refinements that reuse Tokyo Night floating/control tokens. */
 .excalidraw {
     --color-primary: var(--orca-color-primary-5) !important;
-    --color-primary-darker: #668ce0 !important;
-    --color-primary-darkest: #5878c0 !important;
-    --color-primary-light: #91b2ff !important;
+    --color-primary-darker: color-mix(in oklab, var(--tn-accent) 82%, var(--tn-bg-1)) !important;
+    --color-primary-darkest: color-mix(in oklab, var(--tn-accent) 70%, var(--tn-bg-1)) !important;
+    --color-primary-light: var(--tn-accent-hover) !important;
     --color-surface-lowest: var(--tokyo-night-bg-night) !important;
-    --color-surface-low: #1d2234 !important;
-    --color-surface-mid: #242a3f !important;
-    --color-surface-high: #2a3149 !important;
-    --color-surface-higher: #313954 !important;
-    --color-on-primary-container: #e7eeff !important;
+    --color-surface-low: var(--tokyo-floating-bg-subtle) !important;
+    --color-surface-mid: var(--tokyo-floating-bg-emphasis) !important;
+    --color-surface-high: color-mix(in srgb, var(--tokyo-floating-bg-emphasis), var(--tn-border) 20%) !important;
+    --color-surface-higher: color-mix(in srgb, var(--tokyo-floating-bg-emphasis), var(--tn-border) 35%) !important;
+    --color-on-primary-container: var(--tokyo-night-white) !important;
     --color-on-surface: var(--tokyo-night-foreground) !important;
-    --color-on-surface-variant: #a1abd2 !important;
-    --color-border-outline: #2c334b !important;
-    --color-border-outline-variant: #353d5a !important;
+    --color-on-surface-variant: var(--tokyo-night-comment) !important;
+    --color-border-outline: color-mix(in srgb, var(--tokyo-floating-bg-emphasis), var(--tn-border) 30%) !important;
+    --color-border-outline-variant: var(--tn-border) !important;
     --island-bg-color: var(--tokyo-floating-bg) !important;
     --popup-bg-color: var(--tokyo-floating-bg-emphasis) !important;
     --sidebar-bg-color: var(--tokyo-floating-bg-subtle) !important;
@@ -2054,17 +2303,17 @@ div.orca-settings {
 }
 
 .excalidraw :is(.dropdown-menu-item, [data-radix-collection-item]) {
-    color: #aeb8de !important;
+    color: var(--tokyo-night-foreground) !important;
     border: none !important;
 }
 
 .excalidraw :is(.dropdown-menu-item:hover, [data-radix-collection-item]:hover) {
     background: color-mix(in srgb, var(--orca-color-primary-5), transparent 84%) !important;
-    color: #edf2ff !important;
+    color: var(--tokyo-night-white) !important;
 }
 
 .excalidraw :is(.dropdown-menu-item:hover, [data-radix-collection-item]:hover) * {
-    color: #edf2ff !important;
+    color: var(--tokyo-night-white) !important;
 }
 
 /* Force readable hover text in Excalidraw context menus (prevents dark text overrides). */
@@ -2074,25 +2323,25 @@ div.orca-settings {
     [role="menuitem"]:hover,
     li:hover
 ) :is(span, div, p, a, button, label, strong, em) {
-    color: #f3f7ff !important;
-    -webkit-text-fill-color: #f3f7ff !important;
+    color: var(--tokyo-night-white) !important;
+    -webkit-text-fill-color: var(--tokyo-night-white) !important;
 }
 
 .excalidraw :is(.dropdown-menu-item[aria-disabled="true"], [data-radix-collection-item][aria-disabled="true"], .dropdown-menu-item.disabled) {
-    color: #68739d !important;
+    color: var(--tn-text-2) !important;
 }
 
 .excalidraw :is(.dropdown-menu-item[aria-disabled="true"], [data-radix-collection-item][aria-disabled="true"], .dropdown-menu-item.disabled):hover {
     background: transparent !important;
-    color: #68739d !important;
+    color: var(--tn-text-2) !important;
 }
 
 .excalidraw :is(.dropdown-menu-item kbd, [data-radix-collection-item] kbd, .dropdown-menu-item .shortcut, [data-radix-collection-item] .shortcut) {
-    color: #8e99c5 !important;
+    color: var(--tokyo-night-comment) !important;
 }
 
 .excalidraw :is(.dropdown-menu-item:hover kbd, [data-radix-collection-item]:hover kbd, .dropdown-menu-item:hover .shortcut, [data-radix-collection-item]:hover .shortcut) {
-    color: #cdd8ff !important;
+    color: var(--tokyo-night-white) !important;
 }
 
 .excalidraw :is(.dropdown-menu, .context-menu) :is([role="separator"], hr, .separator, .dropdown-menu-separator) {
@@ -2153,7 +2402,7 @@ div.orca-settings {
 
 .excalidraw :is(.ToolIcon.ToolIcon_type_filled .ToolIcon__icon, .ToolIcon[aria-pressed="true"] .ToolIcon__icon, .sidebar__tab[aria-selected="true"], .library-menu-control[aria-selected="true"], .library-menu-control.active) {
     background: color-mix(in srgb, var(--orca-color-primary-5), transparent 78%) !important;
-    color: #eaf0ff !important;
+    color: var(--tokyo-night-white) !important;
     box-shadow: 0 0 0 1px rgba(122, 162, 247, 0.2) !important;
 }
 
@@ -2176,7 +2425,7 @@ div.orca-settings {
     align-items: center !important;
     justify-content: center !important;
     background: var(--tokyo-control-bg) !important;
-    color: #aeb8de !important;
+    color: var(--tokyo-night-foreground) !important;
     border: 1px solid rgba(122, 162, 247, 0.14) !important;
     box-shadow: var(--tokyo-control-shadow) !important;
     font-weight: 500 !important;
@@ -2188,7 +2437,7 @@ div.orca-settings {
 
 .excalidraw .library-menu-browse-button:hover {
     background: var(--tokyo-control-bg-hover) !important;
-    color: #c0caf5 !important;
+    color: var(--tokyo-night-white) !important;
     border-color: rgba(122, 162, 247, 0.2) !important;
     box-shadow: var(--tokyo-control-shadow-hover) !important;
 }
@@ -2196,17 +2445,17 @@ div.orca-settings {
 .excalidraw .layer-ui__wrapper__top-right :is(.ToolIcon__icon, .library-menu-control) {
     background: color-mix(in srgb, var(--tokyo-control-bg), var(--tokyo-night-bg-night) 20%) !important;
     border: 1px solid rgba(122, 162, 247, 0.1) !important;
-    color: #aab6de !important;
+    color: var(--tokyo-night-foreground) !important;
 }
 
 .excalidraw .layer-ui__wrapper__top-right :is(.ToolIcon__icon, .library-menu-control):hover {
     background: var(--tokyo-control-bg-hover) !important;
-    color: #d7e2ff !important;
+    color: var(--tokyo-night-white) !important;
 }
 
 .excalidraw .layer-ui__wrapper__top-right :is(.ToolIcon.ToolIcon_type_filled .ToolIcon__icon, .ToolIcon[aria-pressed="true"] .ToolIcon__icon, .library-menu-control[aria-selected="true"], .library-menu-control.active) {
     background: color-mix(in srgb, var(--orca-color-primary-5), transparent 84%) !important;
-    color: #e9efff !important;
+    color: var(--tokyo-night-white) !important;
 }
 
 /* Library mode switch: keep it as two explicit buttons (stable fallback). */
@@ -2268,7 +2517,7 @@ div.orca-settings {
 .excalidraw [id*="trigger-library"] :is(button, [role="tab"], .ToolIcon__icon) {
     border-radius: 8px !important;
     background: transparent !important;
-    color: #aab6de !important;
+    color: var(--tokyo-night-foreground) !important;
     box-shadow: none !important;
     min-height: 34px !important;
     padding: 0 !important;
@@ -2276,12 +2525,12 @@ div.orca-settings {
 
 .excalidraw [id*="trigger-library"] :is(button, [role="tab"], .ToolIcon__icon):hover {
     background: color-mix(in srgb, var(--orca-color-primary-5), transparent 88%) !important;
-    color: #dce6ff !important;
+    color: var(--tokyo-night-white) !important;
 }
 
 .excalidraw [id*="trigger-library"] :is([aria-selected="true"], [aria-pressed="true"], .active) {
     background: color-mix(in srgb, var(--orca-color-primary-5), transparent 82%) !important;
-    color: #eef3ff !important;
+    color: var(--tokyo-night-white) !important;
     box-shadow: 0 0 0 1px rgba(122, 162, 247, 0.18) !important;
 }
 
@@ -2387,7 +2636,7 @@ div.orca-settings {
 .excalidraw :is(input[type="text"], input[type="search"], textarea) {
     background: var(--tokyo-night-bg-night) !important;
     color: var(--tokyo-night-foreground) !important;
-    border: 1px solid #353d5a !important;
+    border: 1px solid var(--tn-border) !important;
     border-radius: var(--orca-radius-sm) !important;
 }
 
@@ -2501,16 +2750,32 @@ div.orca-settings {
     display: inline-block;
     padding: 4px 16px;
     border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.02);
-    background-image: radial-gradient(
-        ellipse at center bottom,
-        color-mix(in srgb, var(--tokyo-night-red), transparent 85%),
-        transparent 70%
-    );
+    background-color: rgb(from var(--tn-bg-1) r g b / 0.34);
+    background-image:
+        radial-gradient(
+            ellipse at 18% 8%,
+            rgb(from #ffffff r g b / 0.34),
+            transparent 52%
+        ),
+        linear-gradient(
+            180deg,
+            rgb(from #ffffff r g b / 0.26) 0%,
+            rgb(from #ffffff r g b / 0.05) 42%,
+            transparent 100%
+        ),
+        radial-gradient(
+            ellipse at center bottom,
+            color-mix(in srgb, var(--tn-accent), transparent 88%),
+            transparent 70%
+        );
     background-repeat: no-repeat;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px) saturate(112%);
+    -webkit-backdrop-filter: blur(14px) saturate(112%);
+    border: 1px solid rgb(from #ffffff r g b / 0.48);
+    box-shadow:
+        inset 0 1px 0 rgb(from #ffffff r g b / 0.4),
+        inset 0 -1px 0 rgb(from var(--tn-border) r g b / 0.22),
+        0 8px 18px rgb(from var(--tn-text-1) r g b / 0.06);
     transition: all 0.4s ease;
 }
 #main
@@ -2520,14 +2785,64 @@ div.orca-settings {
         .orca-repr-main-none-editable
     )
     h1:hover > span:first-child {
-    color: var(--tokyo-night-red);
+    color: var(--tn-accent);
     text-shadow: 0 0 12px
-        color-mix(in srgb, var(--tokyo-night-red), transparent 40%);
-    background-image: radial-gradient(
-        ellipse at center bottom,
-        color-mix(in srgb, var(--tokyo-night-red), transparent 50%),
-        transparent 70%
-    );
+        color-mix(in srgb, var(--tn-accent), transparent 70%);
+    background-image:
+        radial-gradient(
+            ellipse at 16% 8%,
+            rgb(from #ffffff r g b / 0.38),
+            transparent 54%
+        ),
+        linear-gradient(
+            180deg,
+            rgb(from #ffffff r g b / 0.28) 0%,
+            rgb(from #ffffff r g b / 0.07) 42%,
+            transparent 100%
+        ),
+        radial-gradient(
+            ellipse at center bottom,
+            color-mix(in srgb, var(--tn-accent), transparent 74%),
+            transparent 72%
+        );
+}
+
+@media (prefers-color-scheme: dark) {
+    #main
+        :is(
+            .orca-block-editor-main,
+            .orca-repr-main-content,
+            .orca-repr-main-none-editable
+        )
+        h1 > span:first-child {
+        background-color: rgba(255, 255, 255, 0.02);
+        background-image: radial-gradient(
+            ellipse at center bottom,
+            color-mix(in srgb, var(--tokyo-night-red), transparent 85%),
+            transparent 70%
+        );
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        box-shadow: none;
+    }
+    #main
+        :is(
+            .orca-block-editor-main,
+            .orca-repr-main-content,
+            .orca-repr-main-none-editable
+        )
+        h1:hover > span:first-child {
+        color: var(--tokyo-night-red);
+        text-shadow: 0 0 12px
+            color-mix(in srgb, var(--tokyo-night-red), transparent 40%);
+        background-image: radial-gradient(
+            ellipse at center bottom,
+            color-mix(in srgb, var(--tokyo-night-red), transparent 50%),
+            transparent 70%
+        );
+    }
 }
 
 /* H2 下划线展开效果 */
@@ -3196,7 +3511,7 @@ div.orca-settings {
     )
     .orca-highlight:hover {
     background-color: var(--tokyo-night-red) !important;
-    color: #fff !important;
+    color: #ffffff !important;
     transform: scale(1.05);
     box-shadow: 0 0 12px
         color-mix(in srgb, var(--tokyo-night-red), transparent 50%);
@@ -3306,3 +3621,5 @@ div.orca-settings {
 .orca-repr-main-content.orca-repr-table2-content .orca-repr-main-collapsed .orca-block-handle {
     display: none !important;
 }
+
+

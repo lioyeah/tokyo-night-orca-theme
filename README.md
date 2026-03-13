@@ -1,18 +1,14 @@
 # Tokyo Night 主题 for Orca Notes
 
-一款适用于 [Orca Notes](https://orca.sh/) 的精致 Tokyo Night 暗色主题，旨在提供舒适的视觉体验并提升笔记的专注度。
+一款适用于 [Orca Notes](https://orca.sh/) 的精致 Tokyo Night 双模主题，默认提供 Tokyo Night Light，并随系统/Orca 亮暗模式自动切换。
 
 [![GitHub Stars](https://img.shields.io/github/stars/lioyeah/tokyo-night-orca-theme?style=social)](https://github.com/lioyeah/tokyo-night-orca-theme/stargazers)
 
 ## ✨ 功能特性
 
-* **经典的 Tokyo Night 配色**：精心调校的颜色方案，带来标志性的视觉感受。
-    * 主背景：`#1a1b26` (Night)
-    * 次背景/UI 元素：`#24283b` (Storm), `#1f2335` (Float)
-    * 主要文字：`#a9b1d6`
-    * 高亮/强调文字：`#c0caf5`
-    * 注释/次要文字：`#565f89`
-    * 强调色 (蓝)：`#7aa2f7`
+* **Tokyo Night Light + Dark 自动切换**：精心调校的亮暗双配色，带来统一品牌体验。
+    * Light 核心：背景 `#e6e7ed`、次背景 `#d6d8df`、正文 `#363c4d`、主色 `#2959aa`
+    * Dark 核心：背景 `#1a1b26`、次背景 `#16161e`、正文 `#a9b1d6`、主色 `#7aa2f7`
     * 以及更多符合 Tokyo Night 规范的颜色应用于各种 UI 组件。
 * **全面的 UI 覆盖**：
     * 应用整体背景和文字颜色。
@@ -42,7 +38,7 @@
 
 1.  安装并启用插件后，进入 Orca Notes 的 `设置` > `外观`。
 2.  在 `主题` 下拉菜单中，选择 `Tokyo Night`。
-3.  主题将立即应用。
+3.  主题将立即应用，并根据 Orca/系统亮暗模式自动切换 Light/Dark 变体。
 
 ## ⚙️ 配置选项
 
