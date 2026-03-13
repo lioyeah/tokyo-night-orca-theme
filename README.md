@@ -48,6 +48,27 @@
 
 当前版本采用纯静态 CSS 架构。所有样式在 `tokyo-night.css` 中定义，悬浮圆角效果默认启用，无需额外配置。
 
+## 🧭 维护速查（Vibe 用户）
+
+如果你只想快速调风格，优先改 `public/tokyo-night.css` 里的这 10 个 token（位于第二个 `:root` 区域）：
+
+1. `--tokyo-floating-bg`：菜单/弹层基础背景色
+2. `--tokyo-floating-bg-subtle`：tooltip 等更轻浮层背景
+3. `--tokyo-floating-bg-emphasis`：modal/settings 等更重浮层背景
+4. `--tokyo-shadow-floating`：普通浮层阴影强度
+5. `--tokyo-shadow-floating-strong`：重浮层阴影强度
+6. `--tokyo-control-bg`：按钮/输入框默认背景
+7. `--tokyo-control-bg-hover`：按钮/输入框 hover 背景
+8. `--tokyo-control-shadow`：控件默认轮廓
+9. `--tokyo-control-shadow-focus`：控件 focus 可见性
+10. `--tokyo-transition-ui`：主要交互过渡时长
+
+建议：
+
+1. 先改颜色 token（`bg`/`shadow`），确认整体调性。
+2. 再改过渡 token（`transition`），避免“看起来卡顿或过快”。
+3. 每次改完执行 `npm run build`，只观察 3 类界面：`popup`、`modal`、`settings`。
+
 ## 🛠️ 开发与构建
 
 如果您想为此主题贡献代码或自行构建：

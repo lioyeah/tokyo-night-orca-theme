@@ -1,6 +1,10 @@
 /* Tokyo Night Theme for Orca Notes */
 /* 整合自 main.ts 中的所有 CSS 字符串 */
 
+/*
+ * Root A: base palette + Orca semantic color mapping.
+ * Safe to tweak for global tone and contrast.
+ */
 :root {
     /* ===== Tokyo Night 核心调色板 ===== */
     --tokyo-night-red: #f7768e;
@@ -1126,11 +1130,12 @@ mark,
 
 /* ===== 菜单样式 - 现代阴影 ===== */
 .orca-menu {
-    background-color: var(--tokyo-night-bg-storm) !important;
+    background: var(--tokyo-floating-bg) !important;
     color: var(--orca-color-text-1) !important;
     border: none !important;
-    box-shadow: var(--tokyo-shadow-3) !important;
+    box-shadow: var(--tokyo-shadow-floating) !important;
     border-radius: var(--orca-radius-md) !important;
+    overflow: hidden !important;
 }
 .orca-menu .orca-menu-item:hover {
     background-color: var(--tokyo-night-terminal-black) !important;
@@ -1143,11 +1148,12 @@ mark,
 
 /* ===== 工具提示样式 - 现代阴影 ===== */
 .orca-tooltip {
-    background-color: var(--tokyo-night-bg-night) !important;
+    background: var(--tokyo-floating-bg-subtle) !important;
     color: var(--tokyo-night-white) !important;
     border: none !important;
-    box-shadow: var(--tokyo-shadow-2) !important;
+    box-shadow: var(--tokyo-shadow-tooltip) !important;
     border-radius: var(--orca-radius-sm) !important;
+    padding: calc(var(--orca-spacing-xs) * 0.75) var(--orca-spacing-sm) !important;
 }
 
 /* ===== 块操作手柄 ===== */
@@ -1166,30 +1172,31 @@ mark,
 
 /* ===== 弹出层样式 - 现代圆角阴影 ===== */
 .orca-popup {
-    background-color: var(--tokyo-night-bg-storm) !important;
+    background: var(--tokyo-floating-bg) !important;
     opacity: 1 !important;
     z-index: 501 !important;
     border-radius: var(--orca-radius-md) !important;
-    box-shadow: var(--tokyo-shadow-3) !important;
+    border: none !important;
+    box-shadow: var(--tokyo-shadow-floating) !important;
     overflow: hidden !important;
 }
 
 /* 工具栏弹出菜单 */
 #headbar .orca-popup,
 #headbar > div.orca-popup > div {
+    background: var(--tokyo-floating-bg) !important;
+    border: none !important;
     border-radius: var(--orca-radius-md) !important;
-    box-shadow: var(--tokyo-shadow-3) !important;
+    box-shadow: var(--tokyo-shadow-floating) !important;
     overflow: hidden !important;
 }
 
 /* 主编辑区内弹出层增强可见度 */
 #main .orca-popup,
 #main .orca-panel.active > .orca-hideable.no-pointer > .orca-popup.orca-hideable-content {
-    background: var(--tokyo-night-bg-float) !important;
-    border: 1px solid rgba(65, 72, 104, 0.5) !important;
-    box-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.2),
-        var(--tokyo-shadow-3) !important;
+    background: var(--tokyo-floating-bg-emphasis) !important;
+    border: none !important;
+    box-shadow: var(--tokyo-shadow-floating) !important;
 }
 .orca-popup .item,
 .orca-popup .menu-item,
@@ -1216,10 +1223,10 @@ mark,
 /* ===== 模态框和对话框 - 现代阴影 ===== */
 .orca-modal,
 .orca-dialog {
-    background-color: var(--tokyo-night-bg-storm) !important;
+    background: var(--tokyo-floating-bg-emphasis) !important;
     color: var(--orca-color-text-1) !important;
     border: none !important;
-    box-shadow: var(--tokyo-shadow-4) !important;
+    box-shadow: var(--tokyo-shadow-floating-strong) !important;
     border-radius: var(--orca-radius-lg) !important;
 }
 
@@ -1242,13 +1249,27 @@ mark,
     border-radius: var(--orca-radius-sm) !important;
     padding: var(--orca-spacing-md) !important;
 }
-.orca-query-conditions .orca-query-conditions-reset.orca-button {
-    background-color: var(--tokyo-night-bg-float) !important;
+
+/* Shared control surface baseline for settings/query actions. */
+.orca-query-conditions .orca-query-conditions-reset.orca-button,
+.orca-settings > .views button:not(.orca-switch),
+.orca-settings button:not(.orca-switch),
+.orca-settings > .views .shortcut-input button.orca-button.plain {
+    background: var(--tokyo-control-bg) !important;
     color: var(--tokyo-night-white) !important;
-    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    border: none !important;
+    border-radius: var(--orca-radius-sm) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    transition:
+        background var(--tokyo-transition-ui) !important,
+        box-shadow var(--tokyo-transition-ui) !important;
 }
-.orca-query-conditions .orca-query-conditions-reset.orca-button:hover {
-    background-color: var(--tokyo-night-terminal-black) !important;
+.orca-query-conditions .orca-query-conditions-reset.orca-button:hover,
+.orca-settings > .views button:not(.orca-switch):hover,
+.orca-settings button:not(.orca-switch):hover,
+.orca-settings > .views .shortcut-input button.orca-button.plain:hover {
+    background: var(--tokyo-control-bg-hover) !important;
+    box-shadow: var(--tokyo-control-shadow-hover) !important;
 }
 
 /* ===== 查询编辑器标签页 ===== */
@@ -1467,10 +1488,10 @@ nav#sidebar .years .year.selected {
 
 /* ===== 设置模态框样式 ===== */
 div.orca-settings {
-    background-color: var(--tokyo-night-bg-storm) !important;
+    background: var(--tokyo-floating-bg-emphasis) !important;
     color: var(--orca-color-text-1) !important;
-    border: 1px solid var(--tokyo-night-terminal-black) !important;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3) !important;
+    border: none !important;
+    box-shadow: var(--tokyo-shadow-floating-strong) !important;
     border-radius: var(--orca-radius-lg) !important;
     overflow: hidden !important;
     padding: 0 !important;
@@ -1479,15 +1500,17 @@ div.orca-settings {
 .orca-settings > .headbar,
 .orca-settings > .header,
 .orca-settings > .head {
-    background-color: var(--tokyo-night-bg-night) !important;
+    background: rgba(29, 33, 48, 0.98) !important;
     color: var(--orca-color-text-1) !important;
-    border-bottom: 1px solid var(--tokyo-night-terminal-black) !important;
+    border-bottom: none !important;
+    box-shadow: inset 0 -1px 0 rgba(122, 162, 247, 0.08) !important;
 }
 
 /* 设置左侧导航区 */
 .orca-settings > .sections {
-    background-color: var(--tokyo-night-bg-dark) !important;
-    border-right: 1px solid var(--tokyo-night-terminal-black) !important;
+    background: rgba(25, 28, 40, 0.96) !important;
+    border-right: none !important;
+    box-shadow: inset -1px 0 0 rgba(122, 162, 247, 0.07) !important;
     border-top-left-radius: var(--orca-radius-lg) !important;
     border-bottom-left-radius: var(--orca-radius-lg) !important;
     overflow: hidden !important;
@@ -1499,8 +1522,9 @@ div.orca-settings {
 .orca-settings > .sections .header,
 .orca-settings > .sections .head,
 .orca-settings > .sections .title {
-    background-color: var(--tokyo-night-bg-dark) !important;
-    border-bottom: 1px solid var(--tokyo-night-terminal-black) !important;
+    background-color: transparent !important;
+    border-bottom: none !important;
+    box-shadow: inset 0 -1px 0 rgba(122, 162, 247, 0.06) !important;
 }
 
 .orca-settings > .sections .headbar *,
@@ -1546,7 +1570,7 @@ div.orca-settings {
 
 /* 设置右侧内容视图区 */
 .orca-settings > .views {
-    background-color: var(--tokyo-night-bg-night) !important;
+    background: rgba(24, 27, 39, 0.98) !important;
     color: var(--orca-color-text-1) !important;
     border-top-right-radius: var(--orca-radius-lg) !important;
     border-bottom-right-radius: var(--orca-radius-lg) !important;
@@ -1557,7 +1581,8 @@ div.orca-settings {
 .orca-settings > .views h3,
 .orca-settings > .views .settings-group-title {
     color: var(--tokyo-night-white) !important;
-    border-bottom: 1px solid var(--tokyo-night-terminal-black) !important;
+    border-bottom: none !important;
+    box-shadow: inset 0 -1px 0 rgba(122, 162, 247, 0.08) !important;
     padding-bottom: 0.5em !important;
     margin-bottom: 1em !important;
 }
@@ -1576,15 +1601,12 @@ div.orca-settings {
 /* 设置界面按钮 */
 .orca-settings > .views button:not(.orca-switch),
 .orca-settings button:not(.orca-switch) {
-    background-color: var(--tokyo-night-terminal-black) !important;
-    color: var(--tokyo-night-white) !important;
-    border: 1px solid var(--tokyo-night-comment) !important;
     padding: 0.5em 1em !important;
-    border-radius: 4px !important;
 }
-.orca-settings > .views button:not(.orca-switch):hover,
-.orca-settings button:not(.orca-switch):hover {
-    background-color: var(--tokyo-night-comment) !important;
+.orca-settings > .views button:not(.orca-switch):focus-visible,
+.orca-settings button:not(.orca-switch):focus-visible {
+    outline: none !important;
+    box-shadow: var(--tokyo-control-shadow-focus) !important;
 }
 .orca-settings > .views button:not(.orca-switch) .ti,
 .orca-settings button:not(.orca-switch) .ti {
@@ -1594,12 +1616,6 @@ div.orca-settings {
 /* 快捷方式设置按钮 */
 .orca-settings > .views .shortcut-input button.orca-button.plain {
     padding: var(--orca-spacing-xs) var(--orca-spacing-sm) !important;
-    color: var(--tokyo-night-white) !important;
-    background-color: var(--tokyo-night-terminal-black) !important;
-    border: 1px solid var(--tokyo-night-comment) !important;
-}
-.orca-settings > .views .shortcut-input button.orca-button.plain:hover {
-    background-color: var(--tokyo-night-comment) !important;
 }
 .orca-settings > .views .shortcut-input button.orca-button.plain .ti {
     color: var(--tokyo-night-white) !important;
@@ -1608,16 +1624,20 @@ div.orca-settings {
 /* 设置界面输入框 */
 .orca-settings > .views .orca-input-input,
 .orca-settings .orca-input-input {
-    background-color: var(--tokyo-night-bg-night) !important;
+    background: var(--tokyo-control-bg) !important;
     color: var(--orca-color-text-1) !important;
-    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    border: none !important;
     padding: var(--orca-spacing-sm) var(--orca-spacing-md) !important;
     border-radius: var(--orca-radius-sm) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    transition:
+        background var(--tokyo-transition-ui) !important,
+        box-shadow var(--tokyo-transition-ui) !important;
 }
 .orca-settings > .views .orca-input-input:focus-within,
 .orca-settings .orca-input-input:focus-within {
-    border-color: var(--orca-color-primary-5) !important;
-    box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.35) !important;
+    background: var(--tokyo-control-bg-hover) !important;
+    box-shadow: var(--tokyo-control-shadow-focus) !important;
     outline: none !important;
 }
 
@@ -1634,7 +1654,7 @@ div.orca-settings {
 .orca-settings > .views .orca-input-input[type="color"],
 .orca-settings .orca-input-input[type="color"] {
     padding: 0 var(--orca-spacing-xs) !important;
-    background-color: var(--tokyo-night-bg-night) !important;
+    background: var(--tokyo-control-bg) !important;
 }
 
 /* 通用输入控件备用样式 */
@@ -1642,26 +1662,51 @@ div.orca-settings {
 .orca-settings > .views input[type="password"],
 .orca-settings > .views textarea,
 .orca-settings > .views select {
-    background-color: var(--tokyo-night-bg-night) !important;
+    background: var(--tokyo-control-bg) !important;
     color: var(--orca-color-text-1) !important;
-    border: 1px solid var(--tokyo-night-terminal-black) !important;
+    border: none !important;
     padding: 0.5em !important;
-    border-radius: 4px !important;
+    border-radius: var(--orca-radius-sm) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    transition:
+        background var(--tokyo-transition-ui) !important,
+        box-shadow var(--tokyo-transition-ui) !important;
+}
+.orca-settings > .views input[type="text"]:hover,
+.orca-settings > .views input[type="password"]:hover,
+.orca-settings > .views textarea:hover,
+.orca-settings > .views select:hover {
+    background: var(--tokyo-control-bg-hover) !important;
+    box-shadow: var(--tokyo-control-shadow-hover) !important;
+}
+.orca-settings > .views input[type="text"]:focus,
+.orca-settings > .views input[type="password"]:focus,
+.orca-settings > .views textarea:focus,
+.orca-settings > .views select:focus {
+    outline: none !important;
+    background: var(--tokyo-control-bg-hover) !important;
+    box-shadow: var(--tokyo-control-shadow-focus) !important;
 }
 
 /* 设置界面开关组件 */
 .orca-settings .orca-switch {
-    background-color: var(--tokyo-night-terminal-black) !important;
-    transition: background-color 0.2s ease !important;
+    background: var(--tokyo-control-bg) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    transition:
+        background var(--tokyo-transition-ui) !important,
+        box-shadow var(--tokyo-transition-ui) !important;
 }
 .orca-settings .orca-switch .orca-switch-toggle {
     background-color: var(--orca-color-text-1) !important;
     transition:
         background-color 0.2s ease,
-        transform 0.1s ease-in-out !important;
+        transform var(--tokyo-transition-micro) !important;
 }
 .orca-settings .orca-switch.orca-switch-on {
-    background-color: var(--orca-color-primary-5) !important;
+    background: rgba(105, 137, 212, 0.96) !important;
+    box-shadow:
+        0 0 0 1px rgba(122, 162, 247, 0.18),
+        0 0 14px rgba(122, 162, 247, 0.12) !important;
 }
 .orca-settings .orca-switch.orca-switch-on .orca-switch-toggle {
     background-color: var(--tokyo-night-white) !important;
@@ -1669,9 +1714,10 @@ div.orca-settings {
 
 /* 设置界面分段控件 */
 .orca-settings > .views .orca-segmented {
-    background-color: var(--tokyo-night-bg-night) !important;
+    background: var(--tokyo-control-bg) !important;
     border-radius: var(--orca-radius-md) !important;
     padding: 3px !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
 }
 .orca-settings > .views .orca-segmented .orca-segmented-item {
     color: var(--orca-color-text-1) !important;
@@ -1679,27 +1725,27 @@ div.orca-settings {
     line-height: var(--orca-height-segmented, 22px) !important;
     border-radius: var(--orca-radius-sm) !important;
     transition:
-        color 0.1s ease-in-out,
-        background-color 0.1s ease-in-out !important;
+        color var(--tokyo-transition-micro),
+        background var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
     background-color: transparent !important;
 }
 .orca-settings > .views .orca-segmented .orca-segmented-item .ti {
     color: var(--orca-color-text-1) !important;
 }
 .orca-settings > .views .orca-segmented .orca-segmented-item:hover {
-    background-color: var(--tokyo-night-terminal-black) !important;
+    background: var(--tokyo-control-bg-hover) !important;
     color: var(--tokyo-night-white) !important;
+    box-shadow: inset 0 0 0 1px rgba(122, 162, 247, 0.08) !important;
 }
 .orca-settings > .views .orca-segmented .orca-segmented-item:hover .ti {
     color: var(--tokyo-night-white) !important;
 }
 .orca-settings > .views .orca-segmented .orca-segmented-item.orca-selected {
-    background-color: var(--orca-color-primary-5) !important;
+    background: rgba(122, 162, 247, 0.92) !important;
     color: var(--tokyo-night-bg-night) !important;
-    box-shadow: var(
-        --orca-shadow-segmented,
-        0 1px 3px rgba(0, 0, 0, 0.1)
-    ) !important;
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset !important;
 }
 .orca-settings > .views .orca-segmented .orca-segmented-item.orca-selected .ti {
     color: var(--tokyo-night-bg-night) !important;
@@ -1712,7 +1758,8 @@ div.orca-settings {
 .orca-settings .orca-settings-shortcuts-header {
     background-color: var(--tokyo-night-bg-night) !important;
     color: var(--tokyo-night-white) !important;
-    border-bottom: 1px solid var(--tokyo-night-terminal-black) !important;
+    border-bottom: none !important;
+    box-shadow: inset 0 -1px 0 rgba(122, 162, 247, 0.08) !important;
 }
 
 .orca-settings .orca-table-row:hover {
@@ -1723,6 +1770,10 @@ div.orca-settings {
     color: var(--tokyo-night-bg-night) !important;
 }
 
+/*
+ * Root B: floating surfaces, controls, and motion tokens.
+ * Most "vibe tuning" work should happen here first.
+ */
 /* ===== 现代阴影层级系统 ===== */
 :root {
     /* 阴影层级 - 现代设计 */
@@ -1730,6 +1781,12 @@ div.orca-settings {
     --tokyo-shadow-2: 0 4px 8px rgba(0, 0, 0, 0.25), 0 0 1px rgba(0, 0, 0, 0.15);
     --tokyo-shadow-3: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.2);
     --tokyo-shadow-4: 0 16px 48px rgba(0, 0, 0, 0.35), 0 0 2px rgba(0, 0, 0, 0.25);
+    --tokyo-shadow-floating:
+        0 10px 26px rgba(0, 0, 0, 0.26),
+        0 0 0 1px rgba(122, 162, 247, 0.06);
+    --tokyo-shadow-floating-strong:
+        0 14px 34px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(122, 162, 247, 0.08);
     
     /* 内阴影 - 用于凹陷感 */
     --tokyo-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 0 1px rgba(0, 0, 0, 0.1);
@@ -1739,10 +1796,28 @@ div.orca-settings {
     --tokyo-shadow-glow-hover: 0 0 30px rgba(122, 162, 247, 0.25);
     
     /* 保留原有变量兼容 */
-    --tokyo-shadow-floating: var(--tokyo-shadow-3);
     --tokyo-floating-radius: 16px;
     --tokyo-glass-bg: rgba(18, 20, 29, 0.95);
-    --tokyo-glass-blur: 8px;
+    --tokyo-glass-blur: 0px;
+    --tokyo-floating-bg: rgba(27, 30, 44, 0.98);
+    --tokyo-floating-bg-subtle: rgba(30, 34, 49, 0.98);
+    --tokyo-floating-bg-emphasis: rgba(32, 36, 52, 0.99);
+    --tokyo-floating-outline: rgba(122, 162, 247, 0.1);
+    --tokyo-shadow-tooltip:
+        0 6px 14px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(122, 162, 247, 0.05);
+    --tokyo-control-bg: rgba(37, 41, 59, 0.92);
+    --tokyo-control-bg-hover: rgba(45, 51, 73, 0.94);
+    --tokyo-control-shadow:
+        0 0 0 1px rgba(122, 162, 247, 0.08);
+    --tokyo-control-shadow-hover:
+        0 0 0 1px rgba(122, 162, 247, 0.12);
+    --tokyo-control-shadow-focus:
+        0 0 0 2px rgba(122, 162, 247, 0.32),
+        0 0 0 1px rgba(122, 162, 247, 0.16);
+    --tokyo-transition-ui: 0.18s ease;
+    --tokyo-transition-fast: 0.14s ease-in-out;
+    --tokyo-transition-micro: 0.1s ease-in-out;
 }
 
 /* 侧边栏透明，与窗体融合 */
@@ -2623,5 +2698,13 @@ div.orca-settings {
 .orca-repr-quote2 .orca-block-handle,
 .orca-repr-quote2.orca-repr-main .orca-block-handle,
 .orca-repr-quote2.orca-repr-main-collapsed .orca-block-handle {
+    display: none !important;
+}
+
+/* ===== Table cell block handle hidden ===== */
+/* Only hide leading point handles inside table2 cells. */
+.orca-repr-main-content.orca-repr-table2-content .orca-block-handle,
+.orca-repr-main-content.orca-repr-table2-content .orca-repr-main .orca-block-handle,
+.orca-repr-main-content.orca-repr-table2-content .orca-repr-main-collapsed .orca-block-handle {
     display: none !important;
 }
