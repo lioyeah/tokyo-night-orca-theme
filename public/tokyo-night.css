@@ -1103,6 +1103,46 @@ mark,
     border: none !important;
     box-shadow: var(--tokyo-shadow-1) !important;
 }
+
+/* Solid button fallback: unify unnamed solid actions across popups/editors. */
+.orca-button.solid:not(.primary):not(.dangerous):not(.warn):not(.info):not(.soft) {
+    background-color: color-mix(
+        in srgb,
+        var(--orca-color-primary-5),
+        var(--tokyo-night-bg-storm) 66%
+    ) !important;
+    color: var(--tokyo-night-white) !important;
+    border: 1px solid rgba(122, 162, 247, 0.2) !important;
+    border-radius: var(--orca-radius-sm) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    transition:
+        background-color var(--tokyo-transition-ui),
+        border-color var(--tokyo-transition-ui),
+        box-shadow var(--tokyo-transition-ui),
+        color var(--tokyo-transition-ui) !important;
+}
+.orca-button.solid:not(.primary):not(.dangerous):not(.warn):not(.info):not(.soft):hover {
+    background-color: color-mix(
+        in srgb,
+        var(--orca-color-primary-5),
+        var(--tokyo-night-bg-storm) 56%
+    ) !important;
+    color: #eef3ff !important;
+    border-color: rgba(122, 162, 247, 0.3) !important;
+    box-shadow: var(--tokyo-control-shadow-hover) !important;
+}
+.orca-button.solid:not(.primary):not(.dangerous):not(.warn):not(.info):not(.soft):disabled,
+.orca-button.solid:not(.primary):not(.dangerous):not(.warn):not(.info):not(.soft)[disabled] {
+    background-color: color-mix(
+        in srgb,
+        var(--orca-color-primary-5),
+        var(--tokyo-night-bg-storm) 82%
+    ) !important;
+    color: #7f8ab3 !important;
+    border-color: rgba(122, 162, 247, 0.12) !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+}
 .orca-button.plain {
     color: var(--tokyo-night-white) !important;
 }
@@ -1135,7 +1175,7 @@ mark,
     border: none !important;
     box-shadow: var(--tokyo-shadow-floating) !important;
     border-radius: var(--orca-radius-md) !important;
-    overflow: hidden !important;
+    overflow: visible !important;
 }
 .orca-menu .orca-menu-item:hover {
     background-color: var(--tokyo-night-terminal-black) !important;
@@ -1178,7 +1218,7 @@ mark,
     border-radius: var(--orca-radius-md) !important;
     border: none !important;
     box-shadow: var(--tokyo-shadow-floating) !important;
-    overflow: hidden !important;
+    overflow: visible !important;
 }
 
 /* 工具栏弹出菜单 */
@@ -1188,7 +1228,7 @@ mark,
     border: none !important;
     border-radius: var(--orca-radius-md) !important;
     box-shadow: var(--tokyo-shadow-floating) !important;
-    overflow: hidden !important;
+    overflow: visible !important;
 }
 
 /* 主编辑区内弹出层增强可见度 */
@@ -1328,6 +1368,118 @@ nav#sidebar a.active {
 nav#sidebar .item.active .ti,
 nav#sidebar a.active .ti {
     color: var(--tokyo-night-bg-night) !important;
+}
+
+/* Sidebar "new page" button: dedicated Tokyo Night accent style. */
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn {
+    background-color: #1c2240 !important;
+    background-image:
+        radial-gradient(
+            circle at 8% -145%,
+            rgba(216, 232, 255, 0.6) 0 18%,
+            rgba(216, 232, 255, 0.16) 23%,
+            transparent 30%
+        ),
+        radial-gradient(circle at 22% 76%, rgba(125, 207, 255, 0.22) 0 10%, transparent 18%),
+        radial-gradient(circle at 62% 82%, rgba(247, 118, 142, 0.2) 0 11%, transparent 20%),
+        linear-gradient(
+            90deg,
+            transparent 0 18%,
+            rgba(125, 207, 255, 0.2) 18% 22%,
+            transparent 22% 44%,
+            rgba(187, 154, 247, 0.18) 44% 48%,
+            transparent 48% 68%,
+            rgba(255, 158, 100, 0.18) 68% 72%,
+            transparent 72% 100%
+        ),
+        radial-gradient(circle at 26% 26%, rgba(200, 235, 255, 0.75) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 74% 30%, rgba(200, 235, 255, 0.65) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 88% 18%, rgba(200, 235, 255, 0.6) 0 1px, transparent 1.5px),
+        linear-gradient(
+            180deg,
+            transparent 0 64%,
+            rgba(44, 37, 82, 0.42) 64% 84%,
+            rgba(36, 31, 70, 0.56) 84% 100%
+        ),
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--tokyo-night-magenta), transparent 84%) 0%,
+            color-mix(in srgb, var(--tokyo-night-blue), transparent 90%) 52%,
+            transparent 100%
+        ) !important;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 28%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100% !important;
+    background-position: 0 0, 0 0, 0 0, 0 100%, 0 0, 0 0, 0 0, 0 0, 0 0 !important;
+    background-repeat: no-repeat !important;
+    color: #f5f7ff !important;
+    text-shadow: 0 1px 0 rgba(9, 11, 18, 0.45) !important;
+    border: none !important;
+    border-radius: var(--orca-radius-sm) !important;
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 color-mix(in srgb, #ffffff, transparent 90%) !important;
+    transition:
+        filter var(--tokyo-transition-ui),
+        box-shadow var(--tokyo-transition-ui),
+        transform var(--tokyo-transition-ui) !important;
+}
+
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover {
+    filter: brightness(1.06) !important;
+    box-shadow:
+        0 6px 14px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 color-mix(in srgb, #ffffff, transparent 86%) !important;
+}
+
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn .ti.ti-plus {
+    color: color-mix(in srgb, var(--tokyo-night-cyan), #ffffff 12%) !important;
+    opacity: 0.96 !important;
+    margin-right: 0.35em !important;
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    backface-visibility: hidden;
+    will-change: transform, text-shadow;
+    transition:
+        transform 0.22s ease-out,
+        text-shadow var(--tokyo-transition-fast),
+        opacity var(--tokyo-transition-fast),
+        color var(--tokyo-transition-fast) !important;
+}
+
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn > :is(
+    .orca-select-button-text,
+    .orca-button-text,
+    span:not(.ti)
+) {
+    display: inline-block;
+    transform: scale(1);
+    transform-origin: left center;
+    backface-visibility: hidden;
+    will-change: transform, text-shadow;
+    transition:
+        transform 0.22s ease-out,
+        text-shadow var(--tokyo-transition-fast),
+        color var(--tokyo-transition-fast) !important;
+}
+
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover .ti.ti-plus {
+    opacity: 1 !important;
+    color: #d9e7ff !important;
+    transform: scale(1.1);
+    text-shadow:
+        0 0 8px rgba(125, 207, 255, 0.92),
+        0 0 14px rgba(187, 154, 247, 0.72);
+}
+
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover > :is(
+    .orca-select-button-text,
+    .orca-button-text,
+    span:not(.ti)
+) {
+    color: #e9f1ff !important;
+    transform: scale(1.04);
+    text-shadow:
+        0 0 8px rgba(125, 207, 255, 0.78),
+        0 0 16px rgba(187, 154, 247, 0.58);
 }
 
 /* 侧边栏搜索框 - 现代阴影 */
@@ -1820,9 +1972,455 @@ div.orca-settings {
     --tokyo-transition-micro: 0.1s ease-in-out;
 }
 
+/* ===== Excalidraw whiteboard theming ===== */
+/* Scoped refinements that reuse Tokyo Night floating/control tokens. */
+.excalidraw {
+    --color-primary: var(--orca-color-primary-5) !important;
+    --color-primary-darker: #668ce0 !important;
+    --color-primary-darkest: #5878c0 !important;
+    --color-primary-light: #91b2ff !important;
+    --color-surface-lowest: var(--tokyo-night-bg-night) !important;
+    --color-surface-low: #1d2234 !important;
+    --color-surface-mid: #242a3f !important;
+    --color-surface-high: #2a3149 !important;
+    --color-surface-higher: #313954 !important;
+    --color-on-primary-container: #e7eeff !important;
+    --color-on-surface: var(--tokyo-night-foreground) !important;
+    --color-on-surface-variant: #a1abd2 !important;
+    --color-border-outline: #2c334b !important;
+    --color-border-outline-variant: #353d5a !important;
+    --island-bg-color: var(--tokyo-floating-bg) !important;
+    --popup-bg-color: var(--tokyo-floating-bg-emphasis) !important;
+    --sidebar-bg-color: var(--tokyo-floating-bg-subtle) !important;
+    --button-hover-bg: color-mix(in srgb, var(--orca-color-primary-5), transparent 84%) !important;
+    --select-highlight-color: color-mix(in srgb, var(--orca-color-primary-5), transparent 72%) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+
+.excalidraw .Island {
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--tokyo-floating-bg-emphasis), #ffffff 2%),
+        var(--tokyo-floating-bg)
+    ) !important;
+    border: 1px solid rgba(122, 162, 247, 0.1) !important;
+    box-shadow: var(--tokyo-shadow-floating) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+
+.excalidraw :is(.dropdown-menu, .context-menu, .popover, .Dialog, [role="dialog"]) {
+    background: var(--tokyo-floating-bg-emphasis) !important;
+    border: none !important;
+    border-radius: var(--orca-radius-md) !important;
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.34),
+        0 0 0 1px rgba(122, 162, 247, 0.12) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+
+.excalidraw :is(.dropdown-menu, .context-menu) {
+    overflow: visible !important;
+}
+
+.excalidraw :is(.dropdown-menu, .context-menu, .popover, .Dialog, [role="dialog"])::before,
+.excalidraw :is(.dropdown-menu, .context-menu, .popover, .Dialog, [role="dialog"])::after {
+    box-shadow: none !important;
+}
+
+.excalidraw [data-radix-popper-content-wrapper] > :is(.dropdown-menu, .context-menu, .popover) {
+    border: none !important;
+    outline: none !important;
+}
+
+/* Context menu in whiteboard uses .popover > ul; force single-layer frame. */
+.excalidraw .popover,
+.excalidraw .popover > ul {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-image: none !important;
+}
+
+.excalidraw .popover {
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.34),
+        0 0 0 1px rgba(122, 162, 247, 0.12) !important;
+    overflow: visible !important;
+}
+
+.excalidraw [data-radix-popper-content-wrapper],
+.excalidraw .popover {
+    z-index: 1200 !important;
+}
+
+.excalidraw :is(.dropdown-menu-item, [data-radix-collection-item]) {
+    color: #aeb8de !important;
+    border: none !important;
+}
+
+.excalidraw :is(.dropdown-menu-item:hover, [data-radix-collection-item]:hover) {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 84%) !important;
+    color: #edf2ff !important;
+}
+
+.excalidraw :is(.dropdown-menu-item:hover, [data-radix-collection-item]:hover) * {
+    color: #edf2ff !important;
+}
+
+/* Force readable hover text in Excalidraw context menus (prevents dark text overrides). */
+.excalidraw :is(.context-menu, .dropdown-menu, .popover) :is(
+    .dropdown-menu-item:hover,
+    [data-radix-collection-item]:hover,
+    [role="menuitem"]:hover,
+    li:hover
+) :is(span, div, p, a, button, label, strong, em) {
+    color: #f3f7ff !important;
+    -webkit-text-fill-color: #f3f7ff !important;
+}
+
+.excalidraw :is(.dropdown-menu-item[aria-disabled="true"], [data-radix-collection-item][aria-disabled="true"], .dropdown-menu-item.disabled) {
+    color: #68739d !important;
+}
+
+.excalidraw :is(.dropdown-menu-item[aria-disabled="true"], [data-radix-collection-item][aria-disabled="true"], .dropdown-menu-item.disabled):hover {
+    background: transparent !important;
+    color: #68739d !important;
+}
+
+.excalidraw :is(.dropdown-menu-item kbd, [data-radix-collection-item] kbd, .dropdown-menu-item .shortcut, [data-radix-collection-item] .shortcut) {
+    color: #8e99c5 !important;
+}
+
+.excalidraw :is(.dropdown-menu-item:hover kbd, [data-radix-collection-item]:hover kbd, .dropdown-menu-item:hover .shortcut, [data-radix-collection-item]:hover .shortcut) {
+    color: #cdd8ff !important;
+}
+
+.excalidraw :is(.dropdown-menu, .context-menu) :is([role="separator"], hr, .separator, .dropdown-menu-separator) {
+    border-color: rgba(122, 162, 247, 0.1) !important;
+    background-color: rgba(122, 162, 247, 0.08) !important;
+}
+
+/* Avoid heavy row borders that visually look like double frame. */
+.excalidraw :is(.dropdown-menu-item, [data-radix-collection-item]) + :is(.dropdown-menu-item, [data-radix-collection-item]) {
+    border-top: none !important;
+}
+
+.excalidraw :is(.sidebar, [class*="Sidebar"]) {
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--tokyo-floating-bg-subtle), #ffffff 2%),
+        var(--tokyo-floating-bg-subtle)
+    ) !important;
+    border-left: 1px solid rgba(122, 162, 247, 0.08) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+
+.excalidraw :is(.sidebar__header, .sidebar__tabs) {
+    border-bottom: 1px solid rgba(122, 162, 247, 0.08) !important;
+}
+
+.excalidraw :is(.sidebar__header, .sidebar__tabs) :is(.sidebar__tab, .library-menu-control) {
+    background: var(--tokyo-control-bg) !important;
+    color: var(--tokyo-night-foreground) !important;
+    border: 1px solid transparent !important;
+    border-radius: var(--orca-radius-sm) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    transition:
+        background var(--tokyo-transition-ui),
+        box-shadow var(--tokyo-transition-ui),
+        border-color var(--tokyo-transition-ui) !important;
+}
+
+.excalidraw :is(.sidebar__header, .sidebar__tabs) :is(.sidebar__tab:hover, .library-menu-control:hover) {
+    background: var(--tokyo-control-bg-hover) !important;
+    box-shadow: var(--tokyo-control-shadow-hover) !important;
+    border-color: rgba(122, 162, 247, 0.2) !important;
+}
+
+.excalidraw :is(.ToolIcon__icon, .sidebar__header .sidebar__tab, .sidebar__header .library-menu-control, .sidebar__tabs .sidebar__tab, .sidebar__tabs .library-menu-control) {
+    border-radius: var(--orca-radius-sm) !important;
+    color: var(--tokyo-night-foreground) !important;
+    transition:
+        background var(--tokyo-transition-fast),
+        color var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
+
+.excalidraw :is(.ToolIcon__icon:hover, .sidebar__header .sidebar__tab:hover, .sidebar__header .library-menu-control:hover, .sidebar__tabs .sidebar__tab:hover, .sidebar__tabs .library-menu-control:hover) {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 86%) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+
+.excalidraw :is(.ToolIcon.ToolIcon_type_filled .ToolIcon__icon, .ToolIcon[aria-pressed="true"] .ToolIcon__icon, .sidebar__tab[aria-selected="true"], .library-menu-control[aria-selected="true"], .library-menu-control.active) {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 78%) !important;
+    color: #eaf0ff !important;
+    box-shadow: 0 0 0 1px rgba(122, 162, 247, 0.2) !important;
+}
+
+.excalidraw .ToolIcon__icon svg,
+.excalidraw .ToolIcon__icon .icon {
+    opacity: 0.86;
+}
+
+.excalidraw .ToolIcon__icon:hover svg,
+.excalidraw .ToolIcon__icon:hover .icon {
+    opacity: 0.96;
+}
+
+.excalidraw :is(.ToolIcon.ToolIcon_type_filled .ToolIcon__icon, .ToolIcon[aria-pressed="true"] .ToolIcon__icon) :is(svg, .icon) {
+    opacity: 1;
+}
+
+.excalidraw .library-menu-browse-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: var(--tokyo-control-bg) !important;
+    color: #aeb8de !important;
+    border: 1px solid rgba(122, 162, 247, 0.14) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    min-height: 40px !important;
+    padding: 10px 14px !important;
+    border-radius: var(--orca-radius-sm) !important;
+}
+
+.excalidraw .library-menu-browse-button:hover {
+    background: var(--tokyo-control-bg-hover) !important;
+    color: #c0caf5 !important;
+    border-color: rgba(122, 162, 247, 0.2) !important;
+    box-shadow: var(--tokyo-control-shadow-hover) !important;
+}
+
+.excalidraw .layer-ui__wrapper__top-right :is(.ToolIcon__icon, .library-menu-control) {
+    background: color-mix(in srgb, var(--tokyo-control-bg), var(--tokyo-night-bg-night) 20%) !important;
+    border: 1px solid rgba(122, 162, 247, 0.1) !important;
+    color: #aab6de !important;
+}
+
+.excalidraw .layer-ui__wrapper__top-right :is(.ToolIcon__icon, .library-menu-control):hover {
+    background: var(--tokyo-control-bg-hover) !important;
+    color: #d7e2ff !important;
+}
+
+.excalidraw .layer-ui__wrapper__top-right :is(.ToolIcon.ToolIcon_type_filled .ToolIcon__icon, .ToolIcon[aria-pressed="true"] .ToolIcon__icon, .library-menu-control[aria-selected="true"], .library-menu-control.active) {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 84%) !important;
+    color: #e9efff !important;
+}
+
+/* Library mode switch: keep it as two explicit buttons (stable fallback). */
+.excalidraw [id*="trigger-library"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: fit-content !important;
+    max-width: fit-content !important;
+    flex: 0 0 auto !important;
+    gap: 2px !important;
+    padding: 2px !important;
+    background: color-mix(in srgb, var(--tokyo-control-bg), var(--tokyo-night-bg-night) 25%) !important;
+    border: 1px solid rgba(122, 162, 247, 0.14) !important;
+    border-radius: 10px !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.excalidraw [id*="trigger-library"] > :is(button, [role="tab"], .ToolIcon, .library-menu-control) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 0 0 34px !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.excalidraw [id*="trigger-library"] > :is(button, [role="tab"], .ToolIcon, .library-menu-control)::before,
+.excalidraw [id*="trigger-library"] > :is(button, [role="tab"], .ToolIcon, .library-menu-control)::after {
+    content: none !important;
+}
+
+.excalidraw [id*="trigger-library"] > :is(button, [role="tab"], .ToolIcon, .library-menu-control) :is(.ToolIcon__icon, svg, .icon) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.excalidraw [id*="trigger-library"] :is(button, [role="tab"], .ToolIcon__icon) {
+    border-radius: 8px !important;
+    background: transparent !important;
+    color: #aab6de !important;
+    box-shadow: none !important;
+    min-height: 34px !important;
+    padding: 0 !important;
+}
+
+.excalidraw [id*="trigger-library"] :is(button, [role="tab"], .ToolIcon__icon):hover {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 88%) !important;
+    color: #dce6ff !important;
+}
+
+.excalidraw [id*="trigger-library"] :is([aria-selected="true"], [aria-pressed="true"], .active) {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 82%) !important;
+    color: #eef3ff !important;
+    box-shadow: 0 0 0 1px rgba(122, 162, 247, 0.18) !important;
+}
+
+/* Neutralize global ToolIcon active skins inside segmented switch. */
+.excalidraw [id*="trigger-library"] :is(.ToolIcon.ToolIcon_type_filled .ToolIcon__icon, .ToolIcon[aria-pressed="true"] .ToolIcon__icon) {
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* Fix personal library tile text/button overlap ("前往块"). */
+.excalidraw .library-unit__dragger.library-unit__pulse {
+    display: grid !important;
+    align-content: start !important;
+    justify-items: center !important;
+    gap: 8px !important;
+    padding: 8px 6px !important;
+    min-height: 86px !important;
+    overflow: hidden !important;
+}
+
+.excalidraw .library-unit__dragger.library-unit__pulse :is(.library-unit__name, .library-unit__caption, span) {
+    position: static !important;
+    transform: none !important;
+    max-width: 100% !important;
+    text-align: center !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+}
+
+.excalidraw .library-unit__dragger.library-unit__pulse :is(button, a) {
+    position: static !important;
+    margin: 0 !important;
+}
+
+/* Radix exact trigger fallback: search/library are separate buttons. */
+.excalidraw :is(
+    [id^="radix-"][id$="-trigger-search"],
+    [id^="radix-"][id$="-trigger-library"]
+) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(122, 162, 247, 0.16) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.excalidraw :is(
+    [id^="radix-"][id$="-trigger-search"],
+    [id^="radix-"][id$="-trigger-library"]
+)::before,
+.excalidraw :is(
+    [id^="radix-"][id$="-trigger-search"],
+    [id^="radix-"][id$="-trigger-library"]
+)::after {
+    content: none !important;
+}
+
+.excalidraw :is(
+    [id^="radix-"][id$="-trigger-search"],
+    [id^="radix-"][id$="-trigger-library"]
+) :is(svg, .icon, .ToolIcon__icon) {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.excalidraw :is(
+    [id^="radix-"][id$="-trigger-search"],
+    [id^="radix-"][id$="-trigger-library"]
+):hover {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 88%) !important;
+    border-color: rgba(122, 162, 247, 0.24) !important;
+}
+
+.excalidraw :is(
+    [id^="radix-"][id$="-trigger-search"],
+    [id^="radix-"][id$="-trigger-library"]
+):is([aria-selected="true"], [aria-pressed="true"], .active) {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 82%) !important;
+    border-color: rgba(122, 162, 247, 0.3) !important;
+    box-shadow: 0 0 0 1px rgba(122, 162, 247, 0.18) !important;
+}
+
+.excalidraw :is(input[type="text"], input[type="search"], textarea) {
+    background: var(--tokyo-night-bg-night) !important;
+    color: var(--tokyo-night-foreground) !important;
+    border: 1px solid #353d5a !important;
+    border-radius: var(--orca-radius-sm) !important;
+}
+
+.excalidraw :is(input[type="text"], input[type="search"], textarea):focus {
+    border-color: var(--orca-color-primary-5) !important;
+    box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.3) !important;
+}
+
+.excalidraw :is(.help-dialog, .layer-ui__wrapper__top-right, .layer-ui__wrapper__footer, .layer-ui__wrapper__footer-right) {
+    color: var(--tokyo-night-foreground) !important;
+}
+
 /* 侧边栏透明，与窗体融合 */
 #sidebar {
     background-color: transparent !important;
+}
+/* Whiteboard block frame in editor: soft Tokyo Night green outline. */
+#main .orca-repr-main-content.orca-repr-whiteboard-content > div > div {
+    border: 1px solid color-mix(in srgb, var(--tokyo-night-green), transparent 86%) !important;
+    border-radius: calc(var(--orca-radius-md) + 1px) !important;
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--tokyo-night-green), transparent 92%),
+        0 0 22px color-mix(in srgb, var(--tokyo-night-green), transparent 95%) !important;
+    transition:
+        border-color var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
+
+#main .orca-repr-main-content.orca-repr-whiteboard-content > div > div:hover {
+    border-color: color-mix(in srgb, var(--tokyo-night-green), transparent 78%) !important;
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--tokyo-night-green), transparent 88%),
+        0 0 26px color-mix(in srgb, var(--tokyo-night-green), transparent 93%) !important;
 }
 
 /* 主编辑区悬浮容器 */
