@@ -29,6 +29,7 @@
     --tn-sidebar-icon-bg: color-mix(in srgb, var(--tn-accent), transparent 94%);
     --tn-sidebar-icon-bg-hover: color-mix(in srgb, var(--tn-accent), transparent 90%);
     --tn-sidebar-icon-fg-default: color-mix(in srgb, var(--tn-text-2), var(--tn-accent) 12%);
+    --tn-calendar-hover-text: color-mix(in srgb, var(--tn-accent), var(--tn-text-1) 28%);
 
     /* ===== 兼容旧 token 命名 ===== */
     --tokyo-night-red: var(--tn-danger);
@@ -118,6 +119,7 @@
         --tn-sidebar-icon-bg: color-mix(in srgb, var(--tn-accent), transparent 92%);
         --tn-sidebar-icon-bg-hover: color-mix(in srgb, var(--tn-accent), transparent 86%);
         --tn-sidebar-icon-fg-default: color-mix(in srgb, var(--tn-text-2), var(--tn-accent) 10%);
+        --tn-calendar-hover-text: color-mix(in srgb, var(--tn-accent-hover), var(--tn-bright) 32%);
 
         --tokyo-night-orange: #ff9e64;
         --tokyo-night-yellow: #e0af68;
@@ -479,6 +481,13 @@ mark,
     padding: 1em !important;
     margin: 1em 0 !important;
     box-shadow: var(--tokyo-shadow-inset), var(--tokyo-shadow-2) !important;
+}
+
+/* 代码块文本渲染修复：避免亮色模式出现白边/镶嵌感 */
+.orca-panels-container :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content),
+.orca-panels-container :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content) * {
+    text-shadow: none !important;
+    -webkit-text-stroke: 0 !important;
 }
 
 /* ===== Content hover motion (block-level) ===== */
@@ -1293,6 +1302,12 @@ mark,
     background-color: var(--tokyo-night-terminal-black) !important;
     color: var(--tokyo-night-white) !important;
 }
+.orca-menu .orca-menu-item {
+    transition:
+        background-color var(--tokyo-transition-fast),
+        color var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
 .orca-menu .orca-menu-item.selected {
     background-color: var(--orca-color-primary-5) !important;
     color: var(--tokyo-night-bg-night) !important;
@@ -1360,6 +1375,10 @@ mark,
 .orca-popup .menu-item,
 .orca-popup button {
     color: var(--tokyo-night-foreground) !important;
+    transition:
+        background-color var(--tokyo-transition-fast),
+        color var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
 }
 .orca-popup .item:hover,
 .orca-popup .menu-item:hover,
@@ -1565,6 +1584,31 @@ nav#sidebar .title,
 nav#sidebar span {
     color: var(--tokyo-night-foreground) !important;
 }
+nav#sidebar :is(
+    .item,
+    a,
+    .orca-fav-item-item,
+    .orca-tags-tag-item,
+    .orca-aliased-block-item,
+    .orca-page-item
+) {
+    transition:
+        background-color var(--tokyo-transition-fast),
+        color var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
+nav#sidebar :is(
+    .item,
+    a,
+    .orca-fav-item-item,
+    .orca-tags-tag-item,
+    .orca-aliased-block-item,
+    .orca-page-item
+) .ti {
+    transition:
+        color var(--tokyo-transition-fast),
+        background-color var(--tokyo-transition-fast) !important;
+}
 
 nav#sidebar .item:hover,
 nav#sidebar a:hover {
@@ -1632,8 +1676,8 @@ nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn {
     border-radius: var(--orca-radius-sm) !important;
     box-shadow:
         0 6px 12px rgb(from var(--tn-text-1) r g b / 0.1),
-        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.08) inset,
-        inset 0 1px 0 rgb(from #ffffff r g b / 0.78) !important;
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.08) inset !important;
+    box-sizing: border-box !important;
     transition:
         filter var(--tokyo-transition-ui),
         box-shadow var(--tokyo-transition-ui),
@@ -1645,16 +1689,14 @@ nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:focus-visible {
     border-color: transparent !important;
     box-shadow:
         0 6px 12px rgb(from var(--tn-text-1) r g b / 0.1),
-        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.12) inset,
-        inset 0 1px 0 rgb(from #ffffff r g b / 0.78) !important;
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.12) inset !important;
 }
 
 nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover {
-    filter: brightness(1.02) !important;
+    filter: none !important;
     box-shadow:
-        0 8px 16px rgb(from var(--tn-text-1) r g b / 0.14),
-        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.18) inset,
-        inset 0 1px 0 rgb(from #ffffff r g b / 0.84) !important;
+        0 6px 12px rgb(from var(--tn-text-1) r g b / 0.1),
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.08) inset !important;
 }
 
 nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn .ti.ti-plus {
@@ -1917,6 +1959,19 @@ nav#sidebar th {
 nav#sidebar .vc-day,
 nav#sidebar .day {
     color: var(--tokyo-night-foreground) !important;
+    background-color: transparent !important;
+    transition:
+        transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1),
+        color 0.16s ease !important;
+    transform-origin: 50% 58%;
+    position: relative;
+}
+nav#sidebar .vc-day .vc-day-content {
+    position: relative;
+    background-color: transparent !important;
+    transition:
+        transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1),
+        color 0.16s ease !important;
 }
 nav#sidebar .vc-day.is-not-in-month,
 nav#sidebar .day.prev-month,
@@ -1938,6 +1993,22 @@ nav#sidebar .day.value {
     color: var(--tokyo-night-red) !important;
     font-weight: bold !important;
     border: none !important;
+}
+
+/* 日历日期 hover：字体加粗 + Dock 风格邻近平滑缩放 */
+nav#sidebar .orca-calendar .day:not(.value):not(.selected):hover,
+nav#sidebar .orca-calendar .vc-day:not(.is-selected):hover .vc-day-content {
+    background-color: transparent !important;
+    transform: translateX(2.8px) scale(1.3);
+    color: var(--tn-calendar-hover-text) !important;
+    font-weight: 700 !important;
+    z-index: 2;
+}
+nav#sidebar .orca-calendar .days .day:not(.value):not(.selected):hover + .day:not(.value):not(.selected) {
+    transform: translateX(1px) scale(1.1);
+}
+nav#sidebar .orca-calendar .days .day:not(.value):not(.selected):has(+ .day:not(.value):not(.selected):hover) {
+    transform: translateX(1px) scale(1.1);
 }
 
 /* 年份和月份选择网格 */
@@ -3458,8 +3529,8 @@ div.orca-settings {
         .orca-repr-main-none-editable
     )
     .orca-inline[data-type="b"]:hover {
-    transform: translateY(-2px) scale(1.08);
-    text-shadow: 0 0 10px var(--orca-color-primary-5);
+    transform: translateY(-1px) scale(1.03);
+    text-shadow: 0 0 6px var(--orca-color-primary-5);
 }
 
 /* Em 波浪下划线效果 */
