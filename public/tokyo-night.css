@@ -30,6 +30,28 @@
     --tn-sidebar-icon-bg-hover: color-mix(in srgb, var(--tn-accent), transparent 90%);
     --tn-sidebar-icon-fg-default: color-mix(in srgb, var(--tn-text-2), var(--tn-accent) 12%);
     --tn-calendar-hover-text: color-mix(in srgb, var(--tn-accent), var(--tn-text-1) 28%);
+    --tn-query-neon-border: color-mix(in srgb, var(--tn-accent), var(--tn-border) 62%);
+    --tn-query-neon-ring: color-mix(in srgb, var(--tn-accent), transparent 84%);
+    --tn-query-neon-glow: color-mix(in srgb, var(--tn-accent), transparent 93%);
+    --tn-query-neon-border-hover: color-mix(in srgb, var(--tn-accent-hover), var(--tn-border) 52%);
+    --tn-query-neon-ring-hover: color-mix(in srgb, var(--tn-accent-hover), transparent 80%);
+    --tn-query-neon-glow-hover: color-mix(in srgb, var(--tn-accent-hover), transparent 90%);
+    --tn-query-neon-tube-c1: color-mix(in srgb, #49c7ff, var(--tn-info) 78%);
+    --tn-query-neon-tube-c2: color-mix(in srgb, #66a6ff, var(--tn-accent) 74%);
+    --tn-query-neon-tube-c3: color-mix(in srgb, #8f8dff, var(--tn-accent) 56%);
+    --tn-query-neon-tube-c4: color-mix(in srgb, #b57dff, var(--tn-magenta) 70%);
+    --tn-query-neon-tube-c5: color-mix(in srgb, #ff8ad7, var(--tn-magenta) 52%);
+    --tn-query-neon-tube-c6: color-mix(in srgb, #ffb86b, var(--tn-warn) 78%);
+    --tn-query-neon-tube-c7: color-mix(in srgb, #8dffcf, var(--tn-success) 72%);
+    --tn-query-neon-line-opacity: 0.98;
+    --tn-query-neon-glow-opacity: 0.42;
+    --tn-query-neon-glow-blur: 8px;
+    --tn-query-neon-glow-spread: 1px;
+    --tn-query-panel-bg: color-mix(in srgb, var(--tn-accent), var(--orca-color-bg-2) 94%);
+    --tn-query-fog-opacity: 0.24;
+    --tn-query-fog-blur: 20px;
+    --tn-query-fog-speed: 4.68s;
+    --tn-query-fog-shift-speed: 7.02s;
 
     /* ===== 兼容旧 token 命名 ===== */
     --tokyo-night-red: var(--tn-danger);
@@ -120,6 +142,28 @@
         --tn-sidebar-icon-bg-hover: color-mix(in srgb, var(--tn-accent), transparent 86%);
         --tn-sidebar-icon-fg-default: color-mix(in srgb, var(--tn-text-2), var(--tn-accent) 10%);
         --tn-calendar-hover-text: color-mix(in srgb, var(--tn-accent-hover), var(--tn-bright) 32%);
+        --tn-query-neon-border: color-mix(in srgb, var(--tn-accent), var(--tn-border) 56%);
+        --tn-query-neon-ring: color-mix(in srgb, var(--tn-accent), transparent 78%);
+        --tn-query-neon-glow: color-mix(in srgb, var(--tn-accent), transparent 88%);
+        --tn-query-neon-border-hover: color-mix(in srgb, var(--tn-accent-hover), var(--tn-border) 48%);
+        --tn-query-neon-ring-hover: color-mix(in srgb, var(--tn-accent-hover), transparent 73%);
+        --tn-query-neon-glow-hover: color-mix(in srgb, var(--tn-accent-hover), transparent 84%);
+        --tn-query-neon-tube-c1: color-mix(in srgb, #7bd9ff, var(--tn-info) 76%);
+        --tn-query-neon-tube-c2: color-mix(in srgb, #89b9ff, var(--tn-accent) 70%);
+        --tn-query-neon-tube-c3: color-mix(in srgb, #a39eff, var(--tn-accent-hover) 58%);
+        --tn-query-neon-tube-c4: color-mix(in srgb, #c49fff, var(--tn-magenta) 66%);
+        --tn-query-neon-tube-c5: color-mix(in srgb, #ff9ee3, var(--tn-magenta) 54%);
+        --tn-query-neon-tube-c6: color-mix(in srgb, #ffc68a, var(--tn-warn) 72%);
+        --tn-query-neon-tube-c7: color-mix(in srgb, #a8ffdc, var(--tn-success) 68%);
+        --tn-query-neon-line-opacity: 1;
+        --tn-query-neon-glow-opacity: 0.72;
+        --tn-query-neon-glow-blur: 12px;
+        --tn-query-neon-glow-spread: 3px;
+        --tn-query-panel-bg: color-mix(in srgb, var(--tn-accent), var(--orca-color-bg-2) 93%);
+        --tn-query-fog-opacity: 0.34;
+        --tn-query-fog-blur: 24px;
+        --tn-query-fog-speed: 4.16s;
+        --tn-query-fog-shift-speed: 6.24s;
 
         --tokyo-night-orange: #ff9e64;
         --tokyo-night-yellow: #e0af68;
@@ -1521,8 +1565,197 @@ body > div.orca-modal-overlay.orca-modal-overlay-blurred > div > div.orca-plugin
 
 /* ===== 查询构建器 ===== */
 .orca-query-conditions {
+    position: relative !important;
+    isolation: isolate !important;
+    overflow: hidden !important;
     border-radius: var(--orca-radius-sm) !important;
     padding: var(--orca-spacing-md) !important;
+    border: 1px solid transparent !important;
+    background: var(--tn-query-panel-bg) !important;
+    box-shadow: none !important;
+    transition:
+        border-color var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
+
+#main .orca-block-editor-query-views .orca-query-conditions {
+    background: var(--tn-query-panel-bg) !important;
+}
+
+.orca-query-conditions > * {
+    position: relative;
+    z-index: 1;
+}
+
+.orca-query-conditions::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 0.65px;
+    background:
+        linear-gradient(
+            115deg,
+            var(--tn-query-neon-tube-c1) 0%,
+            var(--tn-query-neon-tube-c2) 16%,
+            var(--tn-query-neon-tube-c3) 33%,
+            var(--tn-query-neon-tube-c4) 50%,
+            var(--tn-query-neon-tube-c5) 67%,
+            var(--tn-query-neon-tube-c6) 84%,
+            var(--tn-query-neon-tube-c7) 100%
+        ),
+        linear-gradient(
+            290deg,
+            transparent 8%,
+            color-mix(in srgb, white, var(--tn-query-neon-tube-c3) 62%) 36%,
+            transparent 58%,
+            color-mix(in srgb, var(--tn-query-neon-tube-c5), white 24%) 82%,
+            transparent 97%
+        );
+    background-blend-mode: normal, screen;
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: var(--tn-query-neon-line-opacity);
+    filter: saturate(1.18) contrast(1.06);
+    box-shadow:
+        0 0 0 0.5px color-mix(in srgb, var(--tn-query-neon-ring), transparent 36%),
+        0 0 6px color-mix(in srgb, var(--tn-query-neon-glow), transparent 36%);
+    pointer-events: none;
+    transition:
+        opacity var(--tokyo-transition-fast),
+        filter var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
+
+.orca-query-conditions::after {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle, color-mix(in srgb, var(--tn-query-neon-tube-c1), transparent 18%) 0%, transparent 56%),
+        radial-gradient(circle, color-mix(in srgb, var(--tn-query-neon-tube-c2), transparent 24%) 0%, transparent 52%),
+        radial-gradient(circle, color-mix(in srgb, var(--tn-query-neon-tube-c4), transparent 22%) 0%, transparent 54%),
+        radial-gradient(circle, color-mix(in srgb, var(--tn-query-neon-tube-c5), transparent 20%) 0%, transparent 55%),
+        radial-gradient(circle, color-mix(in srgb, var(--tn-query-neon-tube-c6), transparent 24%) 0%, transparent 53%),
+        radial-gradient(circle, color-mix(in srgb, var(--tn-query-neon-tube-c7), transparent 20%) 0%, transparent 55%);
+    background-repeat: no-repeat;
+    background-size:
+        34% 34%,
+        58% 58%,
+        40% 40%,
+        62% 62%,
+        28% 28%,
+        50% 50%;
+    background-position:
+        8% 24%,
+        86% 16%,
+        70% 84%,
+        18% 76%,
+        78% 54%,
+        24% 48%;
+    filter: blur(var(--tn-query-fog-blur)) saturate(1.2) brightness(1.03);
+    opacity: var(--tn-query-fog-opacity);
+    pointer-events: none;
+    z-index: 0;
+    will-change: background-position, opacity, filter;
+    animation:
+        tn-query-neon-orbs var(--tn-query-fog-speed) linear infinite,
+        tn-query-neon-orbs-b var(--tn-query-fog-shift-speed) ease-in-out infinite;
+    transition:
+        opacity var(--tokyo-transition-fast),
+        filter var(--tokyo-transition-fast) !important;
+}
+
+.orca-query-conditions:hover,
+.orca-query-conditions:focus-within {
+    border-color: transparent !important;
+    background: var(--tn-query-panel-bg) !important;
+    box-shadow: none !important;
+}
+
+.orca-query-conditions:hover::before,
+.orca-query-conditions:focus-within::before {
+    opacity: 1;
+    filter: saturate(1.26) contrast(1.1);
+    box-shadow:
+        0 0 0 0.5px color-mix(in srgb, var(--tn-query-neon-ring-hover), transparent 18%),
+        0 0 10px color-mix(in srgb, var(--tn-query-neon-glow-hover), transparent 18%);
+}
+
+.orca-query-conditions:hover::after,
+.orca-query-conditions:focus-within::after {
+    opacity: calc(var(--tn-query-fog-opacity) + 0.08);
+    filter: blur(calc(var(--tn-query-fog-blur) + 2px)) saturate(1.28) brightness(1.05);
+}
+
+@keyframes tn-query-neon-orbs {
+    0% {
+        background-position:
+            8% 24%,
+            86% 16%,
+            70% 84%,
+            18% 76%,
+            78% 54%,
+            24% 48%;
+    }
+    25% {
+        background-position:
+            22% 10%,
+            72% 30%,
+            80% 62%,
+            12% 88%,
+            58% 70%,
+            34% 34%;
+    }
+    50% {
+        background-position:
+            40% 34%,
+            66% 8%,
+            58% 42%,
+            26% 64%,
+            72% 86%,
+            16% 26%;
+    }
+    75% {
+        background-position:
+            14% 36%,
+            90% 42%,
+            44% 72%,
+            32% 54%,
+            84% 40%,
+            30% 58%;
+    }
+    100% {
+        background-position:
+            8% 24%,
+            86% 16%,
+            70% 84%,
+            18% 76%,
+            78% 54%,
+            24% 48%;
+    }
+}
+
+@keyframes tn-query-neon-orbs-b {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(1.5%, -1.2%, 0) scale(1.02);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .orca-query-conditions::after {
+        animation: none !important;
+    }
 }
 
 /* Shared control surface baseline for settings/query actions. */
