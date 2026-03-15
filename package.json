@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "cross-env NODE_ENV=production tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postbuild": "node scripts/copy-theme.cjs"
   },
   "peerDependencies": {
     "react": "^18.2.0",
