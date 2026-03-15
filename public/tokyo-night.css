@@ -2847,12 +2847,28 @@ div.orca-settings {
 
 /* 主编辑区悬浮容器 */
 #main {
-    border-radius: var(--tokyo-floating-radius) !important;
-    margin: var(--orca-height-headbar) 8px 8px 0 !important;
+    border-radius: var(--tokyo-floating-radius) 0 0 0 !important;
+    margin: 0 0 0 8px !important;
+    top: var(--orca-height-headbar) !important;
+    height: calc(100% - var(--orca-height-headbar)) !important;
     border: 0 !important;
-    box-shadow: 0 12px 28px rgb(from var(--tn-text-1) r g b / 0.14) !important;
+    box-shadow: -12px 0 24px rgb(from var(--tn-text-1) r g b / 0.12) !important;
     overflow: hidden !important;
     background-color: var(--tokyo-glass-bg) !important;
+}
+
+@media (prefers-color-scheme: light) {
+    #main {
+        box-shadow:
+            -14px 0 28px rgb(from var(--tn-text-1) r g b / 0.15),
+            -2px 0 6px rgb(from var(--tn-text-1) r g b / 0.08) !important;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    #main {
+        box-shadow: -10px 0 18px rgba(0, 0, 0, 0.24) !important;
+    }
 }
 
 /* 侧边栏关闭时的边距 */
