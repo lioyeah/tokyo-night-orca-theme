@@ -1357,6 +1357,12 @@ mark,
     color: var(--tokyo-night-bg-night) !important;
 }
 
+/* 修复 slash 命令面板内容溢出：恢复菜单内滚动裁切 */
+.orca-menu.orca-slash-commands {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
 /* ===== 工具提示样式 - 现代阴影 ===== */
 .orca-tooltip {
     background: var(--tokyo-floating-bg-subtle) !important;
