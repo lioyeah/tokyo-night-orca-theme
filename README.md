@@ -1,120 +1,34 @@
 # Tokyo Night 主题 for Orca Notes
 
-一款适用于 [Orca Notes](https://orca.sh/) 的精致 Tokyo Night 双模主题，默认提供 Tokyo Night Light，并随系统/Orca 亮暗模式自动切换。
+适用于 [Orca Notes](https://orca.sh/) 的 Tokyo Night 双模主题，支持 Light / Dark 自动切换。
 
-[![GitHub Stars](https://img.shields.io/github/stars/lioyeah/tokyo-night-orca-theme?style=social)](https://github.com/lioyeah/tokyo-night-orca-theme/stargazers)
+## 功能特性
 
-## ✨ 功能特性
+- Tokyo Night Light + Dark 自动切换（跟随系统或 Orca 亮暗模式）
+- 全局 UI 覆盖：侧边栏、弹层、设置页、主编辑区
+- 查询条件框动态霓虹效果与多光源流动背景
+- 行内代码 keycap 质感与按压交互反馈
+- 构建流程内置 `postbuild`，自动同步 `dist/tokyo-night.css`
 
-* **Tokyo Night Light + Dark 自动切换**：精心调校的亮暗双配色，带来统一品牌体验。
-    * Light 核心：背景 `#e6e7ed`、次背景 `#d6d8df`、正文 `#363c4d`、主色 `#2959aa`
-    * Dark 核心：背景 `#1a1b26`、次背景 `#16161e`、正文 `#a9b1d6`、主色 `#7aa2f7`
-    * 以及更多符合 Tokyo Night 规范的颜色应用于各种 UI 组件。
-* **全面的 UI 覆盖**：
-    * 应用整体背景和文字颜色。
-    * 自定义侧边栏样式。
-    * 美化设置界面，包括输入框、按钮、开关、标签页、表格等。
-    * 调整主界面元素，如查询构建器、占位符文本、标签页、图标按钮等。
-* **动态样式**：通过 CSS 自定义属性（变量）实现，确保颜色应用的一致性和可维护性。
-* **分级视觉增强**：
-    * **标题 (H1-H6)**：拥有各自的 Tokyo Night 强调色，H1-H3 附带精致的渐变下划线。
-    * **列表 (UL/OL)**：严格遵循层级着色（红/橙/黄/绿/蓝/紫），包括列表符号、数字及折叠箭头。
-* **悬浮圆角设计**：侧边栏透明融合背景，主编辑区悬浮显示，配备磨砂玻璃效果与现代圆角阴影。
-## 📦 安装
+## 安装
 
-### 手动安装
+1. 前往 [Releases](https://github.com/lioyeah/tokyo-night-orca-theme/releases) 下载最新发行包。
+2. 解压后将插件目录放入 Orca Notes 插件目录：
+   - Windows: `C:\Users\<用户名>\AppData\Roaming\Orca\plugins`
+   - macOS: `/Users/<用户名>/Library/Application Support/Orca/plugins`
+   - Linux: `~/.config/Orca/plugins`
+3. 重启 Orca Notes，在 `设置 -> 外观 -> 主题` 选择 `Tokyo Night`。
 
-1.  前往本项目的 [GitHub Releases 页面](https://github.com/lioyeah/tokyo-night-orca-theme/releases)。
-    2.  下载最新的 `tokyo-night-orca-theme.zip` (或类似名称的) 发行包。
-3.  解压下载的文件，您会得到一个名为 `tokyo-night-orca-theme` (或其他插件 ID 对应的名称) 的文件夹。
-4.  找到您的 Orca Notes 插件目录。通常位于：
-    * Windows: `C:\Users\<您的用户名>\AppData\Roaming\Orca\plugins`
-    * macOS: `/Users/<您的用户名>/Library/Application Support/Orca/plugins`
-    * Linux: `~/.config/Orca/plugins`
-5.  将解压得到的 `tokyo-night-orca-theme` 文件夹完整复制到 Orca Notes 的 `plugins` 目录下。
-6.  重启 Orca Notes。
+## 开发与构建
 
-## 🚀 使用方法
+```bash
+npm install
+npm run dev
+npm run build
+```
 
-1.  安装并启用插件后，进入 Orca Notes 的 `设置` > `外观`。
-2.  在 `主题` 下拉菜单中，选择 `Tokyo Night`。
-3.  主题将立即应用，并根据 Orca/系统亮暗模式自动切换 Light/Dark 变体。
+构建后产物位于 `dist/`，并会自动同步 `dist/tokyo-night.css`。
 
-## ⚙️ 配置选项
+## 许可证
 
-当前版本采用纯静态 CSS 架构。所有样式在 `tokyo-night.css` 中定义，悬浮圆角效果默认启用，无需额外配置。
-
-## 🧭 维护速查（Vibe 用户）
-
-如果你只想快速调风格，优先改 `public/tokyo-night.css` 里的这 10 个 token（位于第二个 `:root` 区域）：
-
-1. `--tokyo-floating-bg`：菜单/弹层基础背景色
-2. `--tokyo-floating-bg-subtle`：tooltip 等更轻浮层背景
-3. `--tokyo-floating-bg-emphasis`：modal/settings 等更重浮层背景
-4. `--tokyo-shadow-floating`：普通浮层阴影强度
-5. `--tokyo-shadow-floating-strong`：重浮层阴影强度
-6. `--tokyo-control-bg`：按钮/输入框默认背景
-7. `--tokyo-control-bg-hover`：按钮/输入框 hover 背景
-8. `--tokyo-control-shadow`：控件默认轮廓
-9. `--tokyo-control-shadow-focus`：控件 focus 可见性
-10. `--tokyo-transition-ui`：主要交互过渡时长
-
-建议：
-
-1. 先改颜色 token（`bg`/`shadow`），确认整体调性。
-2. 再改过渡 token（`transition`），避免“看起来卡顿或过快”。
-3. 每次改完执行 `npm run build`，只观察 3 类界面：`popup`、`modal`、`settings`。
-
-## 🛠️ 开发与构建
-
-如果您想为此主题贡献代码或自行构建：
-
-1.  **克隆仓库**:
-    ```bash
-    git clone [https://github.com/lioyeah/tokyo-night-orca-theme.git](https://github.com/lioyeah/tokyo-night-orca-theme.git)
-    cd tokyo-night-orca-theme
-    ```
-    2.  **安装依赖**:
-    ```bash
-    npm install
-    # 或者
-    # yarn install
-    ```
-
-3.  **开发模式**:
-    ```bash
-    npm run dev
-    # 或者
-    # yarn dev
-    ```
-    这将启动 Vite 的开发服务器。您可能需要将构建目标（通常是 `dist/` 目录下的 `index.js` 和 `theme.css`）链接或复制到您的 Orca Notes 插件目录中，以便在 Orca Notes 中实时查看更改。
-
-4.  **构建插件**:
-    ```bash
-    npm run build
-    # 或者
-    # yarn build
-    ```
-    构建产物将输出到 `dist/` 文件夹。您需要将 `dist/index.js` (插件主逻辑)、`tokyo-night.css` (主题样式) 和 `icon.png` 一起打包到插件文件夹中。
-
-    最终用于 Orca 的插件文件夹结构应类似于：
-    ```
-    tokyo-night-orca-theme/  (或者您的插件 ID 命名的文件夹)
-    ├── index.js             (来自 dist/)
-    ├── tokyo-night.css      (主题样式文件)
-    └── icon.png
-    ```
-
-## 🤝 贡献
-
-欢迎各种形式的贡献！如果您有任何建议、发现错误或希望添加新功能，请随时：
-
-* 提交 [Issues](https://github.com/liyoeah/tokyo-night-orca-theme/issues)
-* 创建 [Pull Requests](https://github.com/lioyeah/tokyo-night-orca-theme/pulls)
-## 📜 许可证
-
-本项目采用 [MIT](LICENSE) 许可证。
----
-
-希望这款 Tokyo Night 主题能为您在 Orca Notes 中的使用带来愉悦！
-
+[MIT](LICENSE)
