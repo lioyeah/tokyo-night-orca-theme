@@ -59,7 +59,7 @@
     ) !important;
     box-shadow: 0 6px 16px
         color-mix(in srgb, var(--orca-color-primary-5), transparent 85%) !important;
-    transform: translateY(-1px);
+    transform: none !important;
 }
 #main
     :is(
@@ -236,7 +236,7 @@
     border: 1px solid var(--keycap-border) !important;
     border-top-color: var(--keycap-border-top) !important;
     border-bottom-color: var(--keycap-border-bottom) !important;
-    border-radius: 6px !important;
+    border-radius: var(--orca-radius-md) !important;
     padding: 3px 10px !important;
     font-family: "Cascadia Code", "Fira Code", Consolas, Monaco, "Courier New", monospace !important;
     font-size: 0.9em !important;
@@ -263,24 +263,26 @@
 
 /* 悬停模拟顶面下压：顶面下沉，阴影落点保持稳定 */
 .orca-inline.c:hover, [class*="orca-inline c"]:hover {
+    border-color: var(--keycap-border) !important;
     border-top-color: var(--keycap-border-top) !important;
-    border-bottom-color: var(--keycap-border-bottom) !important;
+    border-bottom-color: var(--keycap-border) !important;
     transform: translateY(1px);
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
         0 2px 0 var(--keycap-depth),
-        0 3px 1px var(--keycap-step-rim),
-        0 4px 7px var(--keycap-shadow) !important;
+        0 3px 4px rgba(0, 0, 0, 0.34) !important;
 }
 
-/* 按下时顶面继续下压：键程到底，阴影仍保持锚定 */
+/* 按下时顶面继续下压：保持简洁实现 */
 .orca-inline.c:active, [class*="orca-inline c"]:active {
+    border-color: var(--keycap-press-depth) !important;
+    border-top-color: var(--keycap-press-depth) !important;
+    border-bottom-color: var(--keycap-press-depth) !important;
+    background: var(--keycap-bg-bottom) !important;
+    background-image: none !important;
+    text-shadow: none !important;
     transform: translateY(2px);
-    box-shadow:
-        inset 0 3px 3px rgba(0, 0, 0, 0.24),
-        0 1px 0 var(--keycap-press-depth),
-        0 2px 1px var(--keycap-step-rim),
-        0 3px 6px var(--keycap-shadow) !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.34) !important;
 }
 
 /* 编辑器内行内代码过渡效果 */

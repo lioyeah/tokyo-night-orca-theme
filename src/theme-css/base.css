@@ -61,7 +61,7 @@ mark,
     )
     .orca-repr.orca-repr-quote2 {
     border: none !important;
-    border-radius: 8px !important;
+    border-radius: var(--orca-radius-lg) !important;
     background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.02) 100%) !important;
     position: relative !important;
     overflow: hidden !important;
@@ -455,5 +455,147 @@ mark,
     :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
     :is(.token.operator, .token.punctuation, .token.entity) {
     background: transparent !important;
+}
+
+/* 编辑态代码高亮修复（CodeMirror）：与预览态 Tokyo Night 配色一致 */
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-line, .cm-content) {
+    color: var(--tn-code-fg) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-comment, .cm-lineComment, .cm-blockComment, .cm-docComment) {
+    color: var(--tn-code-comment) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-keyword, .cm-controlKeyword, .cm-definitionKeyword, .cm-operatorKeyword, .cm-atom, .cm-bool) {
+    color: var(--tn-code-keyword) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-string, .cm-specialString, .cm-regexp) {
+    color: var(--tn-code-string) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-number, .cm-integer, .cm-float) {
+    color: var(--tn-code-number) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-function, .cm-functionName, .cm-definition, .cm-macroName) {
+    color: var(--tn-code-function) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-propertyName, .cm-namespace, .cm-constant, .cm-labelName) {
+    color: var(--tn-code-constant) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-typeName, .cm-className, .cm-variableName, .cm-parameter) {
+    color: var(--tn-code-type) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-operator, .cm-punctuation, .cm-bracket) {
+    color: var(--tn-code-punctuation) !important;
+    background: transparent !important;
+}
+
+/* 补充编辑态 token 映射（覆盖 CSS/HTML/SQL 等模式的常见 cm-* 类） */
+.orca-panels-container
+    .orca-code-editor-container
+    .cm-editor
+    .cm-content
+    :is(.cm-tagName, .cm-attributeName, .cm-qualifier, .cm-meta) {
+    color: var(--tn-code-keyword) !important;
+}
+.orca-panels-container
+    .orca-code-editor-container
+    .cm-editor
+    .cm-content
+    :is(.cm-propertyName, .cm-variableName, .cm-variableName2, .cm-variableNameSpecial) {
+    color: var(--tn-code-constant) !important;
+}
+.orca-panels-container
+    .orca-code-editor-container
+    .cm-editor
+    .cm-content
+    :is(.cm-typeName, .cm-builtin, .cm-className, .cm-labelName) {
+    color: var(--tn-code-type) !important;
+}
+.orca-panels-container
+    .orca-code-editor-container
+    .cm-editor
+    .cm-content
+    :is(.cm-atom, .cm-bool, .cm-null, .cm-unit) {
+    color: var(--tn-code-number) !important;
+}
+.orca-panels-container
+    .orca-code-editor-container
+    .cm-editor
+    .cm-content
+    :is(.cm-link, .cm-url) {
+    color: var(--tn-code-function) !important;
+}
+
+/* CodeMirror 压缩类名高亮（如 ͼp~ͼw）映射到 Tokyo Night */
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼp"] {
+    color: var(--tn-code-comment) !important;
+}
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼq"] {
+    color: var(--tn-code-keyword) !important;
+}
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼr"] {
+    color: var(--tn-code-string) !important;
+}
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼt"] {
+    color: var(--tn-code-number) !important;
+}
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼu"] {
+    color: var(--tn-code-function) !important;
+}
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼv"] {
+    color: var(--tn-code-constant) !important;
+}
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼw"] {
+    color: var(--tn-code-punctuation) !important;
+}
+
+/* 代码行号可见性修复：统一提升 gutter/line-number 对比度 */
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(
+        .line-number,
+        .line-numbers-rows,
+        .line-numbers-rows > span,
+        .line-numbers-rows > span::before,
+        .gutter,
+        .gutter-line,
+        .code-gutter,
+        .code-line-number,
+        .cm-lineNumbers,
+        .cm-gutters,
+        .cm-gutterElement
+    ) {
+    color: color-mix(in srgb, var(--tn-text-2), var(--tn-bright) 22%) !important;
+    opacity: 0.92 !important;
+    text-shadow: none !important;
+}
+
+/* 行号区域背景与主题统一（避免默认白底） */
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(.line-numbers-rows, .gutter, .code-gutter, .cm-lineNumbers, .cm-gutters) {
+    background-color: color-mix(
+        in srgb,
+        var(--tokyo-night-bg-float),
+        var(--orca-color-bg-2) 42%
+    ) !important;
+    border-right: 1px solid
+        color-mix(in srgb, var(--tn-border), transparent 28%) !important;
 }
 

@@ -902,7 +902,7 @@ nav#sidebar .orca-calendar .days .day:not(.value):not(.selected):has(+ .day:not(
 nav#sidebar .months .month,
 nav#sidebar .years .year {
     color: var(--tokyo-night-foreground) !important;
-    border-radius: 6px !important;
+    border-radius: var(--orca-radius-md) !important;
     transition:
         background-color 0.2s,
         color 0.2s,
