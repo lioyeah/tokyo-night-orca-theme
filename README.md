@@ -3,9 +3,9 @@
 适用于 [Orca Notes](https://www.orca-studio.com/orcanote/zh/) 的 Tokyo Night 双模主题，支持 Light / Dark 自动切换，并对编辑区、侧边栏、设置页和白板场景做了系统化视觉统一。
 
 Tokyo Night Light
-![](https://vip.123pan.cn/1847464593/yk6baz03t0l000dckc4t7huhp05oobmzDIYxAwFzAdJ2DvxPBIrzAF==.webp)
+<img src="https://vip.123pan.cn/1847464593/yk6baz03t0l000dckc4t7huhp05oobmzDIYxAwFzAdJ2DvxPBIrzAF==.webp">
 Tokyo Night
-![](https://vip.123pan.cn/1847464593/yk6baz03t0l000dckc5lpelpyg5p390pDIYxAwFzAdJ2DvxPBIrzAF==.webp)
+<img src="https://vip.123pan.cn/1847464593/yk6baz03t0l000dckc5lpelpyg5p390pDIYxAwFzAdJ2DvxPBIrzAF==.webp">
 ## 功能与特性
 
 - Tokyo Night Light / Dark 双模自动切换（跟随系统或 Orca 亮暗模式）。
