@@ -30,6 +30,7 @@ dist-ssr
 
 # Node.js 依赖
 /node_modules
+/.npm-cache/
 
 # 锁文件（按仓库约定忽略）
 package-lock.json

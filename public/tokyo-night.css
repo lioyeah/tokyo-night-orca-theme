@@ -201,6 +201,7 @@
     }
 }
 
+
 /* ===== 基础页面和应用容器样式 ===== */
 body,
 div#app {
@@ -659,6 +660,7 @@ mark,
     :is(.token.operator, .token.punctuation, .token.entity) {
     background: transparent !important;
 }
+
 
 /* ===== Content hover motion (block-level) ===== */
 #main
@@ -1765,6 +1767,7 @@ body > div.orca-modal-overlay.orca-modal-overlay-blurred > div > div.orca-plugin
     border-radius: 999px !important;
     border: 1px solid transparent !important;
 }
+
 
 /* ===== 查询构建器 ===== */
 .orca-query-conditions {
@@ -3028,6 +3031,7 @@ div.orca-settings {
  * Root B: floating surfaces, controls, and motion tokens.
  * Most "vibe tuning" work should happen here first.
  */
+
 /* ===== 现代阴影层级系统 ===== */
 :root {
     /* 阴影层级 - light */
@@ -3098,6 +3102,7 @@ div.orca-settings {
         --tokyo-control-bg-hover: rgba(45, 51, 73, 0.94);
     }
 }
+
 
 /* ===== Excalidraw whiteboard theming ===== */
 /* Scoped refinements that reuse Tokyo Night floating/control tokens. */
@@ -4335,7 +4340,9 @@ div.orca-settings {
     display: none !important;
 }
 
+
 /* ===== 无序列表圆点句柄最终覆盖（放在文件末尾确保优先级） ===== */
+/* 这些规则用于压过宿主与前序分层中的冲突样式，请保持在 manifest 最末位。 */
 .orca-panels-container
     :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
     .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),

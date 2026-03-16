@@ -1,0 +1,71 @@
+/* ===== 现代阴影层级系统 ===== */
+:root {
+    /* 阴影层级 - light */
+    --tokyo-shadow-1: 0 1px 2px rgb(from var(--tn-text-1) r g b / 0.08), 0 0 1px rgb(from var(--tn-text-1) r g b / 0.05);
+    --tokyo-shadow-2: 0 4px 10px rgb(from var(--tn-text-1) r g b / 0.14), 0 0 1px rgb(from var(--tn-text-1) r g b / 0.07);
+    --tokyo-shadow-3: 0 8px 24px rgb(from var(--tn-text-1) r g b / 0.2), 0 0 1px rgb(from var(--tn-text-1) r g b / 0.1);
+    --tokyo-shadow-4: 0 16px 48px rgb(from var(--tn-text-1) r g b / 0.24), 0 0 2px rgb(from var(--tn-text-1) r g b / 0.14);
+    --tokyo-shadow-floating: 0 10px 26px rgb(from var(--tn-text-1) r g b / 0.18);
+    --tokyo-shadow-floating-strong: 0 14px 34px rgb(from var(--tn-text-1) r g b / 0.22);
+
+    /* 内阴影 - 用于凹陷感 */
+    --tokyo-shadow-inset: inset 0 1px 2px rgb(from var(--tn-text-1) r g b / 0.1), inset 0 0 1px rgb(from var(--tn-text-1) r g b / 0.06);
+
+    /* 发光效果 */
+    --tokyo-shadow-glow-primary: 0 0 0 1px rgb(from var(--tn-accent) r g b / 0.28), 0 0 20px rgb(from var(--tn-accent) r g b / 0.14);
+    --tokyo-shadow-glow-hover: 0 0 30px rgb(from var(--tn-accent) r g b / 0.2);
+
+    /* 保留原有变量兼容 */
+    --tokyo-floating-radius: 16px;
+    --tokyo-glass-bg: rgb(from var(--tn-bg-2) r g b / 0.95);
+    --tokyo-glass-blur: 0px;
+    --tokyo-floating-bg: rgb(from var(--tn-bg-1) r g b / 0.98);
+    --tokyo-floating-bg-subtle: rgb(from var(--tn-bg-2) r g b / 0.98);
+    --tokyo-floating-bg-emphasis: rgb(from var(--tn-bg-3) r g b / 0.99);
+    --tokyo-floating-outline: rgb(from var(--tn-accent) r g b / 0.1);
+    --tokyo-shadow-tooltip:
+        0 6px 14px rgb(from var(--tn-text-1) r g b / 0.15),
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.08);
+    --tokyo-control-bg: rgb(from var(--tn-bg-2) r g b / 0.92);
+    --tokyo-control-bg-hover: rgb(from var(--tn-bg-3) r g b / 0.94);
+    --tokyo-control-shadow:
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.1);
+    --tokyo-control-shadow-hover:
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.16);
+    --tokyo-control-shadow-focus:
+        0 0 0 2px rgb(from var(--tn-accent) r g b / 0.32),
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.16);
+    --tokyo-transition-ui: 0.18s ease;
+    --tokyo-transition-fast: 0.14s ease-in-out;
+    --tokyo-transition-micro: 0.1s ease-in-out;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --tokyo-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.1);
+        --tokyo-shadow-2: 0 4px 8px rgba(0, 0, 0, 0.25), 0 0 1px rgba(0, 0, 0, 0.15);
+        --tokyo-shadow-3: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.2);
+        --tokyo-shadow-4: 0 16px 48px rgba(0, 0, 0, 0.35), 0 0 2px rgba(0, 0, 0, 0.25);
+        --tokyo-shadow-floating:
+            0 10px 26px rgba(0, 0, 0, 0.26),
+            0 0 0 1px rgba(122, 162, 247, 0.06);
+        --tokyo-shadow-floating-strong:
+            0 14px 34px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(122, 162, 247, 0.08);
+        --tokyo-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 0 1px rgba(0, 0, 0, 0.1);
+        --tokyo-shadow-glow-primary: 0 0 0 1px rgba(122, 162, 247, 0.3), 0 0 20px rgba(122, 162, 247, 0.15);
+        --tokyo-shadow-glow-hover: 0 0 30px rgba(122, 162, 247, 0.25);
+
+        --tokyo-glass-bg: rgba(18, 20, 29, 0.95);
+        --tokyo-floating-bg: rgba(27, 30, 44, 0.98);
+        --tokyo-floating-bg-subtle: rgba(30, 34, 49, 0.98);
+        --tokyo-floating-bg-emphasis: rgba(32, 36, 52, 0.99);
+        --tokyo-floating-outline: rgba(122, 162, 247, 0.1);
+        --tokyo-shadow-tooltip:
+            0 6px 14px rgba(0, 0, 0, 0.2),
+            0 0 0 1px rgba(122, 162, 247, 0.05);
+        --tokyo-control-bg: rgba(37, 41, 59, 0.92);
+        --tokyo-control-bg-hover: rgba(45, 51, 73, 0.94);
+    }
+}
+

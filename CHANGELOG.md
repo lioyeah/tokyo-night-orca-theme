@@ -5,10 +5,14 @@
 ## [Unreleased]
 
 ### 新增
-- 待补充
+- 新增主题样式源码目录 `src/theme-css/`，按 `tokens/base/components/feature-overrides/final-overrides` 进行分层维护。
+- 新增 `scripts/build-theme-css.cjs` 与 `src/theme-css/manifest.json`，支持按固定顺序拼接生成 `public/tokyo-night.css`。
+- 新增 CSS 质量检查：引入 stylelint 最小规则集，提供 `npm run lint:css`。
 
 ### 改进
-- 待补充
+- 构建流程调整为先执行 `build:css` 再进行 TypeScript/Vite 构建，确保发布产物始终由源码分片生成。
+- 新增 `npm run check`（`build + lint:css`）作为主题重构后的基础验收命令。
+- 文档更新：补充主题 CSS 分层结构、拼接机制与开发检查流程。
 
 ## [1.0.0] - 2026-03-15
 

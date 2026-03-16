@@ -1,0 +1,63 @@
+/* ===== 无序列表圆点句柄最终覆盖（放在文件末尾确保优先级） ===== */
+/* 这些规则用于压过宿主与前序分层中的冲突样式，请保持在 manifest 最末位。 */
+.orca-panels-container
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
+.orca-panels-container
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled)::before {
+    color: var(--tokyo-night-orange) !important;
+    opacity: 1 !important;
+}
+
+.orca-panels-container
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
+.orca-panels-container
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled)::before {
+    color: var(--tokyo-night-cyan) !important;
+}
+
+.orca-panels-container
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
+.orca-panels-container
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled)::before {
+    color: var(--tokyo-night-spring-green) !important;
+}
+
+.orca-panels-container
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
+.orca-panels-container
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
+    .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled)::before {
+    color: var(--tokyo-night-magenta) !important;
+}
+
+/* 兼容覆盖：直接命中无序列表上下文中的 ti 图标（含 square 形态） */
+#main .orca-block[data-type="ul"] .orca-block-handle.ti,
+#main .orca-repr-ul .orca-block-handle.ti,
+#main .orca-repr-ul-content .orca-block-handle.ti {
+    color: var(--tokyo-night-orange) !important;
+    opacity: 1 !important;
+}
+#main .orca-block[data-type="ul"] .orca-block-handle.ti::before,
+#main .orca-repr-ul .orca-block-handle.ti::before,
+#main .orca-repr-ul-content .orca-block-handle.ti::before {
+    color: var(--tokyo-night-orange) !important;
+}

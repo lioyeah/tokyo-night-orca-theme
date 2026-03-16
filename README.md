@@ -23,11 +23,17 @@
 
 ```bash
 npm install
+npm run build:css
 npm run dev
 npm run build
+npm run lint:css
 ```
 
-构建后产物位于 `dist/`，并会自动同步 `dist/tokyo-night.css`。
+说明：
+
+- 主题源码按模块拆分在 `src/theme-css/`，由 `manifest.json` 定义拼接顺序。
+- `npm run build:css` 会生成 `public/tokyo-night.css`，`npm run build` 会继续复制到 `dist/tokyo-night.css`。
+- 可使用 `npm run check` 执行完整检查（构建 + CSS 规则检查）。
 
 ## 许可证
 

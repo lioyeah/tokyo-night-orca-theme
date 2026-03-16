@@ -1,0 +1,459 @@
+/* ===== 基础页面和应用容器样式 ===== */
+body,
+div#app {
+    background-color: var(--orca-color-bg-1) !important;
+    color: var(--orca-color-text-1) !important;
+}
+
+.orca-panels-container {
+    background-color: var(--orca-color-bg-1) !important;
+}
+
+/* 全局光标颜色 */
+* {
+    caret-color: var(--orca-color-primary-5) !important;
+    scrollbar-color: var(--orca-color-win-scrollbar) var(--orca-color-bg-1);
+}
+
+/* ===== 高亮样式 ===== */
+mark,
+.orca-highlight {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-red) !important;
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+/* ===== 链接颜色 ===== */
+.orca-panels-container a {
+    color: var(--orca-color-link) !important;
+}
+.orca-panels-container a:hover {
+    color: var(--orca-color-primary-5) !important;
+}
+
+/* ===== 引用块样式 - 现代阴影 ===== */
+.orca-panels-container blockquote {
+    border: none !important;
+    border-left: 3px solid var(--orca-color-primary-5) !important;
+    background-color: var(--tokyo-night-bg-float) !important;
+    padding: 0.5em 0.75em !important;
+    margin: 0.75em 0 !important;
+    border-radius: var(--orca-radius-sm) !important;
+    box-shadow: var(--tokyo-shadow-inset), var(--tokyo-shadow-1) !important;
+}
+.orca-panels-container .orca-block[data-type="quote"] .orca-block,
+.orca-panels-container .orca-block[data-type="quote2"] .orca-block {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* ===== Callout 提示框样式（复刻 phycat-abyss）===== */
+/* 基础 Callout 样式 - 渐变背景 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2 {
+    border: none !important;
+    border-radius: 8px !important;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transition: box-shadow 0.2s ease !important;
+}
+
+/* 右下角 Emoji 图标 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2::after {
+    content: "";
+    position: absolute;
+    right: -10px;
+    bottom: -15px;
+    font-family: "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+    font-size: 64px;
+    line-height: 1;
+    opacity: 0.15;
+    transform: rotate(-15deg);
+    pointer-events: none;
+    z-index: 0;
+    filter: grayscale(100%);
+    text-shadow: 0 0 10px currentColor;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease,
+        right 0.4s ease, bottom 0.4s ease, filter 0.4s ease, text-shadow 0.4s ease;
+}
+
+/* 悬停效果 - 增强阴影 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+    z-index: 1 !important;
+}
+
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2:hover::after {
+    transform: rotate(0) scale(1.05);
+    opacity: 0.25;
+    right: 5px;
+    bottom: -5px;
+    filter: grayscale(0);
+    text-shadow: 0 0 20px currentColor;
+}
+
+/* Note - 青色 (var(--tn-info)) */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-note {
+    background: linear-gradient(90deg, transparent 0%, rgba(21, 151, 176, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-note::after {
+    content: "📝";
+    color: var(--tn-info);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-note:hover {
+    box-shadow: 0 4px 20px rgba(21, 151, 176, 0.2) !important;
+}
+
+/* Tip - 绿色 (var(--tn-success)) */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-tip {
+    background: linear-gradient(90deg, transparent 0%, rgba(97, 182, 133, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-tip::after {
+    content: "💡";
+    color: var(--tn-success);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-tip:hover {
+    box-shadow: 0 4px 20px rgba(97, 182, 133, 0.2) !important;
+}
+
+/* Warning - 橙色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-warning {
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 158, 100, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-warning::after {
+    content: "⚠️";
+    color: var(--tokyo-night-orange);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-warning:hover {
+    box-shadow: 0 4px 20px rgba(255, 158, 100, 0.2) !important;
+}
+
+/* Important - 紫色 (var(--tn-magenta)) */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-important {
+    background: linear-gradient(90deg, transparent 0%, rgba(183, 148, 240, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-important::after {
+    content: "🔥";
+    color: var(--tn-magenta);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-important:hover {
+    box-shadow: 0 4px 20px rgba(183, 148, 240, 0.2) !important;
+}
+
+/* Error - 深红色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-error {
+    background: linear-gradient(90deg, transparent 0%, rgba(214, 48, 49, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-error::after {
+    content: "💀";
+    color: var(--tn-danger);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-error:hover {
+    box-shadow: 0 4px 20px rgba(214, 48, 49, 0.2) !important;
+}
+
+/* Info - 蓝色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-info {
+    background: linear-gradient(90deg, transparent 0%, rgba(122, 162, 247, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-info::after {
+    content: "ℹ️";
+    color: var(--tokyo-night-blue);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-info:hover {
+    box-shadow: 0 4px 20px rgba(122, 162, 247, 0.2) !important;
+}
+
+/* Quote - 默认灰色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-quote {
+    background: linear-gradient(90deg, transparent 0%, rgba(86, 95, 137, 0.08) 100%) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-quote::after {
+    content: "💬";
+    color: var(--tokyo-night-comment);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2.orca-repr-quote2-quote:hover {
+    box-shadow: 0 4px 20px rgba(86, 95, 137, 0.2) !important;
+}
+
+/* 嵌套 callout 降级：保留左侧竖线层级，去掉背景与右下角图标重复渲染 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2
+    .orca-repr.orca-repr-quote2 {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2
+    .orca-repr.orca-repr-quote2::after {
+    content: none !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-repr.orca-repr-quote2
+    .orca-repr.orca-repr-quote2:hover {
+    box-shadow: none !important;
+}
+
+/* ===== 代码块卡片风格 - 现代阴影 ===== */
+.orca-panels-container pre,
+.orca-panels-container .orca-code-wrapper {
+    background-color: var(--tokyo-night-bg-float) !important;
+    border: none !important;
+    border-radius: var(--orca-radius-md) !important;
+    padding: 1em !important;
+    margin: 1em 0 !important;
+    box-shadow: var(--tokyo-shadow-inset), var(--tokyo-shadow-2) !important;
+}
+
+/* 代码块文本渲染修复：避免亮色模式出现白边/镶嵌感 */
+.orca-panels-container :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content),
+.orca-panels-container :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content) * {
+    text-shadow: none !important;
+    -webkit-text-stroke: 0 !important;
+}
+
+/* ===== 代码高亮配色（Prism token 映射，贴近 Tokyo Night 语义） ===== */
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(code, pre, .orca-code-preview, .orca-code-editor) {
+    color: var(--tn-code-fg) !important;
+}
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    .token {
+    color: var(--tn-code-variable) !important;
+    background: transparent !important;
+}
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(.token.comment, .token.prolog, .token.doctype, .token.cdata) {
+    color: var(--tn-code-comment) !important;
+}
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(
+        .token.keyword,
+        .token.atrule,
+        .token.important,
+        .token.selector,
+        .token.tag
+    ) {
+    color: var(--tn-code-keyword) !important;
+}
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(.token.string, .token.char, .token.attr-value, .token.regex) {
+    color: var(--tn-code-string) !important;
+}
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(.token.number, .token.boolean, .token.symbol) {
+    color: var(--tn-code-number) !important;
+}
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(
+        .token.function,
+        .token.function-variable,
+        .token.builtin,
+        .token.class-name
+    ) {
+    color: var(--tn-code-function) !important;
+}
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(.token.constant, .token.property, .token.namespace) {
+    color: var(--tn-code-constant) !important;
+}
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(.token.type, .token.parameter) {
+    color: var(--tn-code-type) !important;
+}
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    .token.operator {
+    color: var(--tn-code-operator) !important;
+}
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(.token.punctuation, .token.entity) {
+    color: var(--tn-code-punctuation) !important;
+}
+
+/* 语法符号背景修复：亮色模式下避免 operator/punctuation 出现块状底色 */
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(.token.operator, .token.punctuation, .token.entity) {
+    background: transparent !important;
+}
+

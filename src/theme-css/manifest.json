@@ -1,0 +1,11 @@
+{
+  "parts": [
+    "tokens.css",
+    "base.css",
+    "components.css",
+    "feature-overrides.css",
+    "feature-overrides-shadow-system.css",
+    "feature-overrides-excalidraw.css",
+    "final-overrides.css"
+  ]
+}

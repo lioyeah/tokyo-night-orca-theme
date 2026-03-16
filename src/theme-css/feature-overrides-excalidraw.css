@@ -1,0 +1,1236 @@
+/* ===== Excalidraw whiteboard theming ===== */
+/* Scoped refinements that reuse Tokyo Night floating/control tokens. */
+.excalidraw {
+    --color-primary: var(--orca-color-primary-5) !important;
+    --color-primary-darker: color-mix(in oklab, var(--tn-accent) 82%, var(--tn-bg-1)) !important;
+    --color-primary-darkest: color-mix(in oklab, var(--tn-accent) 70%, var(--tn-bg-1)) !important;
+    --color-primary-light: var(--tn-accent-hover) !important;
+    --color-surface-lowest: var(--tokyo-night-bg-night) !important;
+    --color-surface-low: var(--tokyo-floating-bg-subtle) !important;
+    --color-surface-mid: var(--tokyo-floating-bg-emphasis) !important;
+    --color-surface-high: color-mix(in srgb, var(--tokyo-floating-bg-emphasis), var(--tn-border) 20%) !important;
+    --color-surface-higher: color-mix(in srgb, var(--tokyo-floating-bg-emphasis), var(--tn-border) 35%) !important;
+    --color-on-primary-container: var(--tokyo-night-white) !important;
+    --color-on-surface: var(--tokyo-night-foreground) !important;
+    --color-on-surface-variant: var(--tokyo-night-comment) !important;
+    --color-border-outline: color-mix(in srgb, var(--tokyo-floating-bg-emphasis), var(--tn-border) 30%) !important;
+    --color-border-outline-variant: var(--tn-border) !important;
+    --island-bg-color: var(--tokyo-floating-bg) !important;
+    --popup-bg-color: var(--tokyo-floating-bg-emphasis) !important;
+    --sidebar-bg-color: var(--tokyo-floating-bg-subtle) !important;
+    --button-hover-bg: color-mix(in srgb, var(--orca-color-primary-5), transparent 84%) !important;
+    --select-highlight-color: color-mix(in srgb, var(--orca-color-primary-5), transparent 72%) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+
+.excalidraw .Island {
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--tokyo-floating-bg-emphasis), #ffffff 2%),
+        var(--tokyo-floating-bg)
+    ) !important;
+    border: 1px solid rgba(122, 162, 247, 0.1) !important;
+    box-shadow: var(--tokyo-shadow-floating) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+
+.excalidraw :is(.dropdown-menu, .context-menu, .popover, .Dialog, [role="dialog"]) {
+    background: var(--tokyo-floating-bg-emphasis) !important;
+    border: none !important;
+    border-radius: var(--orca-radius-md) !important;
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.34),
+        0 0 0 1px rgba(122, 162, 247, 0.12) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+
+.excalidraw :is(.dropdown-menu, .context-menu) {
+    overflow: visible !important;
+}
+
+.excalidraw :is(.dropdown-menu, .context-menu, .popover, .Dialog, [role="dialog"])::before,
+.excalidraw :is(.dropdown-menu, .context-menu, .popover, .Dialog, [role="dialog"])::after {
+    box-shadow: none !important;
+}
+
+.excalidraw [data-radix-popper-content-wrapper] > :is(.dropdown-menu, .context-menu, .popover) {
+    border: none !important;
+    outline: none !important;
+}
+
+/* Context menu in whiteboard uses .popover > ul; force single-layer frame. */
+.excalidraw .popover,
+.excalidraw .popover > ul {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-image: none !important;
+}
+
+.excalidraw .popover {
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.34),
+        0 0 0 1px rgba(122, 162, 247, 0.12) !important;
+    overflow: visible !important;
+}
+
+.excalidraw [data-radix-popper-content-wrapper],
+.excalidraw .popover {
+    z-index: 1200 !important;
+}
+
+.excalidraw :is(.dropdown-menu-item, [data-radix-collection-item]) {
+    color: var(--tokyo-night-foreground) !important;
+    border: none !important;
+}
+
+.excalidraw :is(.dropdown-menu-item:hover, [data-radix-collection-item]:hover) {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 84%) !important;
+    color: var(--tokyo-night-white) !important;
+}
+
+.excalidraw :is(.dropdown-menu-item:hover, [data-radix-collection-item]:hover) * {
+    color: var(--tokyo-night-white) !important;
+}
+
+/* Force readable hover text in Excalidraw context menus (prevents dark text overrides). */
+.excalidraw :is(.context-menu, .dropdown-menu, .popover) :is(
+    .dropdown-menu-item:hover,
+    [data-radix-collection-item]:hover,
+    [role="menuitem"]:hover,
+    li:hover
+) :is(span, div, p, a, button, label, strong, em) {
+    color: var(--tokyo-night-white) !important;
+    -webkit-text-fill-color: var(--tokyo-night-white) !important;
+}
+
+.excalidraw :is(.dropdown-menu-item[aria-disabled="true"], [data-radix-collection-item][aria-disabled="true"], .dropdown-menu-item.disabled) {
+    color: var(--tn-text-2) !important;
+}
+
+.excalidraw :is(.dropdown-menu-item[aria-disabled="true"], [data-radix-collection-item][aria-disabled="true"], .dropdown-menu-item.disabled):hover {
+    background: transparent !important;
+    color: var(--tn-text-2) !important;
+}
+
+.excalidraw :is(.dropdown-menu-item kbd, [data-radix-collection-item] kbd, .dropdown-menu-item .shortcut, [data-radix-collection-item] .shortcut) {
+    color: var(--tokyo-night-comment) !important;
+}
+
+.excalidraw :is(.dropdown-menu-item:hover kbd, [data-radix-collection-item]:hover kbd, .dropdown-menu-item:hover .shortcut, [data-radix-collection-item]:hover .shortcut) {
+    color: var(--tokyo-night-white) !important;
+}
+
+.excalidraw :is(.dropdown-menu, .context-menu) :is([role="separator"], hr, .separator, .dropdown-menu-separator) {
+    border-color: rgba(122, 162, 247, 0.1) !important;
+    background-color: rgba(122, 162, 247, 0.08) !important;
+}
+
+/* Avoid heavy row borders that visually look like double frame. */
+.excalidraw :is(.dropdown-menu-item, [data-radix-collection-item]) + :is(.dropdown-menu-item, [data-radix-collection-item]) {
+    border-top: none !important;
+}
+
+.excalidraw :is(.sidebar, [class*="Sidebar"]) {
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--tokyo-floating-bg-subtle), #ffffff 2%),
+        var(--tokyo-floating-bg-subtle)
+    ) !important;
+    border-left: 1px solid rgba(122, 162, 247, 0.08) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+
+.excalidraw :is(.sidebar__header, .sidebar__tabs) {
+    border-bottom: 1px solid rgba(122, 162, 247, 0.08) !important;
+}
+
+.excalidraw :is(.sidebar__header, .sidebar__tabs) :is(.sidebar__tab, .library-menu-control) {
+    background: var(--tokyo-control-bg) !important;
+    color: var(--tokyo-night-foreground) !important;
+    border: 1px solid transparent !important;
+    border-radius: var(--orca-radius-sm) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    transition:
+        background var(--tokyo-transition-ui),
+        box-shadow var(--tokyo-transition-ui),
+        border-color var(--tokyo-transition-ui) !important;
+}
+
+.excalidraw :is(.sidebar__header, .sidebar__tabs) :is(.sidebar__tab:hover, .library-menu-control:hover) {
+    background: var(--tokyo-control-bg-hover) !important;
+    box-shadow: var(--tokyo-control-shadow-hover) !important;
+    border-color: rgba(122, 162, 247, 0.2) !important;
+}
+
+.excalidraw :is(.ToolIcon__icon, .sidebar__header .sidebar__tab, .sidebar__header .library-menu-control, .sidebar__tabs .sidebar__tab, .sidebar__tabs .library-menu-control) {
+    border-radius: var(--orca-radius-sm) !important;
+    color: var(--tokyo-night-foreground) !important;
+    transition:
+        background var(--tokyo-transition-fast),
+        color var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
+
+.excalidraw :is(.ToolIcon__icon:hover, .sidebar__header .sidebar__tab:hover, .sidebar__header .library-menu-control:hover, .sidebar__tabs .sidebar__tab:hover, .sidebar__tabs .library-menu-control:hover) {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 86%) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+
+.excalidraw :is(.ToolIcon.ToolIcon_type_filled .ToolIcon__icon, .ToolIcon[aria-pressed="true"] .ToolIcon__icon, .sidebar__tab[aria-selected="true"], .library-menu-control[aria-selected="true"], .library-menu-control.active) {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 78%) !important;
+    color: var(--tokyo-night-white) !important;
+    box-shadow: 0 0 0 1px rgba(122, 162, 247, 0.2) !important;
+}
+
+.excalidraw .ToolIcon__icon svg,
+.excalidraw .ToolIcon__icon .icon {
+    opacity: 0.86;
+}
+
+.excalidraw .ToolIcon__icon:hover svg,
+.excalidraw .ToolIcon__icon:hover .icon {
+    opacity: 0.96;
+}
+
+.excalidraw :is(.ToolIcon.ToolIcon_type_filled .ToolIcon__icon, .ToolIcon[aria-pressed="true"] .ToolIcon__icon) :is(svg, .icon) {
+    opacity: 1;
+}
+
+.excalidraw .library-menu-browse-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: var(--tokyo-control-bg) !important;
+    color: var(--tokyo-night-foreground) !important;
+    border: 1px solid rgba(122, 162, 247, 0.14) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    min-height: 40px !important;
+    padding: 10px 14px !important;
+    border-radius: var(--orca-radius-sm) !important;
+}
+
+.excalidraw .library-menu-browse-button:hover {
+    background: var(--tokyo-control-bg-hover) !important;
+    color: var(--tokyo-night-white) !important;
+    border-color: rgba(122, 162, 247, 0.2) !important;
+    box-shadow: var(--tokyo-control-shadow-hover) !important;
+}
+
+.excalidraw .layer-ui__wrapper__top-right :is(.ToolIcon__icon, .library-menu-control) {
+    background: color-mix(in srgb, var(--tokyo-control-bg), var(--tokyo-night-bg-night) 20%) !important;
+    border: 1px solid rgba(122, 162, 247, 0.1) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+
+.excalidraw .layer-ui__wrapper__top-right :is(.ToolIcon__icon, .library-menu-control):hover {
+    background: var(--tokyo-control-bg-hover) !important;
+    color: var(--tokyo-night-white) !important;
+}
+
+.excalidraw .layer-ui__wrapper__top-right :is(.ToolIcon.ToolIcon_type_filled .ToolIcon__icon, .ToolIcon[aria-pressed="true"] .ToolIcon__icon, .library-menu-control[aria-selected="true"], .library-menu-control.active) {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 84%) !important;
+    color: var(--tokyo-night-white) !important;
+}
+
+/* Library mode switch: keep it as two explicit buttons (stable fallback). */
+.excalidraw [id*="trigger-library"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: fit-content !important;
+    max-width: fit-content !important;
+    flex: 0 0 auto !important;
+    gap: 2px !important;
+    padding: 2px !important;
+    background: color-mix(in srgb, var(--tokyo-control-bg), var(--tokyo-night-bg-night) 25%) !important;
+    border: 1px solid rgba(122, 162, 247, 0.14) !important;
+    border-radius: 10px !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.excalidraw [id*="trigger-library"] > :is(button, [role="tab"], .ToolIcon, .library-menu-control) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 0 0 34px !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.excalidraw [id*="trigger-library"] > :is(button, [role="tab"], .ToolIcon, .library-menu-control)::before,
+.excalidraw [id*="trigger-library"] > :is(button, [role="tab"], .ToolIcon, .library-menu-control)::after {
+    content: none !important;
+}
+
+.excalidraw [id*="trigger-library"] > :is(button, [role="tab"], .ToolIcon, .library-menu-control) :is(.ToolIcon__icon, svg, .icon) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.excalidraw [id*="trigger-library"] :is(button, [role="tab"], .ToolIcon__icon) {
+    border-radius: 8px !important;
+    background: transparent !important;
+    color: var(--tokyo-night-foreground) !important;
+    box-shadow: none !important;
+    min-height: 34px !important;
+    padding: 0 !important;
+}
+
+.excalidraw [id*="trigger-library"] :is(button, [role="tab"], .ToolIcon__icon):hover {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 88%) !important;
+    color: var(--tokyo-night-white) !important;
+}
+
+.excalidraw [id*="trigger-library"] :is([aria-selected="true"], [aria-pressed="true"], .active) {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 82%) !important;
+    color: var(--tokyo-night-white) !important;
+    box-shadow: 0 0 0 1px rgba(122, 162, 247, 0.18) !important;
+}
+
+/* Neutralize global ToolIcon active skins inside segmented switch. */
+.excalidraw [id*="trigger-library"] :is(.ToolIcon.ToolIcon_type_filled .ToolIcon__icon, .ToolIcon[aria-pressed="true"] .ToolIcon__icon) {
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* Fix personal library tile text/button overlap ("前往块"). */
+.excalidraw .library-unit__dragger.library-unit__pulse {
+    display: grid !important;
+    align-content: start !important;
+    justify-items: center !important;
+    gap: 8px !important;
+    padding: 8px 6px !important;
+    min-height: 86px !important;
+    overflow: hidden !important;
+}
+
+.excalidraw .library-unit__dragger.library-unit__pulse :is(.library-unit__name, .library-unit__caption, span) {
+    position: static !important;
+    transform: none !important;
+    max-width: 100% !important;
+    text-align: center !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+}
+
+.excalidraw .library-unit__dragger.library-unit__pulse :is(button, a) {
+    position: static !important;
+    margin: 0 !important;
+}
+
+/* Radix exact trigger fallback: search/library are separate buttons. */
+.excalidraw :is(
+    [id^="radix-"][id$="-trigger-search"],
+    [id^="radix-"][id$="-trigger-library"]
+) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(122, 162, 247, 0.16) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.excalidraw :is(
+    [id^="radix-"][id$="-trigger-search"],
+    [id^="radix-"][id$="-trigger-library"]
+)::before,
+.excalidraw :is(
+    [id^="radix-"][id$="-trigger-search"],
+    [id^="radix-"][id$="-trigger-library"]
+)::after {
+    content: none !important;
+}
+
+.excalidraw :is(
+    [id^="radix-"][id$="-trigger-search"],
+    [id^="radix-"][id$="-trigger-library"]
+) :is(svg, .icon, .ToolIcon__icon) {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.excalidraw :is(
+    [id^="radix-"][id$="-trigger-search"],
+    [id^="radix-"][id$="-trigger-library"]
+):hover {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 88%) !important;
+    border-color: rgba(122, 162, 247, 0.24) !important;
+}
+
+.excalidraw :is(
+    [id^="radix-"][id$="-trigger-search"],
+    [id^="radix-"][id$="-trigger-library"]
+):is([aria-selected="true"], [aria-pressed="true"], .active) {
+    background: color-mix(in srgb, var(--orca-color-primary-5), transparent 82%) !important;
+    border-color: rgba(122, 162, 247, 0.3) !important;
+    box-shadow: 0 0 0 1px rgba(122, 162, 247, 0.18) !important;
+}
+
+.excalidraw :is(input[type="text"], input[type="search"], textarea) {
+    background: var(--tokyo-night-bg-night) !important;
+    color: var(--tokyo-night-foreground) !important;
+    border: 1px solid var(--tn-border) !important;
+    border-radius: var(--orca-radius-sm) !important;
+}
+
+.excalidraw :is(input[type="text"], input[type="search"], textarea):focus {
+    border-color: var(--orca-color-primary-5) !important;
+    box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.3) !important;
+}
+
+.excalidraw :is(.help-dialog, .layer-ui__wrapper__top-right, .layer-ui__wrapper__footer, .layer-ui__wrapper__footer-right) {
+    color: var(--tokyo-night-foreground) !important;
+}
+
+/* 侧边栏透明，与窗体融合 */
+#sidebar {
+    background-color: transparent !important;
+}
+/* Whiteboard block frame in editor: soft Tokyo Night green outline. */
+#main .orca-repr-main-content.orca-repr-whiteboard-content > div > div {
+    border: 1px solid color-mix(in srgb, var(--tokyo-night-green), transparent 86%) !important;
+    border-radius: calc(var(--orca-radius-md) + 1px) !important;
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--tokyo-night-green), transparent 92%),
+        0 0 22px color-mix(in srgb, var(--tokyo-night-green), transparent 95%) !important;
+    transition:
+        border-color var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
+
+#main .orca-repr-main-content.orca-repr-whiteboard-content > div > div:hover {
+    border-color: color-mix(in srgb, var(--tokyo-night-green), transparent 78%) !important;
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--tokyo-night-green), transparent 88%),
+        0 0 26px color-mix(in srgb, var(--tokyo-night-green), transparent 93%) !important;
+}
+
+/* 主编辑区悬浮容器 */
+#main {
+    border-radius: var(--tokyo-floating-radius) 0 0 0 !important;
+    margin: calc(var(--orca-height-headbar) + 2px) 0 0 8px !important;
+    top: 0 !important;
+    height: calc(100% - 2px) !important;
+    border: 0 !important;
+    box-shadow: -6px 5px 12px rgb(from var(--tn-text-1) r g b / 0.09) !important;
+    overflow: hidden !important;
+    background-color: var(--tokyo-glass-bg) !important;
+}
+
+@media (prefers-color-scheme: light) {
+    #main {
+        box-shadow:
+            -7px 6px 14px rgb(from var(--tn-text-1) r g b / 0.1),
+            -1px 2px 4px rgb(from var(--tn-text-1) r g b / 0.06) !important;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    #main {
+        box-shadow: -6px 5px 12px rgba(0, 0, 0, 0.2) !important;
+    }
+}
+
+/* 侧边栏关闭时的边距 */
+.sidebar-closed #main,
+.sidebar-closing #main {
+    margin-left: 8px !important;
+}
+
+/* 编辑区背景 */
+#main::before {
+    content: "";
+    background: var(--orca-color-bg-1) !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* 编辑器顶部间距 */
+.orca-block-editor-main {
+    padding-top: var(--orca-spacing-xl) !important;
+}
+
+/* 拖拽手柄位置调整 */
+.orca-panel-drag-handle {
+    top: var(--orca-spacing-xl) !important;
+}
+
+/* 侧边工具栏位置调整 */
+.orca-block-editor-sidetools {
+    top: calc(50px + var(--orca-spacing-xl)) !important;
+}
+
+/* ===== Phycat 风格动效 ===== */
+
+/* 波浪下划线流动动画 */
+@keyframes waveFlow {
+    0% {
+        mask-position-x: 0;
+        -webkit-mask-position-x: 0;
+    }
+    100% {
+        mask-position-x: 12px;
+        -webkit-mask-position-x: 12px;
+    }
+}
+
+/* H1 玻璃按钮质感效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h1 {
+    display: inline-block;
+    position: relative;
+    transition: all 0.4s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h1 > span:first-child {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 8px;
+    background-color: rgb(from #ffffff r g b / 0.06);
+    background-image:
+        radial-gradient(
+            ellipse at center bottom,
+            color-mix(in srgb, var(--tokyo-night-red), transparent 90%),
+            transparent 70%
+        ),
+        linear-gradient(
+            180deg,
+            rgb(from #ffffff r g b / 0.2) 0%,
+            rgb(from #ffffff r g b / 0.04) 36%,
+            transparent 100%
+        );
+    background-repeat: no-repeat;
+    backdrop-filter: blur(8px) saturate(106%);
+    -webkit-backdrop-filter: blur(8px) saturate(106%);
+    border: none;
+    border-top: 1px solid rgb(from #ffffff r g b / 0.42);
+    border-bottom: 1px solid rgb(from var(--tn-border) r g b / 0.34);
+    box-shadow:
+        inset 0 -1px 0 rgb(from #ffffff r g b / 0.18),
+        0 4px 12px rgb(from var(--tn-text-1) r g b / 0.05);
+    transition: all 0.4s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h1:hover > span:first-child {
+    color: var(--tokyo-night-red);
+    text-shadow: 0 0 10px
+        color-mix(in srgb, var(--tokyo-night-red), transparent 66%);
+    background-image:
+        radial-gradient(
+            ellipse at center bottom,
+            color-mix(in srgb, var(--tokyo-night-red), transparent 76%),
+            transparent 72%
+        ),
+        linear-gradient(
+            180deg,
+            rgb(from #ffffff r g b / 0.24) 0%,
+            rgb(from #ffffff r g b / 0.06) 40%,
+            transparent 100%
+        );
+    border-bottom-color: rgb(from var(--tn-border) r g b / 0.42);
+    box-shadow:
+        inset 0 -1px 0 rgb(from #ffffff r g b / 0.22),
+        0 6px 14px rgb(from var(--tn-text-1) r g b / 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+    #main
+        :is(
+            .orca-block-editor-main,
+            .orca-repr-main-content,
+            .orca-repr-main-none-editable
+        )
+        h1 > span:first-child {
+        background-color: rgba(255, 255, 255, 0.02);
+        background-image: radial-gradient(
+            ellipse at center bottom,
+            color-mix(in srgb, var(--tokyo-night-red), transparent 85%),
+            transparent 70%
+        );
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        box-shadow: none;
+    }
+    #main
+        :is(
+            .orca-block-editor-main,
+            .orca-repr-main-content,
+            .orca-repr-main-none-editable
+        )
+        h1:hover > span:first-child {
+        color: var(--tokyo-night-red);
+        text-shadow: 0 0 12px
+            color-mix(in srgb, var(--tokyo-night-red), transparent 40%);
+        background-image: radial-gradient(
+            ellipse at center bottom,
+            color-mix(in srgb, var(--tokyo-night-red), transparent 50%),
+            transparent 70%
+        );
+    }
+}
+
+/* H2 下划线展开效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h2 {
+    position: relative;
+    display: inline-block;
+    background: transparent !important;
+    transition:
+        transform 0.3s ease,
+        text-shadow 0.3s ease,
+        color 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h2:hover {
+    color: var(--tokyo-night-orange) !important;
+    text-shadow: 0 0 10px
+        color-mix(in srgb, var(--tokyo-night-orange), transparent 60%);
+}
+/* H2 下划线 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 30%;
+    height: 2px;
+    background: var(--tokyo-night-orange);
+    transition:
+        width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+        box-shadow 0.3s ease;
+    border-radius: 2px;
+    opacity: 0.7;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h2:hover::before {
+    width: 100%;
+    opacity: 1;
+    box-shadow: 0 0 10px var(--tokyo-night-orange);
+}
+/* H2 后方装饰图标 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h2::after {
+    content: "";
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    margin-left: 6px;
+    vertical-align: middle;
+    background-color: var(--tokyo-night-orange);
+    opacity: 0.7;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286z'/></svg>");
+    mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286z'/></svg>");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transition: opacity 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h2:hover::after {
+    opacity: 1;
+}
+
+/* H3 左边框扩展效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h3 {
+    position: relative;
+    padding-left: 14px;
+    background: transparent !important;
+    transition:
+        padding-left 0.3s ease,
+        text-shadow 0.3s ease,
+        color 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 40%;
+    background: var(--tokyo-night-yellow);
+    border-radius: 2px;
+    opacity: 0.6;
+    transition:
+        height 0.3s ease,
+        opacity 0.3s ease,
+        box-shadow 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h3:hover {
+    padding-left: 20px;
+    color: var(--tokyo-night-yellow) !important;
+    text-shadow: 0 0 8px
+        color-mix(in srgb, var(--tokyo-night-yellow), transparent 60%);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h3:hover::before {
+    height: 70%;
+    opacity: 1;
+    box-shadow: 0 0 8px var(--tokyo-night-yellow);
+}
+/* H3 后方装饰图标 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h3::after {
+    content: "";
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    margin-left: 6px;
+    vertical-align: middle;
+    background-color: var(--tokyo-night-yellow);
+    opacity: 0.7;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M4.571 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286z'/></svg>");
+    mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M4.571 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286z'/></svg>");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transition: opacity 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h3:hover::after {
+    opacity: 1;
+}
+
+/* H4 实心圆点装饰效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h4 {
+    display: flex;
+    align-items: center;
+    background: transparent !important;
+    transition:
+        transform 0.3s ease,
+        text-shadow 0.3s ease,
+        color 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h4::before {
+    content: "";
+    margin-right: 10px;
+    display: inline-block;
+    background-color: var(--tokyo-night-green);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h4:hover {
+    color: var(--tokyo-night-green) !important;
+    text-shadow: 0 0 8px
+        color-mix(in srgb, var(--tokyo-night-green), transparent 60%);
+    transform: translateX(5px);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h4:hover::before {
+    transform: scale(1.3);
+    box-shadow: 0 0 8px var(--tokyo-night-green);
+}
+/* H4 后方装饰图标 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h4::after {
+    content: "";
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    margin-left: 6px;
+    vertical-align: middle;
+    background-color: var(--tokyo-night-green);
+    opacity: 0.7;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M4.571 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 22.857c1.257 0 2.286-1.029 2.286-2.286s-1.029-2.286-2.286-2.286-2.286 1.029-2.286 2.286 1.029 2.286 2.286 2.286z'/></svg>");
+    mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path d='M4.571 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM4.571 18.286c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 25.143c-1.257 0-2.286 1.029-2.286 2.286s1.029 2.286 2.286 2.286 2.286-1.029 2.286-2.286-1.029-2.286-2.286-2.286zM11.429 22.857c1.257 0 2.286-1.029 2.286-2.286s-1.029-2.286-2.286-2.286-2.286 1.029-2.286 2.286 1.029 2.286 2.286 2.286z'/></svg>");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transition: opacity 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    h4:hover::after {
+    opacity: 1;
+}
+
+/* Strong 弹跳缩放效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    strong,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.b,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="b"] {
+    display: inline-block;
+    color: var(--orca-color-primary-5) !important;
+    font-weight: 700;
+    transition:
+        transform 0.2s cubic-bezier(0.5, 1.5, 0.5, 1),
+        text-shadow 0.2s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    strong:hover,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.b:hover,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="b"]:hover {
+    transform: translateY(-1px) scale(1.03);
+    text-shadow: 0 0 6px var(--orca-color-primary-5);
+}
+
+/* Em 波浪下划线效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    em,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.i,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="i"] {
+    font-style: italic;
+    color: var(--tokyo-night-spring-green) !important;
+    position: relative;
+    padding: 0 2px 2px;
+    transition:
+        color 0.3s ease,
+        text-shadow 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    em::after,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.i::after,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="i"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4'%3E%3Cpath fill='none' stroke='black' stroke-width='2' d='M0 3.5c5 0 5-3 10-3s5 3 10 3 5-3 10-3 5 3 10 3'/%3E%3C/svg%3E");
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4'%3E%3Cpath fill='none' stroke='black' stroke-width='2' d='M0 3.5c5 0 5-3 10-3s5 3 10 3 5-3 10-3 5 3 10 3'/%3E%3C/svg%3E");
+    mask-repeat: repeat-x;
+    -webkit-mask-repeat: repeat-x;
+    mask-size: 12px 4px;
+    -webkit-mask-size: 12px 4px;
+    background-color: var(--tokyo-night-spring-green);
+    z-index: -1;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    em:hover,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.i:hover,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="i"]:hover {
+    text-shadow: 0 0 5px
+        color-mix(in srgb, var(--tokyo-night-spring-green), transparent 60%);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    em:hover::after,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.i:hover::after,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="i"]:hover::after {
+    animation: waveFlow 1s linear infinite;
+}
+
+/* Mark 发光效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    mark,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-highlight {
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    mark:hover,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-highlight:hover {
+    background-color: var(--tokyo-night-red) !important;
+    color: #ffffff !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 12px
+        color-mix(in srgb, var(--tokyo-night-red), transparent 50%);
+}
+
+/* 链接悬停增强 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    a {
+    display: inline-block;
+    border-radius: 3px;
+    padding: 0 3px;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    a:hover {
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* 引用块悬停增强 - 添加缩放 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    blockquote:hover {
+    transform: translateY(-1px) scale(1.01);
+}
+
+/* 顶部工具栏背景统一：避免各工具区露出不同底色 */
+#headbar,
+#headbar .orca-headbar-sidebar-tools,
+#headbar .orca-headbar-global-tools,
+#headbar .orca-headbar-user-tools {
+    background-color: var(--orca-color-bg-1) !important;
+    box-shadow: none !important;
+}
+
+/* ===== 块展开/收起圆点视觉区分度增强 ===== */
+/* 注意：此样式仅针对普通文本块，不触及列表类（orca-repr-ul/orca-repr-ol） */
+/* 列表颜色设置保持原有 703-1029 行的样式不变 */
+
+/* 液体变形动画关键帧 */
+@keyframes liquidMorph {
+    0% {
+        border-radius: 50%;
+        transform: scale(1, 1);
+    }
+    25% {
+        border-radius: 40% 60% 60% 40% / 50% 40% 60% 50%;
+        transform: scale(1.3, 0.8);
+    }
+    50% {
+        border-radius: 60% 40% 40% 60% / 40% 50% 50% 60%;
+        transform: scale(0.9, 1.2);
+    }
+    75% {
+        border-radius: 45% 55% 55% 45% / 55% 45% 55% 45%;
+        transform: scale(1.1, 0.9);
+    }
+    100% {
+        border-radius: 50%;
+        transform: scale(1, 1);
+    }
+}
+
+/*
+ * 普通文本块展开状态 - 使用半透明注释色
+ * 选择器边界：仅匹配没有列表类的情况
+ */
+.orca-repr-main:not(.orca-repr-ul):not(.orca-repr-ol) .orca-block-handle.ti-point-filled,
+.orca-repr-main:not(.orca-repr-ul):not(.orca-repr-ol) .orca-block-handle.ti-point {
+    color: var(--tokyo-night-comment) !important;
+    opacity: 0.5 !important;
+}
+
+/*
+ * 普通文本块收起状态 - 使用主题主色蓝色
+ * 选择器边界：仅匹配没有列表类的情况
+ */
+.orca-repr-main-collapsed:not(.orca-repr-ul):not(.orca-repr-ol) .orca-block-handle.orca-block-handle-collapsed,
+.orca-repr-main-collapsed:not(.orca-repr-ul):not(.orca-repr-ol) .orca-block-handle.ti-point-filled,
+.orca-repr-main-collapsed:not(.orca-repr-ul):not(.orca-repr-ol) .orca-block-handle.ti-point {
+    color: var(--tokyo-night-blue) !important;
+    opacity: 1 !important;
+    text-shadow: 0 0 6px color-mix(in srgb, var(--tokyo-night-blue), transparent 60%);
+    /* 切换时触发液体变形动画 */
+    animation: liquidMorph 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Callout 块内圆点隐藏 ===== */
+/* 避免与左侧装饰线发生干涉 */
+.orca-repr-quote2 .orca-block-handle,
+.orca-repr-quote2.orca-repr-main .orca-block-handle,
+.orca-repr-quote2.orca-repr-main-collapsed .orca-block-handle {
+    display: none !important;
+}
+
+/* ===== Table cell block handle hidden ===== */
+/* Only hide leading point handles inside table2 cells. */
+.orca-repr-main-content.orca-repr-table2-content .orca-block-handle,
+.orca-repr-main-content.orca-repr-table2-content .orca-repr-main .orca-block-handle,
+.orca-repr-main-content.orca-repr-table2-content .orca-repr-main-collapsed .orca-block-handle {
+    display: none !important;
+}
+

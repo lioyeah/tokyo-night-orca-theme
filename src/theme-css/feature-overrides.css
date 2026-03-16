@@ -1,0 +1,1262 @@
+/* ===== 查询构建器 ===== */
+.orca-query-conditions {
+    position: relative !important;
+    isolation: isolate !important;
+    overflow: hidden !important;
+    border-radius: var(--orca-radius-sm) !important;
+    padding: var(--orca-spacing-md) !important;
+    border: 1px solid transparent !important;
+    background: var(--tn-query-panel-bg) !important;
+    box-shadow: none !important;
+    transition:
+        border-color var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
+
+#main .orca-block-editor-query-views .orca-query-conditions {
+    background: var(--tn-query-panel-bg) !important;
+}
+
+.orca-query-conditions > * {
+    position: relative;
+    z-index: 1;
+}
+
+.orca-query-conditions::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 0.65px;
+    background:
+        linear-gradient(
+            115deg,
+            var(--tn-query-neon-tube-c1) 0%,
+            var(--tn-query-neon-tube-c2) 16%,
+            var(--tn-query-neon-tube-c3) 33%,
+            var(--tn-query-neon-tube-c4) 50%,
+            var(--tn-query-neon-tube-c5) 67%,
+            var(--tn-query-neon-tube-c6) 84%,
+            var(--tn-query-neon-tube-c7) 100%
+        ),
+        linear-gradient(
+            290deg,
+            transparent 8%,
+            color-mix(in srgb, white, var(--tn-query-neon-tube-c3) 62%) 36%,
+            transparent 58%,
+            color-mix(in srgb, var(--tn-query-neon-tube-c5), white 24%) 82%,
+            transparent 97%
+        );
+    background-blend-mode: normal, screen;
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: var(--tn-query-neon-line-opacity);
+    filter: saturate(1.18) contrast(1.06);
+    box-shadow:
+        0 0 0 0.5px color-mix(in srgb, var(--tn-query-neon-ring), transparent 36%),
+        0 0 6px color-mix(in srgb, var(--tn-query-neon-glow), transparent 36%);
+    pointer-events: none;
+    transition:
+        opacity var(--tokyo-transition-fast),
+        filter var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
+
+.orca-query-conditions::after {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle, color-mix(in srgb, var(--tn-query-neon-tube-c1), transparent 18%) 0%, transparent 56%),
+        radial-gradient(circle, color-mix(in srgb, var(--tn-query-neon-tube-c2), transparent 24%) 0%, transparent 52%),
+        radial-gradient(circle, color-mix(in srgb, var(--tn-query-neon-tube-c4), transparent 22%) 0%, transparent 54%),
+        radial-gradient(circle, color-mix(in srgb, var(--tn-query-neon-tube-c5), transparent 20%) 0%, transparent 55%),
+        radial-gradient(circle, color-mix(in srgb, var(--tn-query-neon-tube-c6), transparent 24%) 0%, transparent 53%),
+        radial-gradient(circle, color-mix(in srgb, var(--tn-query-neon-tube-c7), transparent 20%) 0%, transparent 55%);
+    background-repeat: no-repeat;
+    background-size:
+        34% 34%,
+        58% 58%,
+        40% 40%,
+        62% 62%,
+        28% 28%,
+        50% 50%;
+    background-position:
+        8% 24%,
+        86% 16%,
+        70% 84%,
+        18% 76%,
+        78% 54%,
+        24% 48%;
+    filter: blur(var(--tn-query-fog-blur)) saturate(1.2) brightness(1.03);
+    opacity: var(--tn-query-fog-opacity);
+    pointer-events: none;
+    z-index: 0;
+    will-change: background-position, opacity, filter;
+    animation:
+        tn-query-neon-orbs var(--tn-query-fog-speed) linear infinite,
+        tn-query-neon-orbs-b var(--tn-query-fog-shift-speed) ease-in-out infinite;
+    transition:
+        opacity var(--tokyo-transition-fast),
+        filter var(--tokyo-transition-fast) !important;
+}
+
+.orca-query-conditions:hover,
+.orca-query-conditions:focus-within {
+    border-color: transparent !important;
+    background: var(--tn-query-panel-bg) !important;
+    box-shadow: none !important;
+}
+
+.orca-query-conditions:hover::before,
+.orca-query-conditions:focus-within::before {
+    opacity: 1;
+    filter: saturate(1.26) contrast(1.1);
+    box-shadow:
+        0 0 0 0.5px color-mix(in srgb, var(--tn-query-neon-ring-hover), transparent 18%),
+        0 0 10px color-mix(in srgb, var(--tn-query-neon-glow-hover), transparent 18%);
+}
+
+.orca-query-conditions:hover::after,
+.orca-query-conditions:focus-within::after {
+    opacity: calc(var(--tn-query-fog-opacity) + 0.08);
+    filter: blur(calc(var(--tn-query-fog-blur) + 2px)) saturate(1.28) brightness(1.05);
+}
+
+@keyframes tn-query-neon-orbs {
+    0% {
+        background-position:
+            8% 24%,
+            86% 16%,
+            70% 84%,
+            18% 76%,
+            78% 54%,
+            24% 48%;
+    }
+    25% {
+        background-position:
+            22% 10%,
+            72% 30%,
+            80% 62%,
+            12% 88%,
+            58% 70%,
+            34% 34%;
+    }
+    50% {
+        background-position:
+            40% 34%,
+            66% 8%,
+            58% 42%,
+            26% 64%,
+            72% 86%,
+            16% 26%;
+    }
+    75% {
+        background-position:
+            14% 36%,
+            90% 42%,
+            44% 72%,
+            32% 54%,
+            84% 40%,
+            30% 58%;
+    }
+    100% {
+        background-position:
+            8% 24%,
+            86% 16%,
+            70% 84%,
+            18% 76%,
+            78% 54%,
+            24% 48%;
+    }
+}
+
+@keyframes tn-query-neon-orbs-b {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(1.5%, -1.2%, 0) scale(1.02);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .orca-query-conditions::after {
+        animation: none !important;
+    }
+}
+
+/* Shared control surface baseline for settings/query actions. */
+.orca-query-conditions .orca-query-conditions-reset.orca-button,
+.orca-settings > .views button:not(.orca-switch),
+.orca-settings button:not(.orca-switch),
+.orca-settings > .views .shortcut-input button.orca-button.plain {
+    background: var(--tokyo-control-bg) !important;
+    color: var(--tokyo-night-white) !important;
+    border: none !important;
+    border-radius: var(--orca-radius-sm) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    transition:
+        background var(--tokyo-transition-ui) !important,
+        box-shadow var(--tokyo-transition-ui) !important;
+}
+.orca-query-conditions .orca-query-conditions-reset.orca-button:hover,
+.orca-settings > .views button:not(.orca-switch):hover,
+.orca-settings button:not(.orca-switch):hover,
+.orca-settings > .views .shortcut-input button.orca-button.plain:hover {
+    background: var(--tokyo-control-bg-hover) !important;
+    box-shadow: var(--tokyo-control-shadow-hover) !important;
+}
+
+/* ===== 查询编辑器标签页 ===== */
+.orca-block-editor-query-tabs .orca-segmented-item {
+    color: var(--orca-color-gray-6) !important;
+}
+.orca-block-editor-query-tabs .orca-segmented-item .ti {
+    color: var(--orca-color-gray-6) !important;
+}
+.orca-block-editor-query-tabs .orca-segmented-item.orca-selected {
+    color: var(--tokyo-night-white) !important;
+    border-bottom-color: var(--orca-color-tab) !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+.orca-block-editor-query-tabs .orca-segmented-item.orca-selected .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+/* ===== 侧边栏样式 ===== */
+nav#sidebar {
+    color: var(--tokyo-night-foreground) !important;
+    border-right: none !important;
+    box-shadow: none !important;
+}
+nav#sidebar .orca-select-button-text {
+    color: var(--tokyo-night-red) !important;
+    font-weight: 600 !important;
+}
+
+/* 侧边栏文本颜色 */
+nav#sidebar .item,
+nav#sidebar a,
+nav#sidebar .orca-tags-tag-name,
+nav#sidebar .day,
+nav#sidebar .title,
+nav#sidebar span {
+    color: var(--tokyo-night-foreground) !important;
+}
+nav#sidebar :is(
+    .item,
+    a,
+    .orca-fav-item-item,
+    .orca-tags-tag-item,
+    .orca-aliased-block-item,
+    .orca-page-item
+) {
+    transition:
+        background-color var(--tokyo-transition-fast),
+        color var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
+nav#sidebar :is(
+    .item,
+    a,
+    .orca-fav-item-item,
+    .orca-tags-tag-item,
+    .orca-aliased-block-item,
+    .orca-page-item
+) .ti {
+    transition:
+        color var(--tokyo-transition-fast),
+        background-color var(--tokyo-transition-fast) !important;
+}
+
+nav#sidebar .item:hover,
+nav#sidebar a:hover {
+    background-color: color-mix(in srgb, var(--tn-accent), transparent 86%) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+nav#sidebar :is(.orca-fav-item-item, .orca-tags-tag-item, .orca-aliased-block-item, .orca-page-item):hover {
+    background-color: color-mix(in srgb, var(--tn-accent), transparent 86%) !important;
+    color: var(--tokyo-night-foreground) !important;
+}
+nav#sidebar :is(.orca-fav-item-item, .orca-tags-tag-item, .orca-aliased-block-item, .orca-page-item):hover :is(span, .title, .orca-tags-tag-name, .orca-aliased-block-name) {
+    color: var(--tokyo-night-foreground) !important;
+}
+nav#sidebar .item:hover .ti,
+nav#sidebar a:hover .ti {
+    color: var(--tokyo-night-foreground) !important;
+}
+
+nav#sidebar .item.active,
+nav#sidebar a.active {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+nav#sidebar .item.active .ti,
+nav#sidebar a.active .ti {
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+/* Sidebar "new page" button: dedicated Tokyo Night accent style. */
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn {
+    background-color: color-mix(in srgb, #ffffff, var(--tn-bg-1) 12%) !important;
+    background-image:
+        radial-gradient(circle at 84% 22%, rgba(255, 196, 104, 0.72) 0 8%, rgba(255, 196, 104, 0.3) 14%, transparent 24%),
+        radial-gradient(circle at 84% 22%, rgba(255, 231, 170, 0.6) 0 4%, transparent 10%),
+        radial-gradient(circle at 18% 24%, rgba(125, 207, 255, 0.42) 0 8%, transparent 20%),
+        radial-gradient(circle at 76% 32%, rgba(187, 154, 247, 0.36) 0 10%, transparent 24%),
+        radial-gradient(circle at 30% 28%, rgba(140, 220, 255, 0.7) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 68% 22%, rgba(207, 178, 255, 0.68) 0 1px, transparent 1.6px),
+        linear-gradient(
+            90deg,
+            transparent 0 14%,
+            rgba(125, 207, 255, 0.22) 14% 22%,
+            transparent 22% 42%,
+            rgba(187, 154, 247, 0.2) 42% 50%,
+            transparent 50% 70%,
+            rgba(122, 162, 247, 0.2) 70% 78%,
+            transparent 78% 100%
+        ),
+        linear-gradient(
+            180deg,
+            transparent 0 70%,
+            rgba(122, 162, 247, 0.14) 70% 100%
+        ),
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, #ffffff, var(--tn-bg-1) 6%) 0%,
+            color-mix(in srgb, #ffffff, var(--tn-bg-1) 22%) 100%
+        ) !important;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 24%, 100% 100%, 100% 100% !important;
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 100%, 0 0, 0 0 !important;
+    background-repeat: no-repeat !important;
+    color: color-mix(in srgb, var(--tn-text-1), var(--tn-accent) 12%) !important;
+    text-shadow: 0 1px 0 rgb(from #ffffff r g b / 0.62) !important;
+    border: none !important;
+    border-radius: var(--orca-radius-sm) !important;
+    box-shadow:
+        0 6px 12px rgb(from var(--tn-text-1) r g b / 0.1),
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.08) inset !important;
+    box-sizing: border-box !important;
+    transition:
+        filter var(--tokyo-transition-ui),
+        box-shadow var(--tokyo-transition-ui),
+        transform var(--tokyo-transition-ui) !important;
+}
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:focus,
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:focus-visible {
+    outline: none !important;
+    border-color: transparent !important;
+    box-shadow:
+        0 6px 12px rgb(from var(--tn-text-1) r g b / 0.1),
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.12) inset !important;
+}
+
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover {
+    filter: none !important;
+    box-shadow:
+        0 6px 12px rgb(from var(--tn-text-1) r g b / 0.1),
+        0 0 0 1px rgb(from var(--tn-accent) r g b / 0.08) inset !important;
+}
+
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn .ti.ti-plus {
+    color: var(--tn-accent) !important;
+    opacity: 0.96 !important;
+    margin-right: 0.35em !important;
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    backface-visibility: hidden;
+    will-change: transform, text-shadow;
+    transition:
+        transform 0.22s ease-out,
+        text-shadow var(--tokyo-transition-fast),
+        opacity var(--tokyo-transition-fast),
+        color var(--tokyo-transition-fast) !important;
+}
+
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn > :is(
+    .orca-select-button-text,
+    .orca-button-text,
+    span:not(.ti)
+) {
+    display: inline-block;
+    transform: scale(1);
+    transform-origin: left center;
+    backface-visibility: hidden;
+    will-change: transform, text-shadow;
+    transition:
+        transform 0.22s ease-out,
+        text-shadow var(--tokyo-transition-fast),
+        color var(--tokyo-transition-fast) !important;
+}
+
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover .ti.ti-plus {
+    opacity: 1 !important;
+    color: color-mix(in srgb, var(--tn-accent), var(--tn-accent-hover) 28%) !important;
+    transform: scale(1.1);
+    text-shadow:
+        0 0 8px rgb(from var(--tn-accent) r g b / 0.32),
+        0 0 14px rgb(from var(--tn-accent) r g b / 0.2);
+}
+
+nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover > :is(
+    .orca-select-button-text,
+    .orca-button-text,
+    span:not(.ti)
+) {
+    color: var(--tn-text-1) !important;
+    transform: scale(1.04);
+    text-shadow:
+        0 0 8px rgb(from var(--tn-accent) r g b / 0.26),
+        0 0 16px rgb(from var(--tn-accent) r g b / 0.14);
+}
+
+@media (prefers-color-scheme: dark) {
+    nav#sidebar .item:hover,
+    nav#sidebar a:hover {
+        background-color: var(--tokyo-night-terminal-black) !important;
+        color: var(--tokyo-night-white) !important;
+    }
+    nav#sidebar .item:hover .ti,
+    nav#sidebar a:hover .ti {
+        color: var(--tokyo-night-white) !important;
+    }
+    nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn {
+        background-color: var(--tokyo-floating-bg-emphasis) !important;
+        background-image:
+            radial-gradient(
+                circle at 8% -145%,
+                rgba(216, 232, 255, 0.6) 0 18%,
+                rgba(216, 232, 255, 0.16) 23%,
+                transparent 30%
+            ),
+            radial-gradient(circle at 22% 76%, rgba(125, 207, 255, 0.22) 0 10%, transparent 18%),
+            radial-gradient(circle at 62% 82%, rgba(247, 118, 142, 0.2) 0 11%, transparent 20%),
+            linear-gradient(
+                90deg,
+                transparent 0 18%,
+                rgba(125, 207, 255, 0.2) 18% 22%,
+                transparent 22% 44%,
+                rgba(187, 154, 247, 0.18) 44% 48%,
+                transparent 48% 68%,
+                rgba(255, 158, 100, 0.18) 68% 72%,
+                transparent 72% 100%
+            ),
+            radial-gradient(circle at 26% 26%, rgba(200, 235, 255, 0.75) 0 1px, transparent 1.5px),
+            radial-gradient(circle at 74% 30%, rgba(200, 235, 255, 0.65) 0 1px, transparent 1.5px),
+            radial-gradient(circle at 88% 18%, rgba(200, 235, 255, 0.6) 0 1px, transparent 1.5px),
+            linear-gradient(
+                180deg,
+                transparent 0 64%,
+                rgba(44, 37, 82, 0.42) 64% 84%,
+                rgba(36, 31, 70, 0.56) 84% 100%
+            ),
+            linear-gradient(
+                180deg,
+                color-mix(in srgb, var(--tokyo-night-magenta), transparent 84%) 0%,
+                color-mix(in srgb, var(--tokyo-night-blue), transparent 90%) 52%,
+                transparent 100%
+            ) !important;
+        background-size: 100% 100%, 100% 100%, 100% 100%, 100% 28%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100% !important;
+        background-position: 0 0, 0 0, 0 0, 0 100%, 0 0, 0 0, 0 0, 0 0, 0 0 !important;
+        color: var(--tokyo-night-white) !important;
+        text-shadow: 0 1px 0 rgba(9, 11, 18, 0.45) !important;
+        border: none !important;
+        box-shadow:
+            0 4px 12px rgba(0, 0, 0, 0.18),
+            inset 0 1px 0 color-mix(in srgb, #ffffff, transparent 90%) !important;
+    }
+    nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover {
+        filter: brightness(1.06) !important;
+        box-shadow:
+            0 6px 14px rgba(0, 0, 0, 0.22),
+            inset 0 1px 0 color-mix(in srgb, #ffffff, transparent 86%) !important;
+    }
+    nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn .ti.ti-plus {
+        color: color-mix(in srgb, var(--tokyo-night-cyan), #ffffff 12%) !important;
+    }
+    nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover .ti.ti-plus,
+    nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover > :is(
+        .orca-select-button-text,
+        .orca-button-text,
+        span:not(.ti)
+    ) {
+        color: var(--tokyo-night-white) !important;
+    }
+    nav#sidebar :is(.orca-fav-item-item, .orca-tags-tag-item, .orca-aliased-block-item, .orca-page-item):hover {
+        background-color: var(--tokyo-night-terminal-black) !important;
+        color: var(--tokyo-night-white) !important;
+    }
+    nav#sidebar :is(.orca-fav-item-item, .orca-tags-tag-item, .orca-aliased-block-item, .orca-page-item):hover :is(span, .title, .orca-tags-tag-name, .orca-aliased-block-name) {
+        color: var(--tokyo-night-white) !important;
+    }
+    nav#sidebar .item:hover .ti,
+    nav#sidebar a:hover .ti,
+    nav#sidebar .ti:hover {
+        color: var(--tokyo-night-white) !important;
+    }
+}
+
+/* 侧边栏搜索框 - 单下边框 */
+nav#sidebar .orca-input-input,
+nav#sidebar .search-box .orca-input-input {
+    position: relative !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+nav#sidebar .orca-input-input::before,
+nav#sidebar .search-box .orca-input-input::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--tn-sidebar-input-line);
+    clip-path: polygon(
+        0% 100%,
+        0% 62%,
+        10% 60%,
+        20% 55%,
+        30% 47%,
+        40% 35%,
+        50% 18%,
+        60% 35%,
+        70% 47%,
+        80% 55%,
+        90% 60%,
+        100% 62%,
+        100% 100%
+    );
+    pointer-events: none;
+    transition:
+        clip-path 220ms ease,
+        background-color var(--tokyo-transition-fast) !important;
+}
+nav#sidebar .orca-input-input input,
+nav#sidebar .search-box .orca-input-input input,
+nav#sidebar input.orca-input-actualinput {
+    color: var(--tokyo-night-foreground) !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+nav#sidebar .orca-input-input input:focus,
+nav#sidebar .search-box .orca-input-input input:focus,
+nav#sidebar input.orca-input-actualinput:focus,
+nav#sidebar .orca-input-input input:focus-visible,
+nav#sidebar .search-box .orca-input-input input:focus-visible,
+nav#sidebar input.orca-input-actualinput:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-color: transparent !important;
+}
+nav#sidebar .orca-input-input .ti,
+nav#sidebar .search-box .orca-input-input .ti {
+    color: var(--orca-color-gray-6) !important;
+}
+nav#sidebar .orca-input-input:focus-within,
+nav#sidebar .search-box .orca-input-input:focus-within {
+    box-shadow: none !important;
+}
+nav#sidebar .orca-input-input:hover,
+nav#sidebar .search-box .orca-input-input:hover {
+    box-shadow: none !important;
+}
+nav#sidebar .orca-input-input:hover::before,
+nav#sidebar .search-box .orca-input-input:hover::before,
+nav#sidebar .orca-input-input:focus-within::before,
+nav#sidebar .search-box .orca-input-input:focus-within::before {
+    background: var(--tn-sidebar-input-line-hover) !important;
+    clip-path: polygon(
+        0% 100%,
+        0% 0%,
+        10% 0%,
+        20% 0%,
+        30% 0%,
+        40% 0%,
+        50% 0%,
+        60% 0%,
+        70% 0%,
+        80% 0%,
+        90% 0%,
+        100% 0%,
+        100% 100%
+    );
+}
+nav#sidebar .orca-input-input:not(:focus-within)::before,
+nav#sidebar .search-box .orca-input-input:not(:focus-within)::before {
+    background: var(--tn-sidebar-input-line) !important;
+    clip-path: polygon(
+        0% 100%,
+        0% 62%,
+        10% 60%,
+        20% 55%,
+        30% 47%,
+        40% 35%,
+        50% 18%,
+        60% 35%,
+        70% 47%,
+        80% 55%,
+        90% 60%,
+        100% 62%,
+        100% 100%
+    ) !important;
+}
+/* 精确覆盖：侧边栏标签/别名过滤输入框，移除聚焦高亮边框 */
+#sidebar > section > div:nth-child(2) > div > span > span,
+#sidebar > section > div:nth-child(3) > div > span > span,
+#sidebar > section > div:nth-child(2) > div > span > span:focus-within,
+#sidebar > section > div:nth-child(3) > div > span > span:focus-within {
+    box-shadow: none !important;
+    border-color: transparent !important;
+    outline: none !important;
+}
+#sidebar > section > div:nth-child(2) > div > span > span > input,
+#sidebar > section > div:nth-child(3) > div > span > span > input,
+#sidebar > section > div:nth-child(2) > div > span > span > input:focus,
+#sidebar > section > div:nth-child(3) > div > span > span > input:focus,
+#sidebar > section > div:nth-child(2) > div > span > span > input:focus-visible,
+#sidebar > section > div:nth-child(3) > div > span > span > input:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-color: transparent !important;
+    -webkit-focus-ring-color: transparent !important;
+}
+
+/* 侧边栏标签页选项 */
+.orca-sidebar-tab-options {
+    background-color: transparent !important;
+    border: none !important;
+}
+.orca-sidebar-tab-options .orca-segmented-item {
+    color: var(--tokyo-night-comment) !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    position: relative !important;
+    z-index: 1;
+    padding-bottom: 10px !important;
+}
+.orca-sidebar-tab-options .orca-segmented-item::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    width: 0;
+    height: 0;
+    transform: translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity 160ms ease,
+        transform 200ms ease !important;
+}
+.orca-sidebar-tab-options .orca-segmented-item:hover::after {
+    width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 30%);
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+.orca-sidebar-tab-options .orca-segmented-item .ti {
+    color: var(--tokyo-night-comment) !important;
+}
+.orca-sidebar-tab-options .orca-segmented-item.orca-selected {
+    background-color: transparent !important;
+    color: var(--orca-color-primary-5) !important;
+    font-weight: bold !important;
+}
+.orca-sidebar-tab-options .orca-segmented-item.orca-selected::after,
+.orca-sidebar-tab-options .orca-segmented-item.orca-selected:hover::after {
+    content: "";
+    width: 10px;
+    height: 3px;
+    border: none;
+    border-radius: 999px;
+    background: currentColor;
+    color: currentColor;
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+.orca-sidebar-tab-options .orca-segmented-item.orca-selected .ti {
+    color: var(--orca-color-primary-5) !important;
+}
+
+/* 侧边栏收藏夹图标 */
+nav#sidebar :is(.orca-fav-item-icon, .orca-aliased-block-icon, .orca-tags-tag-icon) {
+    background-color: var(--tn-sidebar-icon-bg) !important;
+}
+
+/* 侧边栏图标颜色 */
+nav#sidebar .ti:not([style*="color"]),
+nav#sidebar .search-box .ti:not([style*="color"]),
+nav#sidebar .toolbar .ti:not([style*="color"]) {
+    color: var(--orca-color-text-2) !important;
+}
+nav#sidebar .search-box .ti.ti-reload,
+nav#sidebar .search-box .ti.ti-x {
+    color: var(--orca-color-text-2) !important;
+}
+nav#sidebar .search-box .ti.ti-reload:hover,
+nav#sidebar .search-box .ti.ti-x:hover {
+    color: var(--tokyo-night-white) !important;
+}
+nav#sidebar .item:hover .ti,
+nav#sidebar a:hover .ti,
+nav#sidebar .ti:hover {
+    color: var(--tokyo-night-foreground) !important;
+}
+nav#sidebar .item.active .ti,
+nav#sidebar a.active .ti {
+    color: var(--tokyo-night-bg-night) !important;
+}
+@media (prefers-color-scheme: dark) {
+    /* 侧边栏暗色下可点击控件 icon 提亮（未激活态） */
+    nav#sidebar {
+        --tn-sidebar-clickable-icon: var(--tokyo-night-comment);
+        --tn-sidebar-clickable-icon-hover: color-mix(in srgb, var(--tn-bright), white 14%);
+    }
+    /* 1) 仓库切换按钮：书本图标 */
+    #sidebar > button.orca-button.plain.orca-select-button.orca-repo-switcher-button > i.ti.ti-book.orca-repo-switcher-icon,
+    /* 2) 仓库切换按钮：下拉 selector 图标 */
+    #sidebar > button.orca-button.plain.orca-select-button.orca-repo-switcher-button > i.ti.ti-selector.orca-select-button-selector {
+        color: var(--tn-sidebar-clickable-icon) !important;
+    }
+    #sidebar > button.orca-button.plain.orca-select-button.orca-repo-switcher-button > i.ti.ti-book.orca-repo-switcher-icon:hover,
+    #sidebar > button.orca-button.plain.orca-select-button.orca-repo-switcher-button > i.ti.ti-selector.orca-select-button-selector:hover {
+        color: var(--tn-sidebar-clickable-icon-hover) !important;
+    }
+    /* 3) 日历左右切换按钮 */
+    #sidebar > div.orca-calendar > header > button.orca-button.plain.orca-calendar-left-btn > .ti,
+    #sidebar > div.orca-calendar > header > button.orca-button.plain.orca-calendar-right-btn > .ti,
+    #sidebar > div.orca-calendar > header > button.orca-button.plain.orca-calendar-left-btn,
+    #sidebar > div.orca-calendar > header > button.orca-button.plain.orca-calendar-right-btn {
+        color: var(--tn-sidebar-clickable-icon) !important;
+    }
+    #sidebar > div.orca-calendar > header > button.orca-button.plain.orca-calendar-left-btn:hover > .ti,
+    #sidebar > div.orca-calendar > header > button.orca-button.plain.orca-calendar-right-btn:hover > .ti,
+    #sidebar > div.orca-calendar > header > button.orca-button.plain.orca-calendar-left-btn:hover,
+    #sidebar > div.orca-calendar > header > button.orca-button.plain.orca-calendar-right-btn:hover {
+        color: var(--tn-sidebar-clickable-icon-hover) !important;
+    }
+    /* 4) 标签/页面筛选输入框：搜索、刷新、清空图标（含相邻同类输入） */
+    #sidebar > section > div:nth-child(2) > div > span > span > i.ti,
+    #sidebar > section > div:nth-child(3) > div > span > span > i.ti {
+        color: var(--tn-sidebar-clickable-icon) !important;
+    }
+    #sidebar > section > div:nth-child(2) > div > span > span > i.ti:hover,
+    #sidebar > section > div:nth-child(3) > div > span > span > i.ti:hover {
+        color: var(--tn-sidebar-clickable-icon-hover) !important;
+    }
+    /* 同类可点击 icon 的兜底提亮，避免暗色下过暗 */
+    nav#sidebar .orca-button.plain .ti:not([style*="color"]),
+    nav#sidebar .search-box .ti:not([style*="color"]),
+    nav#sidebar .toolbar .ti:not([style*="color"]) {
+        color: var(--tn-sidebar-clickable-icon) !important;
+    }
+}
+
+/* Default icon foreground fallback for sidebar icons.
+   Apply only when icon color is not explicitly set inline by user data. */
+nav#sidebar .ti.orca-aliased-block-icon:not([style*="color"]),
+nav#sidebar .ti.orca-fav-item-icon:not([style*="color"]),
+nav#sidebar .ti.orca-tags-tag-icon:not([style*="color"]),
+nav#sidebar .ti.orca-tags-tag-icon-hash:not([style*="color"]) {
+    color: var(--tn-sidebar-icon-fg-default) !important;
+}
+nav#sidebar :is(.orca-fav-item-item, .orca-aliased-block-item, .orca-tags-tag-item):hover :is(.ti.orca-fav-item-icon, .ti.orca-aliased-block-icon, .ti.orca-tags-tag-icon, .ti.orca-tags-tag-icon-hash):not([style*="color"]) {
+    color: var(--tokyo-night-foreground) !important;
+    background-color: var(--tn-sidebar-icon-bg-hover) !important;
+}
+/* 标签列表图标：默认色对齐未激活标签文字（避免只命中单一路径） */
+@media (prefers-color-scheme: dark) {
+    #sidebar .orca-tags-tag-item :is(
+        .ti.orca-tags-tag-props,
+        .ti.orca-tags-tag-menu,
+        .ti.orca-tags-tag-icon,
+        .ti.orca-tags-tag-icon-hash,
+        i[class*="orca-tags-tag-icon"]
+    ):not([style*="color"]) {
+        color: var(--tn-sidebar-clickable-icon) !important;
+    }
+    #sidebar .orca-tags-tag-item:hover :is(
+        .ti.orca-tags-tag-props,
+        .ti.orca-tags-tag-menu,
+        .ti.orca-tags-tag-icon,
+        .ti.orca-tags-tag-icon-hash,
+        i[class*="orca-tags-tag-icon"]
+    ):not([style*="color"]) {
+        color: currentColor !important;
+    }
+}
+
+/* ===== 日历组件 ===== */
+nav#sidebar .vc-title,
+nav#sidebar .title {
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: 600 !important;
+}
+nav#sidebar .choosen-year {
+    color: var(--tokyo-night-blue) !important;
+    font-weight: 600 !important;
+}
+nav#sidebar .choosen-month,
+nav#sidebar .go-now {
+    color: var(--tokyo-night-foreground) !important;
+    font-weight: 600 !important;
+}
+nav#sidebar .orca-calendar > header > :is(.choosen-year, .choosen-month, .go-now) {
+    transition: color var(--tokyo-transition-fast) !important;
+    cursor: pointer;
+}
+nav#sidebar .orca-calendar > header > .choosen-year:hover {
+    color: var(--tn-warn) !important;
+}
+nav#sidebar .orca-calendar > header > :is(.choosen-month, .go-now):hover {
+    color: var(--tn-info) !important;
+}
+nav#sidebar .vc-arrow,
+nav#sidebar .arrow {
+    color: var(--orca-color-text-2) !important;
+}
+nav#sidebar .vc-arrow:hover,
+nav#sidebar .arrow:hover {
+    color: var(--tokyo-night-blue) !important;
+}
+nav#sidebar .vc-weekday,
+nav#sidebar .weekday,
+nav#sidebar .weekdays,
+nav#sidebar th {
+    color: var(--tokyo-night-comment) !important;
+    font-weight: normal !important;
+}
+nav#sidebar .vc-day,
+nav#sidebar .day {
+    color: var(--tokyo-night-foreground) !important;
+    background-color: transparent !important;
+    transition:
+        transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1),
+        color 0.16s ease !important;
+    transform-origin: 50% 58%;
+    position: relative;
+}
+nav#sidebar .vc-day .vc-day-content {
+    position: relative;
+    background-color: transparent !important;
+    transition:
+        transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1),
+        color 0.16s ease !important;
+}
+nav#sidebar .vc-day.is-not-in-month,
+nav#sidebar .day.prev-month,
+nav#sidebar .day.next-month {
+    color: var(--tokyo-night-terminal-black) !important;
+    opacity: 0.5 !important;
+}
+nav#sidebar .vc-day.is-today .vc-day-content,
+nav#sidebar .day.today {
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: bold !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+nav#sidebar .vc-day.is-selected .vc-day-content,
+nav#sidebar .day.selected,
+nav#sidebar .day.value {
+    background-color: transparent !important;
+    color: var(--tokyo-night-red) !important;
+    font-weight: bold !important;
+    border: none !important;
+}
+
+/* 日历日期 hover：字体加粗 + Dock 风格邻近平滑缩放 */
+nav#sidebar .orca-calendar .day:not(.value):not(.selected):hover,
+nav#sidebar .orca-calendar .vc-day:not(.is-selected):hover .vc-day-content {
+    background-color: transparent !important;
+    transform: scale(1.24);
+    color: var(--tn-calendar-hover-text) !important;
+    font-weight: 700 !important;
+    z-index: 2;
+}
+nav#sidebar .orca-calendar .days .day:not(.value):not(.selected):hover + .day:not(.value):not(.selected) {
+    transform: scale(1.1);
+}
+nav#sidebar .orca-calendar .days .day:not(.value):not(.selected):has(+ .day:not(.value):not(.selected):hover) {
+    transform: scale(1.1);
+}
+
+/* 年份和月份选择网格 */
+nav#sidebar .months .month,
+nav#sidebar .years .year {
+    color: var(--tokyo-night-foreground) !important;
+    border-radius: 6px !important;
+    transition:
+        background-color 0.2s,
+        color 0.2s,
+        transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+    transform-origin: 50% 58%;
+    position: relative;
+}
+nav#sidebar .months .month:hover,
+nav#sidebar .years .year:hover {
+    background-color: transparent !important;
+    transform: scale(1.24);
+    color: var(--tn-calendar-hover-text) !important;
+    font-weight: 700 !important;
+    z-index: 2;
+}
+nav#sidebar .months .month:hover + .month,
+nav#sidebar .years .year:hover + .year {
+    transform: scale(1.1);
+}
+nav#sidebar .months .month:has(+ .month:hover),
+nav#sidebar .years .year:has(+ .year:hover) {
+    transform: scale(1.1);
+}
+nav#sidebar .months .month.value,
+nav#sidebar .years .year.value,
+nav#sidebar .months .month.selected,
+nav#sidebar .years .year.selected {
+    background-color: transparent !important;
+    border: none !important;
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: bold !important;
+}
+/* 年/月切换面板容器：与主背景一致，并统一滚动条视觉 */
+nav#sidebar .orca-calendar > div {
+    background-color: transparent !important;
+    overflow-x: hidden !important;
+    scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) transparent !important;
+}
+/* 仅年份页允许纵向滚动；月份页和日期页禁用纵向滚动，避免 Dock 动效触发滚动条 */
+nav#sidebar .orca-calendar > div:has(.years) {
+    overflow-y: auto !important;
+}
+nav#sidebar .orca-calendar > div:has(.months),
+nav#sidebar .orca-calendar > div:has(.days) {
+    overflow-y: hidden !important;
+}
+nav#sidebar .orca-calendar :is(.years, .months) {
+    background-color: transparent !important;
+    overflow-x: hidden !important;
+}
+nav#sidebar .orca-calendar :is(.days, .vc-weeks, .years, .months) {
+    overflow: hidden !important;
+}
+nav#sidebar .orca-calendar .years {
+    overflow-y: auto !important;
+}
+nav#sidebar .orca-calendar > div::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+nav#sidebar .orca-calendar > div::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
+    border-radius: 999px !important;
+    border: 1px solid transparent !important;
+}
+nav#sidebar .orca-calendar > div::-webkit-scrollbar-corner,
+nav#sidebar .orca-calendar > div::-webkit-scrollbar-button {
+    background: transparent !important;
+}
+
+/* ===== 设置模态框样式 ===== */
+div.orca-settings {
+    background: var(--tokyo-floating-bg-emphasis) !important;
+    color: var(--orca-color-text-1) !important;
+    border: none !important;
+    box-shadow: var(--tokyo-shadow-floating-strong) !important;
+    border-radius: var(--orca-radius-lg) !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+}
+
+.orca-settings > .headbar,
+.orca-settings > .header,
+.orca-settings > .head {
+    background: rgba(29, 33, 48, 0.98) !important;
+    color: var(--orca-color-text-1) !important;
+    border-bottom: none !important;
+    box-shadow: inset 0 -1px 0 rgba(122, 162, 247, 0.08) !important;
+}
+
+/* 设置左侧导航区 */
+.orca-settings > .sections {
+    background: rgba(25, 28, 40, 0.96) !important;
+    border-right: none !important;
+    box-shadow: inset -1px 0 0 rgba(122, 162, 247, 0.07) !important;
+    border-top-left-radius: var(--orca-radius-lg) !important;
+    border-bottom-left-radius: var(--orca-radius-lg) !important;
+    overflow: hidden !important;
+    padding-top: 0 !important;
+    margin: 0 !important;
+}
+
+.orca-settings > .sections .headbar,
+.orca-settings > .sections .header,
+.orca-settings > .sections .head,
+.orca-settings > .sections .title {
+    background-color: transparent !important;
+    border-bottom: none !important;
+    box-shadow: inset 0 -1px 0 rgba(122, 162, 247, 0.06) !important;
+}
+
+.orca-settings > .sections .headbar *,
+.orca-settings > .sections .header *,
+.orca-settings > .sections .head *,
+.orca-settings > .sections .title * {
+    background-color: transparent !important;
+}
+
+.orca-settings > .sections .item,
+.orca-settings > .sections .plugin-item {
+    color: var(--orca-color-text-1) !important;
+    padding: var(--orca-spacing-sm) var(--orca-spacing-md) !important;
+    border-radius: var(--orca-radius-md) !important;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+.orca-settings > .sections .item .ti,
+.orca-settings > .sections .plugin-item .ti {
+    color: var(--orca-color-text-1) !important;
+}
+
+.orca-settings > .sections .item:hover,
+.orca-settings > .sections .plugin-item:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+.orca-settings > .sections .item:hover .ti,
+.orca-settings > .sections .plugin-item:hover .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+.orca-settings > .sections .item.selected,
+.orca-settings > .sections .plugin-item.selected {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+.orca-settings > .sections .item.selected .ti,
+.orca-settings > .sections .plugin-item.selected .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+/* 设置右侧内容视图区 */
+.orca-settings > .views {
+    background: rgba(24, 27, 39, 0.98) !important;
+    color: var(--orca-color-text-1) !important;
+    border-top-right-radius: var(--orca-radius-lg) !important;
+    border-bottom-right-radius: var(--orca-radius-lg) !important;
+}
+
+.orca-settings > .views h1,
+.orca-settings > .views h2,
+.orca-settings > .views h3,
+.orca-settings > .views .settings-group-title {
+    color: var(--tokyo-night-white) !important;
+    border-bottom: none !important;
+    box-shadow: inset 0 -1px 0 rgba(122, 162, 247, 0.08) !important;
+    padding-bottom: 0.5em !important;
+    margin-bottom: 1em !important;
+}
+.orca-settings > .views h2 {
+    background-color: var(--tokyo-night-bg-night) !important;
+}
+
+.orca-settings > .views .setting-item-label {
+    color: var(--tokyo-night-white) !important;
+}
+.orca-settings > .views div.desc {
+    color: var(--tokyo-night-comment) !important;
+    font-size: var(--orca-fontsize-xs) !important;
+}
+
+/* 设置界面按钮 */
+.orca-settings > .views button:not(.orca-switch),
+.orca-settings button:not(.orca-switch) {
+    padding: 0.5em 1em !important;
+}
+.orca-settings > .views button:not(.orca-switch):focus-visible,
+.orca-settings button:not(.orca-switch):focus-visible {
+    outline: none !important;
+    box-shadow: var(--tokyo-control-shadow-focus) !important;
+}
+.orca-settings > .views button:not(.orca-switch) .ti,
+.orca-settings button:not(.orca-switch) .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+/* 快捷方式设置按钮 */
+.orca-settings > .views .shortcut-input button.orca-button.plain {
+    padding: var(--orca-spacing-xs) var(--orca-spacing-sm) !important;
+}
+.orca-settings > .views .shortcut-input button.orca-button.plain .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+/* 设置界面输入框 */
+.orca-settings > .views .orca-input-input,
+.orca-settings .orca-input-input {
+    background: var(--tokyo-control-bg) !important;
+    color: var(--orca-color-text-1) !important;
+    border: none !important;
+    padding: var(--orca-spacing-sm) var(--orca-spacing-md) !important;
+    border-radius: var(--orca-radius-sm) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    transition:
+        background var(--tokyo-transition-ui) !important,
+        box-shadow var(--tokyo-transition-ui) !important;
+}
+.orca-settings > .views .orca-input-input:focus-within,
+.orca-settings .orca-input-input:focus-within {
+    background: var(--tokyo-control-bg-hover) !important;
+    box-shadow: var(--tokyo-control-shadow-focus) !important;
+    outline: none !important;
+}
+
+.orca-settings > .views .orca-input-input .orca-input-actualinput,
+.orca-settings .orca-input-input .orca-input-actualinput {
+    background-color: transparent !important;
+    color: var(--orca-color-text-1) !important;
+}
+.orca-settings > .views .orca-input-input .orca-input-actualinput:focus,
+.orca-settings .orca-input-input .orca-input-actualinput:focus {
+    outline: none !important;
+}
+
+.orca-settings > .views .orca-input-input[type="color"],
+.orca-settings .orca-input-input[type="color"] {
+    padding: 0 var(--orca-spacing-xs) !important;
+    background: var(--tokyo-control-bg) !important;
+}
+
+/* 通用输入控件备用样式 */
+.orca-settings > .views input[type="text"],
+.orca-settings > .views input[type="password"],
+.orca-settings > .views textarea,
+.orca-settings > .views select {
+    background: var(--tokyo-control-bg) !important;
+    color: var(--orca-color-text-1) !important;
+    border: none !important;
+    padding: 0.5em !important;
+    border-radius: var(--orca-radius-sm) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    transition:
+        background var(--tokyo-transition-ui) !important,
+        box-shadow var(--tokyo-transition-ui) !important;
+}
+.orca-settings > .views input[type="text"]:hover,
+.orca-settings > .views input[type="password"]:hover,
+.orca-settings > .views textarea:hover,
+.orca-settings > .views select:hover {
+    background: var(--tokyo-control-bg-hover) !important;
+    box-shadow: var(--tokyo-control-shadow-hover) !important;
+}
+.orca-settings > .views input[type="text"]:focus,
+.orca-settings > .views input[type="password"]:focus,
+.orca-settings > .views textarea:focus,
+.orca-settings > .views select:focus {
+    outline: none !important;
+    background: var(--tokyo-control-bg-hover) !important;
+    box-shadow: var(--tokyo-control-shadow-focus) !important;
+}
+
+/* 设置界面开关组件 */
+.orca-settings .orca-switch {
+    background: var(--tokyo-control-bg) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    transition:
+        background var(--tokyo-transition-ui) !important,
+        box-shadow var(--tokyo-transition-ui) !important;
+}
+.orca-settings .orca-switch .orca-switch-toggle {
+    background-color: var(--orca-color-text-1) !important;
+    transition:
+        background-color 0.2s ease,
+        transform var(--tokyo-transition-micro) !important;
+}
+.orca-settings .orca-switch.orca-switch-on {
+    background: rgba(105, 137, 212, 0.96) !important;
+    box-shadow:
+        0 0 0 1px rgba(122, 162, 247, 0.18),
+        0 0 14px rgba(122, 162, 247, 0.12) !important;
+}
+.orca-settings .orca-switch.orca-switch-on .orca-switch-toggle {
+    background-color: var(--tokyo-night-white) !important;
+}
+
+/* 设置界面分段控件 */
+.orca-settings > .views .orca-segmented {
+    background: var(--tokyo-control-bg) !important;
+    border-radius: var(--orca-radius-md) !important;
+    padding: 3px !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item {
+    color: var(--orca-color-text-1) !important;
+    height: var(--orca-height-segmented, 22px) !important;
+    line-height: var(--orca-height-segmented, 22px) !important;
+    border-radius: var(--orca-radius-sm) !important;
+    transition:
+        color var(--tokyo-transition-micro),
+        background var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+    background-color: transparent !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item .ti {
+    color: var(--orca-color-text-1) !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item:hover {
+    background: var(--tokyo-control-bg-hover) !important;
+    color: var(--tokyo-night-white) !important;
+    box-shadow: inset 0 0 0 1px rgba(122, 162, 247, 0.08) !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item:hover .ti {
+    color: var(--tokyo-night-white) !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item.orca-selected {
+    background: rgba(122, 162, 247, 0.92) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset !important;
+}
+.orca-settings > .views .orca-segmented .orca-segmented-item.orca-selected .ti {
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+/* 设置界面表格头部 */
+.orca-settings > .views .orca-table-header-cell,
+.orca-settings .orca-table-header-cell,
+.orca-settings > .views .orca-settings-shortcuts-header,
+.orca-settings .orca-settings-shortcuts-header {
+    background-color: var(--tokyo-night-bg-night) !important;
+    color: var(--tokyo-night-white) !important;
+    border-bottom: none !important;
+    box-shadow: inset 0 -1px 0 rgba(122, 162, 247, 0.08) !important;
+}
+
+.orca-settings .orca-table-row:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+}
+.orca-settings .orca-table-row.selected {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+/*
+ * Root B: floating surfaces, controls, and motion tokens.
+ * Most "vibe tuning" work should happen here first.
+ */
