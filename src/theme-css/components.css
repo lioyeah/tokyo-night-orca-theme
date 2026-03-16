@@ -1,0 +1,1108 @@
+/* ===== Content hover motion (block-level) ===== */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    blockquote,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    :is(pre, .orca-code-wrapper),
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr {
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease,
+        background-color 0.18s ease,
+        opacity 0.18s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    blockquote:hover {
+    border-color: var(--orca-color-primary-5) !important;
+    background-color: color-mix(
+        in srgb,
+        var(--tokyo-night-bg-float),
+        var(--orca-color-primary-5) 8%
+    ) !important;
+    box-shadow: 0 4px 12px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 80%) !important;
+    transform: translateY(-1px);
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    :is(pre, .orca-code-wrapper):hover {
+    border-color: var(--orca-color-primary-5) !important;
+    background-color: color-mix(
+        in srgb,
+        var(--tokyo-night-bg-float),
+        var(--orca-color-primary-5) 6%
+    ) !important;
+    box-shadow: 0 6px 16px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 85%) !important;
+    transform: none !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr:hover {
+    border-color: var(--orca-color-primary-5) !important;
+    box-shadow: 0 0 8px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 70%) !important;
+    transform: scaleX(1.01);
+}
+
+/* ===== 分割线动效（复刻 phycat-abyss）===== */
+/* Orca 的分割线由两个 hr 组成，中间可以输入文字 */
+/* 基础样式 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line {
+    border: none !important;
+    height: 1px !important;
+    margin: 40px 0 !important;
+    position: relative !important;
+    overflow: visible !important;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+/* 扩大悬停区域 - 使用伪元素，并扩展到覆盖相邻区域 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(1)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 200%; /* 扩展到右侧hr区域 */
+    height: 24px;
+    cursor: pointer;
+}
+
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(2)::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 200%; /* 扩展到左侧hr区域 */
+    height: 24px;
+    cursor: pointer;
+}
+
+/* 左侧 hr：从左透明渐变到中间主色 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(1) {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--orca-color-primary-5) 50%,
+        var(--orca-color-primary-5) 100%
+    ) !important;
+}
+
+/* 右侧 hr：从中间主色渐变到右透明 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(2) {
+    background: linear-gradient(
+        90deg,
+        var(--orca-color-primary-5) 0%,
+        var(--orca-color-primary-5) 50%,
+        transparent 100%
+    ) !important;
+}
+
+/*
+ * 悬停点亮效果 - 通过扩大悬停区域实现联动
+ * hover 左侧 hr 或其扩展区域时，点亮左侧，并通过兄弟选择器点亮右侧
+ * hover 右侧 hr 或其扩展区域时，点亮右侧，并通过父容器 :has() 点亮左侧
+ */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(1):hover,
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(1):hover ~ hr.orca-hr-line:nth-of-type(2) {
+    opacity: 1;
+}
+
+/* 使用 :has() 实现 hover 右侧时联动左侧（现代浏览器支持） */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    ):has(hr.orca-hr-line:nth-of-type(2):hover)
+    hr.orca-hr-line:nth-of-type(1),
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    hr.orca-hr-line:nth-of-type(2):hover {
+    opacity: 1;
+}
+
+
+
+#main .orca-table-row {
+    transition:
+        background-color 0.16s ease,
+        box-shadow 0.16s ease;
+}
+#main .orca-table-row:hover {
+    box-shadow: inset 0 0 0 1px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 75%) !important;
+}
+#main :is(.orca-repr-main-content, .orca-repr-main-none-editable) table tr {
+    transition:
+        background-color 0.16s ease,
+        box-shadow 0.16s ease;
+}
+#main
+    :is(.orca-repr-main-content, .orca-repr-main-none-editable)
+    table
+    tr:hover {
+    background-color: color-mix(
+        in srgb,
+        var(--orca-color-primary-5),
+        transparent 90%
+    ) !important;
+    box-shadow: inset 0 0 0 1px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 75%) !important;
+}
+
+/* ===== 行内代码样式 - 按键外观 ===== */
+.orca-inline.c, [class*="orca-inline c"] {
+    background: linear-gradient(180deg, var(--keycap-bg-top) 0%, var(--keycap-bg-bottom) 100%) !important;
+    color: var(--keycap-fg) !important;
+    border: 1px solid var(--keycap-border) !important;
+    border-top-color: var(--keycap-border-top) !important;
+    border-bottom-color: var(--keycap-border-bottom) !important;
+    border-radius: var(--orca-radius-md) !important;
+    padding: 3px 10px !important;
+    font-family: "Cascadia Code", "Fira Code", Consolas, Monaco, "Courier New", monospace !important;
+    font-size: 0.9em !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    letter-spacing: 0.02em !important;
+    text-shadow: 0 1px 0 var(--keycap-text-shadow) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        0 3px 0 var(--keycap-depth),
+        0 4px 1px var(--keycap-step-rim),
+        0 5px 9px var(--keycap-shadow) !important;
+    transition:
+        transform 0.07s ease,
+        box-shadow 0.1s ease,
+        border-color 0.1s ease,
+        color 0.1s ease,
+        background-color 0.1s ease !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    transform-origin: center bottom !important;
+    margin: 0 4px !important;
+}
+
+/* 悬停模拟顶面下压：顶面下沉，阴影落点保持稳定 */
+.orca-inline.c:hover, [class*="orca-inline c"]:hover {
+    border-color: var(--keycap-border) !important;
+    border-top-color: var(--keycap-border-top) !important;
+    border-bottom-color: var(--keycap-border) !important;
+    transform: translateY(1px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        0 2px 0 var(--keycap-depth),
+        0 3px 4px rgba(0, 0, 0, 0.34) !important;
+}
+
+/* 按下时顶面继续下压：保持简洁实现 */
+.orca-inline.c:active, [class*="orca-inline c"]:active {
+    border-color: var(--keycap-press-depth) !important;
+    border-top-color: var(--keycap-press-depth) !important;
+    border-bottom-color: var(--keycap-press-depth) !important;
+    background: var(--keycap-bg-bottom) !important;
+    background-image: none !important;
+    text-shadow: none !important;
+    transform: translateY(2px);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.34) !important;
+}
+
+/* 编辑器内行内代码过渡效果 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline.c, [class*="orca-inline c"] {
+    transition:
+        transform 0.08s ease,
+        box-shadow 0.1s ease,
+        border-color 0.1s ease,
+        color 0.1s ease !important;
+}
+
+/* ===== 标题颜色层次 (H1-H6) ===== */
+/* 默认使用正文颜色，hover 时着色 */
+.orca-panels-container h1 {
+    font-size: 1.6em !important;
+    color: var(--orca-color-text-1) !important;
+    font-weight: 600 !important;
+    transition: color 0.3s ease;
+}
+.orca-panels-container h2 {
+    font-size: 1.4em !important;
+    color: var(--orca-color-text-1) !important;
+    font-weight: 600 !important;
+    transition: color 0.3s ease;
+}
+.orca-panels-container h3 {
+    font-size: 1.25em !important;
+    color: var(--orca-color-text-1) !important;
+    font-weight: 600 !important;
+    transition: color 0.3s ease;
+}
+.orca-panels-container h4 {
+    color: var(--orca-color-text-1) !important;
+    font-weight: 600 !important;
+    transition: color 0.3s ease;
+}
+
+/* ===== Content hover motion (text-level) ===== */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    a {
+    transition:
+        color 0.16s ease,
+        text-shadow 0.16s ease,
+        background-color 0.16s ease,
+        transform 0.16s ease;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    a:hover {
+    color: var(--orca-color-primary-5) !important;
+    background-color: color-mix(
+        in srgb,
+        var(--orca-color-primary-5),
+        transparent 90%
+    ) !important;
+    text-shadow: 0 0 6px
+        color-mix(in srgb, var(--orca-color-primary-5), transparent 70%);
+    transform: translateY(-1px);
+}
+
+
+/* ===== 列表符号样式 ===== */
+/* 无序列表 - 一级 */
+.orca-panels-container
+    .orca-repr-main-content[contenteditable="false"]
+    ul
+    li::marker,
+.orca-panels-container .orca-repr-main-content ul li::marker,
+.orca-panels-container .orca-repr-main-none-editable ul li::marker,
+.orca-panels-container ul li::marker {
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+}
+
+/* 有序列表 - 一级 */
+.orca-panels-container
+    .orca-repr-main-content[contenteditable="false"]
+    ol
+    li::marker,
+.orca-panels-container .orca-repr-main-content ol li::marker,
+.orca-panels-container .orca-repr-main-none-editable ol li::marker,
+.orca-panels-container ol li::marker {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+
+/* Orca 列表容器伪元素 */
+.orca-panels-container .orca-repr-ul-content::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ul-content::before {
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ol-content::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ol-content::before {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ul::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ul::before {
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ol::before,
+.orca-panels-container .orca-repr-main-content.orca-repr-ol::before {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+
+/* 无序列表 - 多级颜色 */
+.orca-panels-container ul ul li::marker {
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container ul ul ul li::marker {
+    color: var(--tokyo-night-spring-green) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container ul ul ul ul li::marker {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+
+.orca-panels-container .orca-repr-main-none-editable ul ul li .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable ul ul li .ti-point,
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    li
+    .ti-circle-filled {
+    color: var(--tokyo-night-cyan) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    ul
+    li
+    .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable ul ul ul li .ti-point,
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    ul
+    li
+    .ti-circle-filled {
+    color: var(--tokyo-night-spring-green) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    ul
+    ul
+    li
+    .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable ul ul ul ul li .ti-point,
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    ul
+    ul
+    li
+    .ti-circle-filled {
+    color: var(--tokyo-night-magenta) !important;
+}
+
+.orca-panels-container .orca-repr-ul-content .orca-repr-ul-content::before {
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container
+    .orca-repr-ul-content
+    .orca-repr-ul-content
+    .orca-repr-ul-content::before {
+    color: var(--tokyo-night-spring-green) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container
+    .orca-repr-ul-content
+    .orca-repr-ul-content
+    .orca-repr-ul-content
+    .orca-repr-ul-content::before {
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+}
+
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-cyan) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    ul
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-spring-green) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    ul
+    ul
+    ul
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-magenta) !important;
+}
+
+.orca-panels-container ul ul li .ti-point-filled,
+.orca-panels-container ul ul li .ti-point,
+.orca-panels-container ul ul li .ti-circle,
+.orca-panels-container ul ul li .ti-circle-filled {
+    color: var(--tokyo-night-cyan) !important;
+}
+.orca-panels-container ul ul ul li .ti-point-filled,
+.orca-panels-container ul ul ul li .ti-point,
+.orca-panels-container ul ul ul li .ti-circle,
+.orca-panels-container ul ul ul li .ti-circle-filled {
+    color: var(--tokyo-night-spring-green) !important;
+}
+.orca-panels-container ul ul ul ul li .ti-point-filled,
+.orca-panels-container ul ul ul ul li .ti-point,
+.orca-panels-container ul ul ul ul li .ti-circle,
+.orca-panels-container ul ul ul ul li .ti-circle-filled {
+    color: var(--tokyo-night-magenta) !important;
+}
+
+/*
+ * 无序列表圆点（编辑态句柄）着色
+ * 仅命中 data-type="ul"，不影响默认文本块句柄
+ */
+.orca-panels-container .orca-block[data-type="ul"] .orca-block-handle.ti-point-filled,
+.orca-panels-container .orca-block[data-type="ul"] .orca-block-handle.ti-point,
+.orca-panels-container .orca-block[data-type="ul"] .orca-block-handle.ti-circle,
+.orca-panels-container .orca-block[data-type="ul"] .orca-block-handle.ti-circle-filled {
+    color: var(--tokyo-night-orange) !important;
+    opacity: 0.95 !important;
+}
+
+/* 多级无序列表句柄配色（与 marker 层级一致） */
+.orca-panels-container
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block-handle.ti-point-filled,
+.orca-panels-container
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block-handle.ti-point,
+.orca-panels-container
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block-handle.ti-circle,
+.orca-panels-container
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block-handle.ti-circle-filled {
+    color: var(--tokyo-night-cyan) !important;
+}
+.orca-panels-container
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block-handle.ti-point-filled,
+.orca-panels-container
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block-handle.ti-point,
+.orca-panels-container
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block-handle.ti-circle,
+.orca-panels-container
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block-handle.ti-circle-filled {
+    color: var(--tokyo-night-spring-green) !important;
+}
+.orca-panels-container
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block-handle.ti-point-filled,
+.orca-panels-container
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block-handle.ti-point,
+.orca-panels-container
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block-handle.ti-circle,
+.orca-panels-container
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    .orca-block-handle.ti-circle-filled {
+    color: var(--tokyo-night-magenta) !important;
+}
+
+/* 有序列表 - 多级颜色 */
+.orca-panels-container ol ol li::marker {
+    color: var(--tokyo-night-blue) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container ol ol ol li::marker {
+    color: var(--tokyo-night-yellow) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container ol ol ol ol li::marker {
+    color: var(--tokyo-night-red) !important;
+    font-weight: 700 !important;
+}
+
+.orca-panels-container .orca-repr-ol-content .orca-repr-ol-content::before {
+    color: var(--tokyo-night-blue) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container
+    .orca-repr-ol-content
+    .orca-repr-ol-content
+    .orca-repr-ol-content::before {
+    color: var(--tokyo-night-yellow) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container
+    .orca-repr-ol-content
+    .orca-repr-ol-content
+    .orca-repr-ol-content
+    .orca-repr-ol-content::before {
+    color: var(--tokyo-night-red) !important;
+    font-weight: 700 !important;
+}
+
+.orca-panels-container .orca-repr-ol .orca-repr-ol::before {
+    color: var(--tokyo-night-blue) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container .orca-repr-ol .orca-repr-ol .orca-repr-ol::before {
+    color: var(--tokyo-night-yellow) !important;
+    font-weight: 700 !important;
+}
+.orca-panels-container
+    .orca-repr-ol
+    .orca-repr-ol
+    .orca-repr-ol
+    .orca-repr-ol::before {
+    color: var(--tokyo-night-red) !important;
+    font-weight: 700 !important;
+}
+
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ol
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-magenta) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ol
+    ol
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-blue) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ol
+    ol
+    ol
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-yellow) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ol
+    ol
+    ol
+    ol
+    li:not(:has(.ti))::before {
+    color: var(--tokyo-night-red) !important;
+}
+
+/* 列表降级方案 */
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ul {
+    list-style: disc outside !important;
+}
+.orca-panels-container
+    .orca-repr-main-content[contenteditable="false"]
+    ul
+    li::before {
+    content: "•" !important;
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+.orca-panels-container .orca-repr-main-content[contenteditable="false"] ol {
+    list-style: decimal outside !important;
+    counter-reset: item !important;
+}
+.orca-panels-container
+    .orca-repr-main-content[contenteditable="false"]
+    ol
+    li::before {
+    content: counters(item, ".") "." !important;
+    counter-increment: item !important;
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+
+/* none-editable 容器与图标子弹 */
+.orca-panels-container .orca-repr-main-none-editable ul {
+    list-style: disc outside !important;
+}
+.orca-panels-container .orca-repr-main-none-editable li .ti-point-filled,
+.orca-panels-container .orca-repr-main-none-editable li .ti-point,
+.orca-panels-container .orca-repr-main-none-editable li .ti-circle-filled {
+    color: var(--tokyo-night-orange) !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ul
+    li:not(:has(.ti))::before {
+    content: "•" !important;
+    color: var(--tokyo-night-orange) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+.orca-panels-container .orca-repr-main-none-editable ol {
+    list-style: decimal outside !important;
+    counter-reset: item !important;
+}
+.orca-panels-container
+    .orca-repr-main-none-editable
+    ol
+    li:not(:has(.ti))::before {
+    content: counters(item, ".") "." !important;
+    counter-increment: item !important;
+    color: var(--tokyo-night-magenta) !important;
+    font-weight: 700 !important;
+    margin-right: 0.25em !important;
+}
+
+.orca-panels-container .orca-repr-main-content ul {
+    list-style: none !important;
+    padding-left: 1.2em !important;
+}
+.orca-panels-container .orca-repr-main-content ul li::before {
+    content: "•" !important;
+    display: inline-block !important;
+    width: 1.2em !important;
+    margin-left: -1.2em !important;
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: 700 !important;
+}
+
+/* ===== 按钮样式 ===== */
+/* ===== 按钮样式 - 现代阴影 ===== */
+.orca-button.primary {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    border: none !important;
+    box-shadow: var(--tokyo-shadow-1) !important;
+}
+.orca-button.primary:hover {
+    filter: brightness(1.05) !important;
+    box-shadow: var(--tokyo-shadow-2) !important;
+}
+.orca-button.dangerous {
+    background-color: var(--orca-color-dangerous-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    border: none !important;
+    box-shadow: var(--tokyo-shadow-1) !important;
+}
+.orca-button.warn {
+    background-color: var(--orca-color-warn-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    border: none !important;
+    box-shadow: var(--tokyo-shadow-1) !important;
+}
+.orca-button.info {
+    background-color: var(--orca-color-info-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+    border: none !important;
+    box-shadow: var(--tokyo-shadow-1) !important;
+}
+.orca-button.soft {
+    background-color: var(--orca-color-gray-7) !important;
+    color: var(--tokyo-night-white) !important;
+    border: none !important;
+    box-shadow: var(--tokyo-shadow-1) !important;
+}
+
+/* Solid button fallback: unify unnamed solid actions across popups/editors. */
+.orca-button.solid:not(.primary):not(.dangerous):not(.warn):not(.info):not(.soft) {
+    background-color: color-mix(
+        in srgb,
+        var(--orca-color-primary-5),
+        var(--tokyo-night-bg-storm) 66%
+    ) !important;
+    color: var(--tokyo-night-white) !important;
+    border: 1px solid rgba(122, 162, 247, 0.2) !important;
+    border-radius: var(--orca-radius-sm) !important;
+    box-shadow: var(--tokyo-control-shadow) !important;
+    transition:
+        background-color var(--tokyo-transition-ui),
+        border-color var(--tokyo-transition-ui),
+        box-shadow var(--tokyo-transition-ui),
+        color var(--tokyo-transition-ui) !important;
+}
+.orca-button.solid:not(.primary):not(.dangerous):not(.warn):not(.info):not(.soft):hover {
+    background-color: color-mix(
+        in srgb,
+        var(--orca-color-primary-5),
+        var(--tokyo-night-bg-storm) 56%
+    ) !important;
+    color: var(--tokyo-night-white) !important;
+    border-color: rgba(122, 162, 247, 0.3) !important;
+    box-shadow: var(--tokyo-control-shadow-hover) !important;
+}
+.orca-button.solid:not(.primary):not(.dangerous):not(.warn):not(.info):not(.soft):disabled,
+.orca-button.solid:not(.primary):not(.dangerous):not(.warn):not(.info):not(.soft)[disabled] {
+    background-color: color-mix(
+        in srgb,
+        var(--orca-color-primary-5),
+        var(--tokyo-night-bg-storm) 82%
+    ) !important;
+    color: var(--tokyo-night-comment) !important;
+    border-color: rgba(122, 162, 247, 0.12) !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+}
+.orca-button.plain {
+    color: var(--tokyo-night-white) !important;
+}
+.orca-button.plain .ti {
+    color: var(--tokyo-night-white) !important;
+}
+
+/* ===== 输入框样式 ===== */
+.orca-input-input:focus-within {
+    border-color: var(--orca-color-primary-5) !important;
+    box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.35) !important;
+}
+.orca-input-input .orca-input-actualinput:focus {
+    outline: none !important;
+}
+
+/* ===== 表格样式 ===== */
+.orca-table-row:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+}
+.orca-table-row.selected {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+/* ===== 菜单样式 - 现代阴影 ===== */
+.orca-menu {
+    background: var(--tokyo-floating-bg) !important;
+    color: var(--orca-color-text-1) !important;
+    border: 0 !important;
+    border-color: transparent !important;
+    outline: none !important;
+    box-shadow: var(--tokyo-shadow-floating) !important;
+    border-radius: var(--orca-radius-md) !important;
+    overflow: visible !important;
+}
+.orca-menu .orca-menu-item:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+.orca-menu .orca-menu-item {
+    transition:
+        background-color var(--tokyo-transition-fast),
+        color var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
+.orca-menu .orca-menu-item.selected {
+    background-color: var(--orca-color-primary-5) !important;
+    color: var(--tokyo-night-bg-night) !important;
+}
+
+/* 修复 slash 命令面板内容溢出：恢复菜单内滚动裁切 */
+.orca-menu.orca-slash-commands {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* ===== 工具提示样式 - 现代阴影 ===== */
+.orca-tooltip {
+    background: var(--tokyo-floating-bg-subtle) !important;
+    color: var(--tokyo-night-white) !important;
+    border: none !important;
+    box-shadow: var(--tokyo-shadow-tooltip) !important;
+    border-radius: var(--orca-radius-sm) !important;
+    padding: calc(var(--orca-spacing-xs) * 0.75) var(--orca-spacing-sm) !important;
+}
+
+/* ===== 块操作手柄 ===== */
+.orca-block-handle {
+    color: var(--orca-color-text-2) !important;
+    background-color: transparent !important;
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+}
+.orca-block-handle:hover {
+    color: var(--orca-color-text-1) !important;
+    background-color: var(--tokyo-night-terminal-black) !important;
+    border-radius: var(--orca-radius-sm);
+}
+
+/* ===== 弹出层样式 - 现代圆角阴影 ===== */
+.orca-popup {
+    background: var(--tokyo-floating-bg) !important;
+    opacity: 1 !important;
+    z-index: 501 !important;
+    border-radius: var(--orca-radius-md) !important;
+    border: 0 !important;
+    border-color: transparent !important;
+    outline: none !important;
+    box-shadow: var(--tokyo-shadow-floating) !important;
+    overflow: visible !important;
+}
+
+/* 工具栏弹出菜单 */
+#headbar .orca-popup,
+#headbar > div.orca-popup > div {
+    background: var(--tokyo-floating-bg) !important;
+    border: 0 !important;
+    border-color: transparent !important;
+    outline: none !important;
+    border-radius: var(--orca-radius-md) !important;
+    box-shadow: var(--tokyo-shadow-floating) !important;
+    overflow: visible !important;
+}
+
+/* 主编辑区内弹出层增强可见度 */
+#main .orca-popup,
+#main .orca-panel.active > .orca-hideable.no-pointer > .orca-popup.orca-hideable-content {
+    background: var(--tokyo-floating-bg-emphasis) !important;
+    border: 0 !important;
+    border-color: transparent !important;
+    outline: none !important;
+    box-shadow: var(--tokyo-shadow-floating) !important;
+}
+.orca-popup .item,
+.orca-popup .menu-item,
+.orca-popup button {
+    color: var(--tokyo-night-foreground) !important;
+    transition:
+        background-color var(--tokyo-transition-fast),
+        color var(--tokyo-transition-fast),
+        box-shadow var(--tokyo-transition-fast) !important;
+}
+.orca-popup .item:hover,
+.orca-popup .menu-item:hover,
+.orca-popup button:hover {
+    background-color: var(--tokyo-night-terminal-black) !important;
+    color: var(--tokyo-night-white) !important;
+}
+.orca-popup .item .ti,
+.orca-popup .menu-item .ti,
+.orca-popup button .ti {
+    color: var(--tokyo-night-foreground) !important;
+}
+.orca-popup .item:hover .ti,
+.orca-popup .menu-item:hover .ti,
+.orca-popup button:hover .ti {
+    color: var(--tokyo-night-white) !important;
+}
+.orca-menu::before,
+.orca-menu::after,
+.orca-popup::before,
+.orca-popup::after {
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+/* ===== 模态框和对话框 - 现代阴影 ===== */
+.orca-modal,
+.orca-dialog {
+    background: var(--tokyo-floating-bg-emphasis) !important;
+    color: var(--orca-color-text-1) !important;
+    border: none !important;
+    box-shadow: var(--tokyo-shadow-floating-strong) !important;
+    border-radius: var(--orca-radius-lg) !important;
+}
+
+/* ===== 滚动条样式 ===== */
+*::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 20%);
+    border-radius: 999px;
+    border: 1px solid transparent;
+}
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable)::-webkit-scrollbar-track,
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable) *::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable),
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable) * {
+    scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 20%) transparent;
+}
+
+/* Main editor scrollbar: slimmer and visually merged with editor background. */
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable)::-webkit-scrollbar,
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable) *::-webkit-scrollbar {
+    width: 4px !important;
+    height: 4px !important;
+}
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable)::-webkit-scrollbar-track,
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable) *::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable)::-webkit-scrollbar-thumb,
+#main :is(.orca-block-editor-main, .orca-repr-main-content, .orca-repr-main-none-editable) *::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
+    border-radius: 999px !important;
+    border: 1px solid transparent !important;
+}
+
+/* Target actual Orca editor scroller path to override any app default scrollbar skin. */
+#main .orca-block-editor.orca-hideable-editor,
+#main .orca-block-editor.orca-hideable-editor * {
+    scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) transparent !important;
+}
+#main .orca-block-editor.orca-hideable-editor::-webkit-scrollbar,
+#main .orca-block-editor.orca-hideable-editor *::-webkit-scrollbar {
+    width: 4px !important;
+    height: 4px !important;
+}
+#main .orca-block-editor.orca-hideable-editor::-webkit-scrollbar-track,
+#main .orca-block-editor.orca-hideable-editor *::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+#main .orca-block-editor.orca-hideable-editor::-webkit-scrollbar-thumb,
+#main .orca-block-editor.orca-hideable-editor *::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
+    border-radius: 999px !important;
+    border: 1px solid transparent !important;
+}
+
+/* Sidebar list scrollbar (targeting orca-aliased-list and sibling list containers). */
+#sidebar .orca-aliased-list,
+#sidebar .orca-tags-list,
+#sidebar .orca-fav-list,
+#sidebar .orca-page-list,
+#sidebar section > div:nth-child(3) > div > div {
+    scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) transparent !important;
+}
+#sidebar .orca-aliased-list::-webkit-scrollbar-track,
+#sidebar .orca-tags-list::-webkit-scrollbar-track,
+#sidebar .orca-fav-list::-webkit-scrollbar-track,
+#sidebar .orca-page-list::-webkit-scrollbar-track,
+#sidebar section > div:nth-child(3) > div > div::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+#sidebar .orca-aliased-list::-webkit-scrollbar-thumb,
+#sidebar .orca-tags-list::-webkit-scrollbar-thumb,
+#sidebar .orca-fav-list::-webkit-scrollbar-thumb,
+#sidebar .orca-page-list::-webkit-scrollbar-thumb,
+#sidebar section > div:nth-child(3) > div > div::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
+    border: 1px solid transparent !important;
+}
+
+/* Plugin marketplace grid scrollbar: force transparent track (host app often sets white track). */
+body > div.orca-modal-overlay.orca-modal-overlay-blurred > div > div.orca-plugin-marketplace-grid,
+.orca-modal-overlay .orca-plugin-marketplace-grid {
+    scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) transparent !important;
+}
+body > div.orca-modal-overlay.orca-modal-overlay-blurred > div > div.orca-plugin-marketplace-grid::-webkit-scrollbar,
+.orca-modal-overlay .orca-plugin-marketplace-grid::-webkit-scrollbar {
+    width: 5px !important;
+    height: 5px !important;
+}
+body > div.orca-modal-overlay.orca-modal-overlay-blurred > div > div.orca-plugin-marketplace-grid::-webkit-scrollbar-track,
+.orca-modal-overlay .orca-plugin-marketplace-grid::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+body > div.orca-modal-overlay.orca-modal-overlay-blurred > div > div.orca-plugin-marketplace-grid::-webkit-scrollbar-thumb,
+.orca-modal-overlay .orca-plugin-marketplace-grid::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
+    border-radius: 999px !important;
+    border: 1px solid transparent !important;
+}
+

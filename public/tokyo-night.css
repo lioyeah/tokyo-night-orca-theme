@@ -201,6 +201,7 @@
     }
 }
 
+
 /* ===== 基础页面和应用容器样式 ===== */
 body,
 div#app {
@@ -264,7 +265,7 @@ mark,
     )
     .orca-repr.orca-repr-quote2 {
     border: none !important;
-    border-radius: 8px !important;
+    border-radius: var(--orca-radius-lg) !important;
     background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.02) 100%) !important;
     position: relative !important;
     overflow: hidden !important;
@@ -660,6 +661,149 @@ mark,
     background: transparent !important;
 }
 
+/* 编辑态代码高亮修复（CodeMirror）：与预览态 Tokyo Night 配色一致 */
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-line, .cm-content) {
+    color: var(--tn-code-fg) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-comment, .cm-lineComment, .cm-blockComment, .cm-docComment) {
+    color: var(--tn-code-comment) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-keyword, .cm-controlKeyword, .cm-definitionKeyword, .cm-operatorKeyword, .cm-atom, .cm-bool) {
+    color: var(--tn-code-keyword) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-string, .cm-specialString, .cm-regexp) {
+    color: var(--tn-code-string) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-number, .cm-integer, .cm-float) {
+    color: var(--tn-code-number) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-function, .cm-functionName, .cm-definition, .cm-macroName) {
+    color: var(--tn-code-function) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-propertyName, .cm-namespace, .cm-constant, .cm-labelName) {
+    color: var(--tn-code-constant) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-typeName, .cm-className, .cm-variableName, .cm-parameter) {
+    color: var(--tn-code-type) !important;
+}
+.orca-panels-container
+    :is(.orca-code-editor, .cm-editor, .cm-content)
+    :is(.cm-operator, .cm-punctuation, .cm-bracket) {
+    color: var(--tn-code-punctuation) !important;
+    background: transparent !important;
+}
+
+/* 补充编辑态 token 映射（覆盖 CSS/HTML/SQL 等模式的常见 cm-* 类） */
+.orca-panels-container
+    .orca-code-editor-container
+    .cm-editor
+    .cm-content
+    :is(.cm-tagName, .cm-attributeName, .cm-qualifier, .cm-meta) {
+    color: var(--tn-code-keyword) !important;
+}
+.orca-panels-container
+    .orca-code-editor-container
+    .cm-editor
+    .cm-content
+    :is(.cm-propertyName, .cm-variableName, .cm-variableName2, .cm-variableNameSpecial) {
+    color: var(--tn-code-constant) !important;
+}
+.orca-panels-container
+    .orca-code-editor-container
+    .cm-editor
+    .cm-content
+    :is(.cm-typeName, .cm-builtin, .cm-className, .cm-labelName) {
+    color: var(--tn-code-type) !important;
+}
+.orca-panels-container
+    .orca-code-editor-container
+    .cm-editor
+    .cm-content
+    :is(.cm-atom, .cm-bool, .cm-null, .cm-unit) {
+    color: var(--tn-code-number) !important;
+}
+.orca-panels-container
+    .orca-code-editor-container
+    .cm-editor
+    .cm-content
+    :is(.cm-link, .cm-url) {
+    color: var(--tn-code-function) !important;
+}
+
+/* CodeMirror 压缩类名高亮（如 ͼp~ͼw）映射到 Tokyo Night */
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼp"] {
+    color: var(--tn-code-comment) !important;
+}
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼq"] {
+    color: var(--tn-code-keyword) !important;
+}
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼr"] {
+    color: var(--tn-code-string) !important;
+}
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼt"] {
+    color: var(--tn-code-number) !important;
+}
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼu"] {
+    color: var(--tn-code-function) !important;
+}
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼv"] {
+    color: var(--tn-code-constant) !important;
+}
+.orca-panels-container .orca-code-editor-container .cm-editor .cm-content [class~="ͼw"] {
+    color: var(--tn-code-punctuation) !important;
+}
+
+/* 代码行号可见性修复：统一提升 gutter/line-number 对比度 */
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(
+        .line-number,
+        .line-numbers-rows,
+        .line-numbers-rows > span,
+        .line-numbers-rows > span::before,
+        .gutter,
+        .gutter-line,
+        .code-gutter,
+        .code-line-number,
+        .cm-lineNumbers,
+        .cm-gutters,
+        .cm-gutterElement
+    ) {
+    color: color-mix(in srgb, var(--tn-text-2), var(--tn-bright) 22%) !important;
+    opacity: 0.92 !important;
+    text-shadow: none !important;
+}
+
+/* 行号区域背景与主题统一（避免默认白底） */
+.orca-panels-container
+    :is(pre, .orca-code-wrapper, .orca-repr-code, .orca-repr-code-content)
+    :is(.line-numbers-rows, .gutter, .code-gutter, .cm-lineNumbers, .cm-gutters) {
+    background-color: color-mix(
+        in srgb,
+        var(--tokyo-night-bg-float),
+        var(--orca-color-bg-2) 42%
+    ) !important;
+    border-right: 1px solid
+        color-mix(in srgb, var(--tn-border), transparent 28%) !important;
+}
+
+
 /* ===== Content hover motion (block-level) ===== */
 #main
     :is(
@@ -721,7 +865,7 @@ mark,
     ) !important;
     box-shadow: 0 6px 16px
         color-mix(in srgb, var(--orca-color-primary-5), transparent 85%) !important;
-    transform: translateY(-1px);
+    transform: none !important;
 }
 #main
     :is(
@@ -898,7 +1042,7 @@ mark,
     border: 1px solid var(--keycap-border) !important;
     border-top-color: var(--keycap-border-top) !important;
     border-bottom-color: var(--keycap-border-bottom) !important;
-    border-radius: 6px !important;
+    border-radius: var(--orca-radius-md) !important;
     padding: 3px 10px !important;
     font-family: "Cascadia Code", "Fira Code", Consolas, Monaco, "Courier New", monospace !important;
     font-size: 0.9em !important;
@@ -925,24 +1069,26 @@ mark,
 
 /* 悬停模拟顶面下压：顶面下沉，阴影落点保持稳定 */
 .orca-inline.c:hover, [class*="orca-inline c"]:hover {
+    border-color: var(--keycap-border) !important;
     border-top-color: var(--keycap-border-top) !important;
-    border-bottom-color: var(--keycap-border-bottom) !important;
+    border-bottom-color: var(--keycap-border) !important;
     transform: translateY(1px);
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
         0 2px 0 var(--keycap-depth),
-        0 3px 1px var(--keycap-step-rim),
-        0 4px 7px var(--keycap-shadow) !important;
+        0 3px 4px rgba(0, 0, 0, 0.34) !important;
 }
 
-/* 按下时顶面继续下压：键程到底，阴影仍保持锚定 */
+/* 按下时顶面继续下压：保持简洁实现 */
 .orca-inline.c:active, [class*="orca-inline c"]:active {
+    border-color: var(--keycap-press-depth) !important;
+    border-top-color: var(--keycap-press-depth) !important;
+    border-bottom-color: var(--keycap-press-depth) !important;
+    background: var(--keycap-bg-bottom) !important;
+    background-image: none !important;
+    text-shadow: none !important;
     transform: translateY(2px);
-    box-shadow:
-        inset 0 3px 3px rgba(0, 0, 0, 0.24),
-        0 1px 0 var(--keycap-press-depth),
-        0 2px 1px var(--keycap-step-rim),
-        0 3px 6px var(--keycap-shadow) !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.34) !important;
 }
 
 /* 编辑器内行内代码过渡效果 */
@@ -1765,6 +1911,7 @@ body > div.orca-modal-overlay.orca-modal-overlay-blurred > div > div.orca-plugin
     border-radius: 999px !important;
     border: 1px solid transparent !important;
 }
+
 
 /* ===== 查询构建器 ===== */
 .orca-query-conditions {
@@ -2670,7 +2817,7 @@ nav#sidebar .orca-calendar .days .day:not(.value):not(.selected):has(+ .day:not(
 nav#sidebar .months .month,
 nav#sidebar .years .year {
     color: var(--tokyo-night-foreground) !important;
-    border-radius: 6px !important;
+    border-radius: var(--orca-radius-md) !important;
     transition:
         background-color 0.2s,
         color 0.2s,
@@ -3028,6 +3175,7 @@ div.orca-settings {
  * Root B: floating surfaces, controls, and motion tokens.
  * Most "vibe tuning" work should happen here first.
  */
+
 /* ===== 现代阴影层级系统 ===== */
 :root {
     /* 阴影层级 - light */
@@ -3098,6 +3246,7 @@ div.orca-settings {
         --tokyo-control-bg-hover: rgba(45, 51, 73, 0.94);
     }
 }
+
 
 /* ===== Excalidraw whiteboard theming ===== */
 /* Scoped refinements that reuse Tokyo Night floating/control tokens. */
@@ -3348,7 +3497,7 @@ div.orca-settings {
     padding: 2px !important;
     background: color-mix(in srgb, var(--tokyo-control-bg), var(--tokyo-night-bg-night) 25%) !important;
     border: 1px solid rgba(122, 162, 247, 0.14) !important;
-    border-radius: 10px !important;
+    border-radius: var(--orca-radius-lg) !important;
     box-shadow: var(--tokyo-control-shadow) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
@@ -3365,7 +3514,7 @@ div.orca-settings {
     margin: 0 !important;
     padding: 0 !important;
     flex: 0 0 34px !important;
-    border-radius: 8px !important;
+    border-radius: var(--orca-radius-lg) !important;
     background: transparent !important;
     box-shadow: none !important;
     border: none !important;
@@ -3393,7 +3542,7 @@ div.orca-settings {
 }
 
 .excalidraw [id*="trigger-library"] :is(button, [role="tab"], .ToolIcon__icon) {
-    border-radius: 8px !important;
+    border-radius: var(--orca-radius-lg) !important;
     background: transparent !important;
     color: var(--tokyo-night-foreground) !important;
     box-shadow: none !important;
@@ -3644,7 +3793,7 @@ div.orca-settings {
     h1 > span:first-child {
     display: inline-block;
     padding: 4px 14px;
-    border-radius: 8px;
+    border-radius: var(--orca-radius-lg);
     background-color: rgb(from #ffffff r g b / 0.06);
     background-image:
         radial-gradient(
@@ -4234,7 +4383,7 @@ div.orca-settings {
     )
     a {
     display: inline-block;
-    border-radius: 3px;
+    border-radius: var(--orca-radius-sm);
     padding: 0 3px;
 }
 #main
@@ -4335,7 +4484,9 @@ div.orca-settings {
     display: none !important;
 }
 
+
 /* ===== 无序列表圆点句柄最终覆盖（放在文件末尾确保优先级） ===== */
+/* 这些规则用于压过宿主与前序分层中的冲突样式，请保持在 manifest 最末位。 */
 .orca-panels-container
     :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content)
     .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
@@ -4396,4 +4547,62 @@ div.orca-settings {
 #main .orca-repr-ul .orca-block-handle.ti::before,
 #main .orca-repr-ul-content .orca-block-handle.ti::before {
     color: var(--tokyo-night-orange) !important;
+}
+
+/* ===== 块层级线（orca-repr-scope-line）颜色统一覆盖 ===== */
+#main .orca-block.orca-container {
+    --tn-scope-line: color-mix(in srgb, var(--tokyo-night-blue), transparent 74%);
+    --tn-scope-line-hover: color-mix(in srgb, var(--tokyo-night-blue), transparent 50%);
+    --tn-scope-line-active: color-mix(in srgb, var(--tn-accent-hover), transparent 24%);
+}
+
+#main .orca-repr-children .orca-block.orca-container {
+    --tn-scope-line: color-mix(in srgb, var(--tokyo-night-cyan), transparent 74%);
+    --tn-scope-line-hover: color-mix(in srgb, var(--tokyo-night-cyan), transparent 50%);
+    --tn-scope-line-active: color-mix(in srgb, var(--tokyo-night-cyan), transparent 24%);
+}
+
+#main .orca-repr-children .orca-repr-children .orca-block.orca-container {
+    --tn-scope-line: color-mix(in srgb, var(--tokyo-night-spring-green), transparent 76%);
+    --tn-scope-line-hover: color-mix(in srgb, var(--tokyo-night-spring-green), transparent 52%);
+    --tn-scope-line-active: color-mix(in srgb, var(--tokyo-night-spring-green), transparent 26%);
+}
+
+#main .orca-repr-children .orca-repr-children .orca-repr-children .orca-block.orca-container {
+    --tn-scope-line: color-mix(in srgb, var(--tokyo-night-magenta), transparent 76%);
+    --tn-scope-line-hover: color-mix(in srgb, var(--tokyo-night-magenta), transparent 52%);
+    --tn-scope-line-active: color-mix(in srgb, var(--tokyo-night-magenta), transparent 26%);
+}
+
+/* 变量注入（默认态），避免状态色向后代继承扩散 */
+#main .orca-block.orca-container {
+    --orca-color-scope-line: var(--tn-scope-line) !important;
+    --orca-border-scope: 1px solid var(--tn-scope-line) !important;
+}
+
+/* 直接命中层级线节点：仅改单线颜色，避免双层视觉 */
+#main .orca-block.orca-container > .orca-repr .orca-repr-scope-line {
+    border-color: var(--tn-scope-line) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transition: border-color 0.16s ease;
+}
+
+/* hover 态由 runtime 精确标记，直接改变量以适配任意 DOM 结构 */
+#main .orca-block.orca-container.tn-scope-line-hover {
+    --orca-color-scope-line: var(--tn-scope-line-hover) !important;
+    --orca-border-scope: 2.5px solid var(--tn-scope-line-hover) !important;
+}
+
+#main
+    .orca-block.orca-container.tn-scope-line-hover
+    > .orca-repr
+    > .orca-repr-main
+    > .orca-repr-scope-line {
+    border-color: var(--tn-scope-line-hover) !important;
+}
+
+/* 激活态只作用当前块 */
+#main .orca-block.orca-container.orca-active > .orca-repr .orca-repr-scope-line {
+    border-color: var(--tn-scope-line-active) !important;
 }

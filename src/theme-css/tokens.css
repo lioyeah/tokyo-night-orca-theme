@@ -1,0 +1,203 @@
+/* Tokyo Night Theme for Orca Notes */
+/* 整合自 main.ts 中的所有 CSS 字符串 */
+
+/*
+ * Root A: base palette + Orca semantic color mapping.
+ * Safe to tweak for global tone and contrast.
+ */
+:root {
+    color-scheme: light;
+
+    /* ===== Tokyo Night Light 核心语义 token ===== */
+    --tn-bg-1: #e6e7ed;
+    --tn-bg-2: #d6d8df;
+    --tn-bg-3: #dcdee3;
+    --tn-text-1: #363c4d;
+    --tn-text-2: #707280;
+    --tn-border: #c1c2c7;
+    --tn-accent: #2959aa;
+    --tn-accent-hover: #0f4b6e;
+    --tn-accent-soft: #9aa5ce33;
+    --tn-selection: #acb0bf40;
+    --tn-success: #33635c;
+    --tn-warn: #8f5e15;
+    --tn-danger: #bd4040;
+    --tn-info: #0da0ba;
+    --tn-magenta: #65359d;
+    --tn-muted: #9da0ab;
+    --tn-bright: #343b58;
+    --tn-sidebar-icon-bg: color-mix(in srgb, var(--tn-accent), transparent 94%);
+    --tn-sidebar-icon-bg-hover: color-mix(in srgb, var(--tn-accent), transparent 90%);
+    --tn-sidebar-icon-fg-default: color-mix(in srgb, var(--tn-text-2), var(--tn-accent) 12%);
+    --tn-calendar-hover-text: color-mix(in srgb, var(--tn-accent), var(--tn-text-1) 28%);
+    --tn-query-neon-border: color-mix(in srgb, var(--tn-accent), var(--tn-border) 62%);
+    --tn-query-neon-ring: color-mix(in srgb, var(--tn-accent), transparent 84%);
+    --tn-query-neon-glow: color-mix(in srgb, var(--tn-accent), transparent 93%);
+    --tn-query-neon-border-hover: color-mix(in srgb, var(--tn-accent-hover), var(--tn-border) 52%);
+    --tn-query-neon-ring-hover: color-mix(in srgb, var(--tn-accent-hover), transparent 80%);
+    --tn-query-neon-glow-hover: color-mix(in srgb, var(--tn-accent-hover), transparent 90%);
+    --tn-query-neon-tube-c1: color-mix(in srgb, #49c7ff, var(--tn-info) 78%);
+    --tn-query-neon-tube-c2: color-mix(in srgb, #66a6ff, var(--tn-accent) 74%);
+    --tn-query-neon-tube-c3: color-mix(in srgb, #8f8dff, var(--tn-accent) 56%);
+    --tn-query-neon-tube-c4: color-mix(in srgb, #b57dff, var(--tn-magenta) 70%);
+    --tn-query-neon-tube-c5: color-mix(in srgb, #ff8ad7, var(--tn-magenta) 52%);
+    --tn-query-neon-tube-c6: color-mix(in srgb, #ffb86b, var(--tn-warn) 78%);
+    --tn-query-neon-tube-c7: color-mix(in srgb, #8dffcf, var(--tn-success) 72%);
+    --tn-query-neon-line-opacity: 0.98;
+    --tn-query-neon-glow-opacity: 0.42;
+    --tn-query-neon-glow-blur: 8px;
+    --tn-query-neon-glow-spread: 1px;
+    --tn-query-panel-bg: color-mix(in srgb, var(--tn-accent), var(--orca-color-bg-2) 94%);
+    --tn-query-fog-opacity: 0.24;
+    --tn-query-fog-blur: 20px;
+    --tn-query-fog-speed: 4.68s;
+    --tn-query-fog-shift-speed: 7.02s;
+    --tn-sidebar-input-line: color-mix(in srgb, var(--tn-border), transparent 8%);
+    --tn-sidebar-input-line-hover: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%);
+
+    /* ===== 代码高亮语义 token（参考 Tokyo Night VSCode，优先复用主题色） ===== */
+    --tn-code-fg: var(--tn-text-1);
+    --tn-code-comment: var(--tokyo-night-comment);
+    --tn-code-keyword: var(--tokyo-night-magenta);
+    --tn-code-string: var(--tokyo-night-green);
+    --tn-code-number: var(--tokyo-night-orange);
+    --tn-code-function: var(--tokyo-night-blue);
+    --tn-code-constant: var(--tokyo-night-cyan);
+    --tn-code-type: var(--tokyo-night-yellow);
+    --tn-code-operator: var(--tn-text-2);
+    --tn-code-punctuation: color-mix(in srgb, var(--tn-text-2), var(--tn-text-1) 30%);
+    --tn-code-variable: var(--tn-text-1);
+
+    /* ===== 兼容旧 token 命名 ===== */
+    --tokyo-night-red: var(--tn-danger);
+    --tokyo-night-orange: #965027;
+    --tokyo-night-yellow: var(--tn-warn);
+    --tokyo-night-green: var(--tn-success);
+    --tokyo-night-spring-green: var(--tn-success);
+    --tokyo-night-cyan: var(--tn-info);
+    --tokyo-night-blue: var(--tn-accent);
+    --tokyo-night-magenta: var(--tn-magenta);
+    --tokyo-night-white: var(--tn-bright);
+    --tokyo-night-foreground: var(--tn-text-1);
+    --tokyo-night-comment: var(--tn-muted);
+    --tokyo-night-bg-night: var(--tn-bg-1);
+    --tokyo-night-bg-storm: var(--tn-bg-2);
+    --tokyo-night-bg-dark: var(--tn-bg-2);
+    --tokyo-night-bg-float: var(--tn-bg-3);
+    --tokyo-night-terminal-black: var(--tn-border);
+
+    /* ===== Inline keycap tokens (light) ===== */
+    --keycap-bg-top: #8a93ad;
+    --keycap-bg-bottom: #7b86a3;
+    --keycap-fg: #eef2ff;
+    --keycap-border: #8a95b2;
+    --keycap-border-top: #a6b0cc;
+    --keycap-border-bottom: #6f7a98;
+    --keycap-depth: #616d8b;
+    --keycap-press-depth: #596481;
+    --keycap-step-rim: rgba(90, 102, 129, 0.58);
+    --keycap-shadow: rgba(29, 36, 56, 0.12);
+    --keycap-text-shadow: rgba(10, 14, 24, 0.2);
+
+    /* ===== Orca 变量覆盖 ===== */
+    --orca-color-bg-1: var(--tn-bg-1) !important;
+    --orca-color-bg-2: var(--tn-bg-2) !important;
+    --orca-color-bg-3: var(--tn-bg-3) !important;
+    --orca-color-text-1: var(--tn-text-1) !important;
+    --orca-color-text-2: var(--tn-text-2) !important;
+    --orca-color-placeholder: var(--tn-muted) !important;
+
+    --orca-color-border: var(--tn-border) !important;
+    --orca-border-general: 1px solid var(--tn-border) !important;
+    --orca-color-separator: var(--tn-border) !important;
+
+    --orca-color-primary-5: var(--tn-accent) !important;
+    --orca-color-primary-4: color-mix(in oklab, var(--tn-accent) 85%, var(--tn-bg-1)) !important;
+    --orca-color-primary-3: color-mix(in oklab, var(--tn-accent) 65%, var(--tn-bg-1)) !important;
+    --orca-color-primary-2: color-mix(in oklab, var(--tn-accent) 40%, var(--tn-bg-1)) !important;
+    --orca-color-primary-1: color-mix(in oklab, var(--tn-accent) 15%, var(--tn-bg-1)) !important;
+    --orca-color-tab: var(--orca-color-primary-4) !important;
+
+    --orca-color-selection: var(--tn-selection);
+    --orca-color-success-5: var(--tn-success);
+    --orca-color-warn-5: var(--tn-warn);
+    --orca-color-dangerous-5: var(--tn-danger);
+    --orca-color-info-5: var(--tn-info);
+    --orca-color-link: var(--tn-accent);
+    --orca-color-win-scrollbar: color-mix(in srgb, var(--tn-text-2), var(--tn-border) 72%);
+
+    --orca-color-gray-7: var(--tn-text-2) !important;
+    --orca-color-gray-6: var(--tn-muted) !important;
+    --orca-color-gray-5: var(--tn-border) !important;
+    --orca-color-gray-4: color-mix(in oklab, var(--tn-border) 80%, var(--tn-bg-1)) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+
+        --tn-bg-1: #1a1b26;
+        --tn-bg-2: #16161e;
+        --tn-bg-3: #1f2335;
+        --tn-text-1: #a9b1d6;
+        --tn-text-2: #9aa5ce;
+        --tn-border: #292e42;
+        --tn-accent: #7aa2f7;
+        --tn-accent-hover: #91b2ff;
+        --tn-accent-soft: #9aa5ce33;
+        --tn-selection: oklch(from var(--tn-accent) l c h / 50%);
+        --tn-success: #9ece6a;
+        --tn-warn: #ff9e64;
+        --tn-danger: #f7768e;
+        --tn-info: #7dcfff;
+        --tn-magenta: #bb9af7;
+        --tn-muted: #565f89;
+        --tn-bright: #c0caf5;
+        --tn-sidebar-icon-bg: color-mix(in srgb, var(--tn-accent), transparent 92%);
+        --tn-sidebar-icon-bg-hover: color-mix(in srgb, var(--tn-accent), transparent 86%);
+        --tn-sidebar-icon-fg-default: color-mix(in srgb, var(--tn-text-2), var(--tn-accent) 10%);
+        --tn-calendar-hover-text: color-mix(in srgb, var(--tn-accent-hover), var(--tn-bright) 32%);
+        --tn-query-neon-border: color-mix(in srgb, var(--tn-accent), var(--tn-border) 56%);
+        --tn-query-neon-ring: color-mix(in srgb, var(--tn-accent), transparent 78%);
+        --tn-query-neon-glow: color-mix(in srgb, var(--tn-accent), transparent 88%);
+        --tn-query-neon-border-hover: color-mix(in srgb, var(--tn-accent-hover), var(--tn-border) 48%);
+        --tn-query-neon-ring-hover: color-mix(in srgb, var(--tn-accent-hover), transparent 73%);
+        --tn-query-neon-glow-hover: color-mix(in srgb, var(--tn-accent-hover), transparent 84%);
+        --tn-query-neon-tube-c1: color-mix(in srgb, #7bd9ff, var(--tn-info) 76%);
+        --tn-query-neon-tube-c2: color-mix(in srgb, #89b9ff, var(--tn-accent) 70%);
+        --tn-query-neon-tube-c3: color-mix(in srgb, #a39eff, var(--tn-accent-hover) 58%);
+        --tn-query-neon-tube-c4: color-mix(in srgb, #c49fff, var(--tn-magenta) 66%);
+        --tn-query-neon-tube-c5: color-mix(in srgb, #ff9ee3, var(--tn-magenta) 54%);
+        --tn-query-neon-tube-c6: color-mix(in srgb, #ffc68a, var(--tn-warn) 72%);
+        --tn-query-neon-tube-c7: color-mix(in srgb, #a8ffdc, var(--tn-success) 68%);
+        --tn-query-neon-line-opacity: 1;
+        --tn-query-neon-glow-opacity: 0.72;
+        --tn-query-neon-glow-blur: 12px;
+        --tn-query-neon-glow-spread: 3px;
+        --tn-query-panel-bg: color-mix(in srgb, var(--tn-accent), var(--orca-color-bg-2) 93%);
+        --tn-query-fog-opacity: 0.34;
+        --tn-query-fog-blur: 24px;
+        --tn-query-fog-speed: 4.16s;
+        --tn-query-fog-shift-speed: 6.24s;
+        --tn-sidebar-input-line: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 26%);
+        --tn-sidebar-input-line-hover: color-mix(in srgb, var(--tn-border), var(--tn-bright) 20%);
+
+        --tokyo-night-orange: #ff9e64;
+        --tokyo-night-yellow: #e0af68;
+        --orca-color-win-scrollbar: #565f89;
+
+        /* ===== Inline keycap tokens (dark) ===== */
+        --keycap-bg-top: #2e3752;
+        --keycap-bg-bottom: #1f2740;
+        --keycap-fg: #d8def8;
+        --keycap-border: #4a5a89;
+        --keycap-border-top: #6c7fb5;
+        --keycap-border-bottom: #1f2a47;
+        --keycap-depth: #0d162c;
+        --keycap-press-depth: #091022;
+        --keycap-step-rim: rgba(58, 77, 123, 0.34);
+        --keycap-shadow: rgba(4, 7, 16, 0.46);
+        --keycap-text-shadow: rgba(0, 0, 0, 0.45);
+    }
+}
+
