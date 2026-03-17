@@ -1164,6 +1164,125 @@ mark,
     transform: translateY(-1px);
 }
 
+/* 引用/标签悬停稳定性修复：仅文字着色，不做背景与位移 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    :is(a.orca-hover-nav, .orca-tag, a.orca-tag):is(:hover, :focus-visible) {
+    background-color: transparent !important;
+    transform: none !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline:not(.c) > span:is(:hover, :focus-visible) {
+    background-color: transparent !important;
+    transform: none !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline:has(> .orca-inline-r-content):is(:hover, :focus-within) {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline:has(> .orca-inline-r-content):is(:hover, :focus-within)
+    > .orca-inline-r-content {
+    color: var(--orca-color-primary-5) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    a.orca-hover-nav {
+    /* 轻微扩展命中区，缓解“字符间空隙”导致的 hover 抖动 */
+    padding-inline: 0.06em;
+    margin-inline: -0.06em;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    :is(.orca-tag, a.orca-tag) {
+    /* 不改变 tag 胶囊盒模型，避免文字偏移 */
+    margin-inline: 0 !important;
+}
+
+/* 块引用箭头：回退宿主默认图标，仅做尺寸与垂直位置微调 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="r"] > i.ti {
+    font-size: 0.88em !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+    transform: translateY(-0.08em);
+    transform-origin: 50% 55%;
+    will-change: transform;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="r"]:is(:hover, :focus-within) > i.ti {
+    animation: tn-ref-icon-elastic 360ms cubic-bezier(0.22, 0.9, 0.3, 1.15);
+}
+
+@keyframes tn-ref-icon-elastic {
+    0% {
+        transform: translateY(-0.08em) scale(1, 1);
+    }
+    30% {
+        transform: translateY(-0.08em) scale(1.2, 0.82);
+    }
+    55% {
+        transform: translateY(-0.08em) scale(0.9, 1.13);
+    }
+    75% {
+        transform: translateY(-0.08em) scale(1.06, 0.95);
+    }
+    100% {
+        transform: translateY(-0.08em) scale(1, 1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #main
+        :is(
+            .orca-block-editor-main,
+            .orca-repr-main-content,
+            .orca-repr-main-none-editable
+        )
+        .orca-inline[data-type="r"]:is(:hover, :focus-within) > i.ti {
+        animation: none !important;
+    }
+}
+
 
 /* ===== 列表符号样式 ===== */
 /* 无序列表 - 一级 */
@@ -1706,6 +1825,42 @@ mark,
     overflow-x: hidden !important;
 }
 
+/* 修复 / 命令日期面板网格左贴：仅作用于 datepicker 弹层，不影响侧边栏日历 */
+.orca-menu.orca-datepicker-menu .orca-date-picker {
+    width: 100% !important;
+}
+.orca-menu.orca-datepicker-menu .orca-date-picker > :is(.days, .months, .years) {
+    width: 100% !important;
+    justify-content: stretch !important;
+}
+.orca-menu.orca-datepicker-menu .orca-date-picker > .days {
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+}
+
+/* 兼容主编辑区 / 命令弹层（DOM 路径：#main .orca-popup ... section .orca-date-picker） */
+#main .orca-popup:has(section .orca-date-picker) {
+    min-width: 252px !important;
+}
+#main .orca-popup section:has(.orca-date-picker) {
+    width: 100% !important;
+}
+#main .orca-popup section .orca-date-picker {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+}
+#main .orca-popup section .orca-date-picker > :is(.days, .months, .years),
+#main .orca-popup section .orca-date-picker > div:has(> .day),
+#main .orca-popup section .orca-date-picker > div:has(> .weekday) {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    justify-content: stretch !important;
+}
+#main .orca-popup section .orca-date-picker .days,
+#main .orca-popup section .orca-date-picker > div:has(> .day) {
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+}
+
 /* ===== 工具提示样式 - 现代阴影 ===== */
 .orca-tooltip {
     background: var(--tokyo-floating-bg-subtle) !important;
@@ -1741,6 +1896,14 @@ mark,
     outline: none !important;
     box-shadow: var(--tokyo-shadow-floating) !important;
     overflow: visible !important;
+}
+
+/* 块预览弹层：裁切内部装饰线，避免层级线溢出边界 */
+.orca-popup.orca-block-preview-popup {
+    overflow: hidden !important;
+}
+.orca-popup.orca-block-preview-popup .orca-repr-scope-line {
+    overflow: hidden !important;
 }
 
 /* 工具栏弹出菜单 */
@@ -2205,7 +2368,7 @@ nav#sidebar :is(.orca-fav-item-item, .orca-tags-tag-item, .orca-aliased-block-it
 nav#sidebar :is(.orca-fav-item-item, .orca-tags-tag-item, .orca-aliased-block-item, .orca-page-item):hover :is(span, .title, .orca-tags-tag-name, .orca-aliased-block-name) {
     color: var(--tokyo-night-foreground) !important;
 }
-nav#sidebar .item:hover .ti,
+nav#sidebar .item:hover .ti:not(.orca-tags-tag-icon):not(.orca-tags-tag-icon-hash):not([class*="orca-tags-tag-icon"]),
 nav#sidebar a:hover .ti {
     color: var(--tokyo-night-foreground) !important;
 }
@@ -2340,7 +2503,7 @@ nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover > :is(
         background-color: var(--tokyo-night-terminal-black) !important;
         color: var(--tokyo-night-white) !important;
     }
-    nav#sidebar .item:hover .ti,
+    nav#sidebar .item:hover .ti:not(.orca-tags-tag-icon):not(.orca-tags-tag-icon-hash):not([class*="orca-tags-tag-icon"]),
     nav#sidebar a:hover .ti {
         color: var(--tokyo-night-white) !important;
     }
@@ -2413,9 +2576,9 @@ nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover > :is(
     nav#sidebar :is(.orca-fav-item-item, .orca-tags-tag-item, .orca-aliased-block-item, .orca-page-item):hover :is(span, .title, .orca-tags-tag-name, .orca-aliased-block-name) {
         color: var(--tokyo-night-white) !important;
     }
-    nav#sidebar .item:hover .ti,
+    nav#sidebar .item:hover .ti:not(.orca-tags-tag-icon):not(.orca-tags-tag-icon-hash):not([class*="orca-tags-tag-icon"]),
     nav#sidebar a:hover .ti,
-    nav#sidebar .ti:hover {
+    nav#sidebar .ti:hover:not(.orca-tags-tag-icon):not(.orca-tags-tag-icon-hash):not([class*="orca-tags-tag-icon"]) {
         color: var(--tokyo-night-white) !important;
     }
 }
@@ -2629,9 +2792,9 @@ nav#sidebar .search-box .ti.ti-reload:hover,
 nav#sidebar .search-box .ti.ti-x:hover {
     color: var(--tokyo-night-white) !important;
 }
-nav#sidebar .item:hover .ti,
+nav#sidebar .item:hover .ti:not(.orca-tags-tag-icon):not(.orca-tags-tag-icon-hash):not([class*="orca-tags-tag-icon"]),
 nav#sidebar a:hover .ti,
-nav#sidebar .ti:hover {
+nav#sidebar .ti:hover:not(.orca-tags-tag-icon):not(.orca-tags-tag-icon-hash):not([class*="orca-tags-tag-icon"]) {
     color: var(--tokyo-night-foreground) !important;
 }
 nav#sidebar .item.active .ti,
@@ -2797,6 +2960,16 @@ nav#sidebar .day.value {
     border: none !important;
 }
 
+/* 暗色模式下周末日期默认提亮到 comment 色阶，保留 today/selected/value 的优先级 */
+@media (prefers-color-scheme: dark) {
+    nav#sidebar .day.weekend:not(.today):not(.selected):not(.value) {
+        color: var(--tokyo-night-comment) !important;
+    }
+    nav#sidebar .vc-day.is-weekend:not(.is-today):not(.is-selected) .vc-day-content {
+        color: var(--tokyo-night-comment) !important;
+    }
+}
+
 /* 日历日期 hover：字体加粗 + Dock 风格邻近平滑缩放 */
 nav#sidebar .orca-calendar .day:not(.value):not(.selected):hover,
 nav#sidebar .orca-calendar .vc-day:not(.is-selected):hover .vc-day-content {
@@ -2885,6 +3058,161 @@ nav#sidebar .orca-calendar > div::-webkit-scrollbar-thumb {
 nav#sidebar .orca-calendar > div::-webkit-scrollbar-corner,
 nav#sidebar .orca-calendar > div::-webkit-scrollbar-button {
     background: transparent !important;
+}
+
+/* ===== 共享日历样式（侧边栏 + / 日期面板） ===== */
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) > header > :is(.choosen-year, .choosen-month, .go-now) {
+    transition: color var(--tokyo-transition-fast) !important;
+    cursor: pointer;
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) > header > .choosen-year:hover {
+    color: var(--tn-warn) !important;
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) > header > :is(.choosen-month, .go-now):hover {
+    color: var(--tn-info) !important;
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) :is(.vc-weekday, .weekday, .weekdays, th) {
+    color: var(--tokyo-night-comment) !important;
+    font-weight: normal !important;
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) :is(.vc-day, .day) {
+    color: var(--tokyo-night-foreground) !important;
+    background-color: transparent !important;
+    transition:
+        transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1),
+        color 0.16s ease !important;
+    transform-origin: 50% 58%;
+    position: relative;
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) .vc-day .vc-day-content {
+    position: relative;
+    background-color: transparent !important;
+    transition:
+        transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1),
+        color 0.16s ease !important;
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) :is(.vc-day.is-not-in-month, .day.prev-month, .day.next-month) {
+    color: var(--tokyo-night-terminal-black) !important;
+    opacity: 0.5 !important;
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) :is(.vc-day.is-today .vc-day-content, .day.today) {
+    color: var(--tokyo-night-cyan) !important;
+    font-weight: bold !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) :is(.vc-day.is-selected .vc-day-content, .day.selected, .day.value) {
+    background-color: transparent !important;
+    color: var(--tokyo-night-red) !important;
+    font-weight: bold !important;
+    border: none !important;
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) .day:not(.value):not(.selected):hover,
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) .vc-day:not(.is-selected):hover .vc-day-content {
+    background-color: transparent !important;
+    transform: scale(1.24);
+    color: var(--tn-calendar-hover-text) !important;
+    font-weight: 700 !important;
+    z-index: 2;
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) .days .day:not(.value):not(.selected):hover + .day:not(.value):not(.selected) {
+    transform: scale(1.1);
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) .days .day:not(.value):not(.selected):has(+ .day:not(.value):not(.selected):hover) {
+    transform: scale(1.1);
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) :is(.months .month, .years .year) {
+    color: var(--tokyo-night-foreground) !important;
+    border-radius: var(--orca-radius-md) !important;
+    transition:
+        background-color 0.2s,
+        color 0.2s,
+        transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+    transform-origin: 50% 58%;
+    position: relative;
+}
+:is(
+    nav#sidebar .orca-calendar,
+    .orca-menu.orca-datepicker-menu .orca-date-picker,
+    #main .orca-popup section .orca-date-picker
+) :is(.months .month:hover, .years .year:hover) {
+    background-color: transparent !important;
+    transform: scale(1.24);
+    color: var(--tn-calendar-hover-text) !important;
+    font-weight: 700 !important;
+    z-index: 2;
+}
+@media (prefers-color-scheme: dark) {
+    :is(
+        nav#sidebar .orca-calendar,
+        .orca-menu.orca-datepicker-menu .orca-date-picker,
+        #main .orca-popup section .orca-date-picker
+    ) .day.weekend:not(.today):not(.selected):not(.value) {
+        color: var(--tokyo-night-comment) !important;
+    }
+    :is(
+        nav#sidebar .orca-calendar,
+        .orca-menu.orca-datepicker-menu .orca-date-picker,
+        #main .orca-popup section .orca-date-picker
+    ) .vc-day.is-weekend:not(.is-today):not(.is-selected) .vc-day-content {
+        color: var(--tokyo-night-comment) !important;
+    }
 }
 
 /* ===== 设置模态框样式 ===== */
@@ -3175,6 +3503,8 @@ div.orca-settings {
  * Root B: floating surfaces, controls, and motion tokens.
  * Most "vibe tuning" work should happen here first.
  */
+
+
 
 /* ===== 现代阴影层级系统 ===== */
 :root {

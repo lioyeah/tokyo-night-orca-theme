@@ -5,6 +5,7 @@
 const THEME_NAME = "Tokyo Night";
 const THEME_CLASS = "t-tokyo-night";
 let pluginName: string;
+let hasRegisteredTheme = false;
 let hoveredScopeBlock: HTMLElement | null = null;
 let onPointerMove: ((event: PointerEvent) => void) | null = null;
 let onMouseLeave: (() => void) | null = null;
@@ -56,9 +57,11 @@ function unbindScopeLineHoverTracking() {
 
 export async function load(name: string) {
   pluginName = name;
+  hasRegisteredTheme = false;
 
   if (orca.state.themes[THEME_NAME] == null) {
     orca.themes.register(pluginName, THEME_NAME, "tokyo-night.css");
+    hasRegisteredTheme = true;
   }
   document.documentElement.classList.add(THEME_CLASS);
   bindScopeLineHoverTracking();
@@ -66,6 +69,9 @@ export async function load(name: string) {
 
 export async function unload() {
   unbindScopeLineHoverTracking();
-  orca.themes.unregister(THEME_NAME);
+  if (hasRegisteredTheme) {
+    orca.themes.unregister(THEME_NAME);
+    hasRegisteredTheme = false;
+  }
   document.documentElement.classList.remove(THEME_CLASS);
 }
