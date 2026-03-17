@@ -358,6 +358,125 @@
     transform: translateY(-1px);
 }
 
+/* 引用/标签悬停稳定性修复：仅文字着色，不做背景与位移 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    :is(a.orca-hover-nav, .orca-tag, a.orca-tag):is(:hover, :focus-visible) {
+    background-color: transparent !important;
+    transform: none !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline:not(.c) > span:is(:hover, :focus-visible) {
+    background-color: transparent !important;
+    transform: none !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline:has(> .orca-inline-r-content):is(:hover, :focus-within) {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline:has(> .orca-inline-r-content):is(:hover, :focus-within)
+    > .orca-inline-r-content {
+    color: var(--orca-color-primary-5) !important;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    a.orca-hover-nav {
+    /* 轻微扩展命中区，缓解“字符间空隙”导致的 hover 抖动 */
+    padding-inline: 0.06em;
+    margin-inline: -0.06em;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    :is(.orca-tag, a.orca-tag) {
+    /* 不改变 tag 胶囊盒模型，避免文字偏移 */
+    margin-inline: 0 !important;
+}
+
+/* 块引用箭头：回退宿主默认图标，仅做尺寸与垂直位置微调 */
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="r"] > i.ti {
+    font-size: 0.88em !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+    transform: translateY(-0.08em);
+    transform-origin: 50% 55%;
+    will-change: transform;
+}
+#main
+    :is(
+        .orca-block-editor-main,
+        .orca-repr-main-content,
+        .orca-repr-main-none-editable
+    )
+    .orca-inline[data-type="r"]:is(:hover, :focus-within) > i.ti {
+    animation: tn-ref-icon-elastic 360ms cubic-bezier(0.22, 0.9, 0.3, 1.15);
+}
+
+@keyframes tn-ref-icon-elastic {
+    0% {
+        transform: translateY(-0.08em) scale(1, 1);
+    }
+    30% {
+        transform: translateY(-0.08em) scale(1.2, 0.82);
+    }
+    55% {
+        transform: translateY(-0.08em) scale(0.9, 1.13);
+    }
+    75% {
+        transform: translateY(-0.08em) scale(1.06, 0.95);
+    }
+    100% {
+        transform: translateY(-0.08em) scale(1, 1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #main
+        :is(
+            .orca-block-editor-main,
+            .orca-repr-main-content,
+            .orca-repr-main-none-editable
+        )
+        .orca-inline[data-type="r"]:is(:hover, :focus-within) > i.ti {
+        animation: none !important;
+    }
+}
+
 
 /* ===== 列表符号样式 ===== */
 /* 无序列表 - 一级 */
@@ -913,8 +1032,16 @@
 }
 
 /* 兼容主编辑区 / 命令弹层（DOM 路径：#main .orca-popup ... section .orca-date-picker） */
-#main .orca-popup section .orca-date-picker {
+#main .orca-popup:has(section .orca-date-picker) {
+    min-width: 252px !important;
+}
+#main .orca-popup section:has(.orca-date-picker) {
     width: 100% !important;
+}
+#main .orca-popup section .orca-date-picker {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
 }
 #main .orca-popup section .orca-date-picker > :is(.days, .months, .years),
 #main .orca-popup section .orca-date-picker > div:has(> .day),
@@ -963,6 +1090,14 @@
     outline: none !important;
     box-shadow: var(--tokyo-shadow-floating) !important;
     overflow: visible !important;
+}
+
+/* 块预览弹层：裁切内部装饰线，避免层级线溢出边界 */
+.orca-popup.orca-block-preview-popup {
+    overflow: hidden !important;
+}
+.orca-popup.orca-block-preview-popup .orca-repr-scope-line {
+    overflow: hidden !important;
 }
 
 /* 工具栏弹出菜单 */
