@@ -1706,6 +1706,18 @@ mark,
     overflow-x: hidden !important;
 }
 
+/* 修复 / 命令日期面板网格左贴：仅作用于 datepicker 弹层，不影响侧边栏日历 */
+.orca-menu.orca-datepicker-menu .orca-date-picker {
+    width: 100% !important;
+}
+.orca-menu.orca-datepicker-menu .orca-date-picker > :is(.days, .months, .years) {
+    width: 100% !important;
+    justify-content: stretch !important;
+}
+.orca-menu.orca-datepicker-menu .orca-date-picker > .days {
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+}
+
 /* ===== 工具提示样式 - 现代阴影 ===== */
 .orca-tooltip {
     background: var(--tokyo-floating-bg-subtle) !important;
