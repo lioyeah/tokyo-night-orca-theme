@@ -1718,6 +1718,22 @@ mark,
     grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
 }
 
+/* 兼容主编辑区 / 命令弹层（DOM 路径：#main .orca-popup ... section .orca-date-picker） */
+#main .orca-popup section .orca-date-picker {
+    width: 100% !important;
+}
+#main .orca-popup section .orca-date-picker > :is(.days, .months, .years),
+#main .orca-popup section .orca-date-picker > div:has(> .day),
+#main .orca-popup section .orca-date-picker > div:has(> .weekday) {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    justify-content: stretch !important;
+}
+#main .orca-popup section .orca-date-picker .days,
+#main .orca-popup section .orca-date-picker > div:has(> .day) {
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+}
+
 /* ===== 工具提示样式 - 现代阴影 ===== */
 .orca-tooltip {
     background: var(--tokyo-floating-bg-subtle) !important;
