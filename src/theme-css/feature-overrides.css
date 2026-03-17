@@ -500,7 +500,7 @@ nav#sidebar .orca-button.solid.orca-sidebar-create-aliased-btn:hover > :is(
     }
     nav#sidebar .item:hover .ti,
     nav#sidebar a:hover .ti,
-    nav#sidebar .ti:hover {
+    nav#sidebar .ti:hover:not(.orca-tags-tag-icon):not(.orca-tags-tag-icon-hash):not([class*="orca-tags-tag-icon"]) {
         color: var(--tokyo-night-white) !important;
     }
 }
@@ -716,7 +716,7 @@ nav#sidebar .search-box .ti.ti-x:hover {
 }
 nav#sidebar .item:hover .ti,
 nav#sidebar a:hover .ti,
-nav#sidebar .ti:hover {
+nav#sidebar .ti:hover:not(.orca-tags-tag-icon):not(.orca-tags-tag-icon-hash):not([class*="orca-tags-tag-icon"]) {
     color: var(--tokyo-night-foreground) !important;
 }
 nav#sidebar .item.active .ti,
@@ -1260,3 +1260,4 @@ div.orca-settings {
  * Root B: floating surfaces, controls, and motion tokens.
  * Most "vibe tuning" work should happen here first.
  */
+
