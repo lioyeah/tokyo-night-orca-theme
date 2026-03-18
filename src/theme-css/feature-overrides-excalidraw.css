@@ -453,11 +453,8 @@
 #main {
     border-radius: var(--tokyo-floating-radius) 0 0 0 !important;
     margin: calc(var(--orca-height-headbar) + 2px) 0 0 8px !important;
-    top: 0 !important;
-    height: calc(100% - 2px) !important;
     border: 0 !important;
     box-shadow: -6px 5px 12px rgb(from var(--tn-text-1) r g b / 0.09) !important;
-    overflow: hidden !important;
     background-color: var(--tokyo-glass-bg) !important;
 }
 
@@ -493,20 +490,7 @@
     z-index: -1;
 }
 
-/* 编辑器顶部间距 */
-.orca-block-editor-main {
-    padding-top: var(--orca-spacing-xl) !important;
-}
-
-/* 拖拽手柄位置调整 */
-.orca-panel-drag-handle {
-    top: var(--orca-spacing-xl) !important;
-}
-
-/* 侧边工具栏位置调整 */
-.orca-block-editor-sidetools {
-    top: calc(50px + var(--orca-spacing-xl)) !important;
-}
+/* 保持宿主编辑区布局与层级定位，避免头部/侧栏随弹层发生位移 */
 
 /* ===== Phycat 风格动效 ===== */
 

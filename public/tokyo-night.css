@@ -1825,17 +1825,7 @@ mark,
     overflow-x: hidden !important;
 }
 
-/* 修复 / 命令日期面板网格左贴：仅作用于 datepicker 弹层，不影响侧边栏日历 */
-.orca-menu.orca-datepicker-menu .orca-date-picker {
-    width: 100% !important;
-}
-.orca-menu.orca-datepicker-menu .orca-date-picker > :is(.days, .months, .years) {
-    width: 100% !important;
-    justify-content: stretch !important;
-}
-.orca-menu.orca-datepicker-menu .orca-date-picker > .days {
-    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
-}
+/* 日期/时间选择弹层：保留宿主默认布局与定位，避免影响整体容器流 */
 
 /* ===== 工具提示样式 - 现代阴影 ===== */
 .orca-tooltip {
@@ -3061,39 +3051,29 @@ nav#sidebar .orca-calendar > div::-webkit-scrollbar-button {
 
 /* ===== 共享日历样式（侧边栏 + / 日期面板） ===== */
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) > header > :is(.choosen-year, .choosen-month, .go-now) {
     transition: color var(--tokyo-transition-fast) !important;
     cursor: pointer;
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) > header > .choosen-year:hover {
     color: var(--tn-warn) !important;
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) > header > :is(.choosen-month, .go-now):hover {
     color: var(--tn-info) !important;
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) :is(.vc-weekday, .weekday, .weekdays, th) {
     color: var(--tokyo-night-comment) !important;
     font-weight: normal !important;
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) :is(.vc-day, .day) {
     color: var(--tokyo-night-foreground) !important;
     background-color: transparent !important;
@@ -3104,9 +3084,7 @@ nav#sidebar .orca-calendar > div::-webkit-scrollbar-button {
     position: relative;
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) .vc-day .vc-day-content {
     position: relative;
     background-color: transparent !important;
@@ -3115,17 +3093,13 @@ nav#sidebar .orca-calendar > div::-webkit-scrollbar-button {
         color 0.16s ease !important;
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) :is(.vc-day.is-not-in-month, .day.prev-month, .day.next-month) {
     color: var(--tokyo-night-terminal-black) !important;
     opacity: 0.5 !important;
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) :is(.vc-day.is-today .vc-day-content, .day.today) {
     color: var(--tokyo-night-cyan) !important;
     font-weight: bold !important;
@@ -3133,9 +3107,7 @@ nav#sidebar .orca-calendar > div::-webkit-scrollbar-button {
     border: none !important;
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) :is(.vc-day.is-selected .vc-day-content, .day.selected, .day.value) {
     background-color: transparent !important;
     color: var(--tokyo-night-red) !important;
@@ -3143,14 +3115,10 @@ nav#sidebar .orca-calendar > div::-webkit-scrollbar-button {
     border: none !important;
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) .day:not(.value):not(.selected):hover,
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) .vc-day:not(.is-selected):hover .vc-day-content {
     background-color: transparent !important;
     transform: scale(1.24);
@@ -3159,23 +3127,17 @@ nav#sidebar .orca-calendar > div::-webkit-scrollbar-button {
     z-index: 2;
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) .days .day:not(.value):not(.selected):hover + .day:not(.value):not(.selected) {
     transform: scale(1.1);
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) .days .day:not(.value):not(.selected):has(+ .day:not(.value):not(.selected):hover) {
     transform: scale(1.1);
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) :is(.months .month, .years .year) {
     color: var(--tokyo-night-foreground) !important;
     border-radius: var(--orca-radius-md) !important;
@@ -3187,9 +3149,7 @@ nav#sidebar .orca-calendar > div::-webkit-scrollbar-button {
     position: relative;
 }
 :is(
-    nav#sidebar .orca-calendar,
-    .orca-menu.orca-datepicker-menu .orca-date-picker,
-    #main .orca-popup section .orca-date-picker
+    nav#sidebar .orca-calendar
 ) :is(.months .month:hover, .years .year:hover) {
     background-color: transparent !important;
     transform: scale(1.24);
@@ -3199,16 +3159,12 @@ nav#sidebar .orca-calendar > div::-webkit-scrollbar-button {
 }
 @media (prefers-color-scheme: dark) {
     :is(
-        nav#sidebar .orca-calendar,
-        .orca-menu.orca-datepicker-menu .orca-date-picker,
-        #main .orca-popup section .orca-date-picker
+        nav#sidebar .orca-calendar
     ) .day.weekend:not(.today):not(.selected):not(.value) {
         color: var(--tokyo-night-comment) !important;
     }
     :is(
-        nav#sidebar .orca-calendar,
-        .orca-menu.orca-datepicker-menu .orca-date-picker,
-        #main .orca-popup section .orca-date-picker
+        nav#sidebar .orca-calendar
     ) .vc-day.is-weekend:not(.is-today):not(.is-selected) .vc-day-content {
         color: var(--tokyo-night-comment) !important;
     }
@@ -4032,11 +3988,8 @@ div.orca-settings {
 #main {
     border-radius: var(--tokyo-floating-radius) 0 0 0 !important;
     margin: calc(var(--orca-height-headbar) + 2px) 0 0 8px !important;
-    top: 0 !important;
-    height: calc(100% - 2px) !important;
     border: 0 !important;
     box-shadow: -6px 5px 12px rgb(from var(--tn-text-1) r g b / 0.09) !important;
-    overflow: hidden !important;
     background-color: var(--tokyo-glass-bg) !important;
 }
 
@@ -4072,20 +4025,7 @@ div.orca-settings {
     z-index: -1;
 }
 
-/* 编辑器顶部间距 */
-.orca-block-editor-main {
-    padding-top: var(--orca-spacing-xl) !important;
-}
-
-/* 拖拽手柄位置调整 */
-.orca-panel-drag-handle {
-    top: var(--orca-spacing-xl) !important;
-}
-
-/* 侧边工具栏位置调整 */
-.orca-block-editor-sidetools {
-    top: calc(50px + var(--orca-spacing-xl)) !important;
-}
+/* 保持宿主编辑区布局与层级定位，避免头部/侧栏随弹层发生位移 */
 
 /* ===== Phycat 风格动效 ===== */
 
