@@ -1837,30 +1837,6 @@ mark,
     grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
 }
 
-/* 兼容主编辑区 / 命令弹层（DOM 路径：#main .orca-popup ... section .orca-date-picker） */
-#main .orca-popup:has(section .orca-date-picker) {
-    min-width: 252px !important;
-}
-#main .orca-popup section:has(.orca-date-picker) {
-    width: 100% !important;
-}
-#main .orca-popup section .orca-date-picker {
-    display: block !important;
-    width: 100% !important;
-    max-width: none !important;
-}
-#main .orca-popup section .orca-date-picker > :is(.days, .months, .years),
-#main .orca-popup section .orca-date-picker > div:has(> .day),
-#main .orca-popup section .orca-date-picker > div:has(> .weekday) {
-    width: 100% !important;
-    box-sizing: border-box !important;
-    justify-content: stretch !important;
-}
-#main .orca-popup section .orca-date-picker .days,
-#main .orca-popup section .orca-date-picker > div:has(> .day) {
-    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
-}
-
 /* ===== 工具提示样式 - 现代阴影 ===== */
 .orca-tooltip {
     background: var(--tokyo-floating-bg-subtle) !important;
@@ -2025,6 +2001,29 @@ mark,
 }
 #main .orca-block-editor.orca-hideable-editor::-webkit-scrollbar-thumb,
 #main .orca-block-editor.orca-hideable-editor *::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
+    border-radius: 999px !important;
+    border: 1px solid transparent !important;
+}
+
+/* Fallback: panel refresh may drop `orca-hideable-editor`, keep scrollbar skin stable. */
+#main .orca-panel.active .orca-block-editor,
+#main .orca-panel.active .orca-block-editor * {
+    scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) transparent !important;
+}
+#main .orca-panel.active .orca-block-editor::-webkit-scrollbar,
+#main .orca-panel.active .orca-block-editor *::-webkit-scrollbar {
+    width: 4px !important;
+    height: 4px !important;
+}
+#main .orca-panel.active .orca-block-editor::-webkit-scrollbar-track,
+#main .orca-panel.active .orca-block-editor *::-webkit-scrollbar-track,
+#main .orca-panel.active .orca-block-editor::-webkit-scrollbar-corner,
+#main .orca-panel.active .orca-block-editor *::-webkit-scrollbar-corner {
+    background: transparent !important;
+}
+#main .orca-panel.active .orca-block-editor::-webkit-scrollbar-thumb,
+#main .orca-panel.active .orca-block-editor *::-webkit-scrollbar-thumb {
     background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
     border-radius: 999px !important;
     border: 1px solid transparent !important;
