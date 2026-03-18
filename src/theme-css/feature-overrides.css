@@ -2152,3 +2152,26 @@ div.orca-settings {
     transform: none !important;
 }
 
+/* 第三方插件弹层适配：保持插件原行为，仅调和 segmented 背景色 */
+:is([data-role="mlo-task-views-panel-root"], [data-role="no-task-views-panel-root"]) .orca-segmented {
+    background-color: color-mix(in srgb, var(--orca-color-bg-2), var(--orca-color-primary-5) 4%) !important;
+    border: 1px solid color-mix(in srgb, var(--orca-color-border), var(--orca-color-primary-5) 10%) !important;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--orca-color-border), white 28%) !important;
+}
+
+:is([data-role="mlo-task-views-panel-root"], [data-role="no-task-views-panel-root"]) .orca-segmented .orca-segmented-item:not(.orca-selected) {
+    color: color-mix(in srgb, var(--orca-color-text-1), var(--orca-color-text-2) 38%) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    :is([data-role="mlo-task-views-panel-root"], [data-role="no-task-views-panel-root"]) .orca-segmented {
+        background-color: color-mix(in srgb, var(--orca-color-bg-3), var(--orca-color-primary-5) 9%) !important;
+        border-color: color-mix(in srgb, var(--orca-color-border), var(--orca-color-primary-5) 22%) !important;
+        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--orca-color-primary-5), transparent 82%) !important;
+    }
+
+    :is([data-role="mlo-task-views-panel-root"], [data-role="no-task-views-panel-root"]) .orca-segmented .orca-segmented-item:not(.orca-selected) {
+        color: color-mix(in srgb, var(--orca-color-text-1), var(--orca-color-text-2) 52%) !important;
+    }
+}
+
