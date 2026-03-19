@@ -1226,6 +1226,13 @@
     display: none !important;
 }
 
+/* Callout 内的无序列表仍需显示列表圆点（复用现有 ul 颜色规则）。 */
+.orca-repr-quote2 :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content) .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
+.orca-repr-quote2.orca-repr-main :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content) .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
+.orca-repr-quote2.orca-repr-main-collapsed :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content) .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled) {
+    display: block !important;
+}
+
 /* ===== Table cell block handle hidden ===== */
 /* Only hide leading point handles inside table2 cells. */
 .orca-repr-main-content.orca-repr-table2-content .orca-block-handle,
