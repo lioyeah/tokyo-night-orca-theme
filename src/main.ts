@@ -9,6 +9,9 @@ let hasRegisteredTheme = false;
 let hoveredScopeBlock: HTMLElement | null = null;
 let onPointerMove: ((event: PointerEvent) => void) | null = null;
 let onMouseLeave: (() => void) | null = null;
+let mainRoot: HTMLElement | null = null;
+let pendingPointerTarget: EventTarget | null = null;
+let pointerFrameId: number | null = null;
 
 function setHoveredScopeBlock(next: HTMLElement | null) {
   if (hoveredScopeBlock === next) return;
@@ -17,27 +20,51 @@ function setHoveredScopeBlock(next: HTMLElement | null) {
   hoveredScopeBlock?.classList.add("tn-scope-line-hover");
 }
 
+function getMainRoot() {
+  if (mainRoot?.isConnected) return mainRoot;
+  const candidate = document.querySelector("#main");
+  mainRoot = candidate instanceof HTMLElement ? candidate : null;
+  return mainRoot;
+}
+
+function flushPointerMove() {
+  pointerFrameId = null;
+  const target = pendingPointerTarget;
+  pendingPointerTarget = null;
+
+  if (!(target instanceof Element)) {
+    setHoveredScopeBlock(null);
+    return;
+  }
+
+  const main = getMainRoot();
+  if (main == null || !main.contains(target)) {
+    setHoveredScopeBlock(null);
+    return;
+  }
+
+  const block = target.closest(".orca-block.orca-container");
+  setHoveredScopeBlock(block instanceof HTMLElement ? block : null);
+}
+
 function bindScopeLineHoverTracking() {
   if (onPointerMove != null) return;
+  getMainRoot();
 
   onPointerMove = (event: PointerEvent) => {
-    const target = event.target;
-    if (!(target instanceof Element)) {
-      setHoveredScopeBlock(null);
-      return;
-    }
-
-    const main = document.querySelector("#main");
-    if (!(main instanceof HTMLElement) || !main.contains(target)) {
-      setHoveredScopeBlock(null);
-      return;
-    }
-
-    const block = target.closest(".orca-block.orca-container");
-    setHoveredScopeBlock(block instanceof HTMLElement ? block : null);
+    pendingPointerTarget = event.target;
+    if (pointerFrameId != null) return;
+    pointerFrameId = window.requestAnimationFrame(flushPointerMove);
   };
 
-  onMouseLeave = () => setHoveredScopeBlock(null);
+  onMouseLeave = () => {
+    pendingPointerTarget = null;
+    if (pointerFrameId != null) {
+      window.cancelAnimationFrame(pointerFrameId);
+      pointerFrameId = null;
+    }
+    setHoveredScopeBlock(null);
+  };
 
   document.addEventListener("pointermove", onPointerMove, true);
   document.addEventListener("mouseleave", onMouseLeave, true);
@@ -52,6 +79,12 @@ function unbindScopeLineHoverTracking() {
     document.removeEventListener("mouseleave", onMouseLeave, true);
     onMouseLeave = null;
   }
+  if (pointerFrameId != null) {
+    window.cancelAnimationFrame(pointerFrameId);
+    pointerFrameId = null;
+  }
+  pendingPointerTarget = null;
+  mainRoot = null;
   setHoveredScopeBlock(null);
 }
 
