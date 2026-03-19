@@ -1926,6 +1926,18 @@ mark,
     box-shadow: none !important;
 }
 
+/* Sidebar context menus are mounted under #main; keep overflow visible to avoid left-edge clipping. */
+#main.orca-panels-container,
+section#main.orca-panels-container,
+section#main.orca-panels-container.no-pointer {
+    overflow: visible !important;
+}
+
+/* Hide the bottom separator line in sidebar popup menu only. */
+#main > div.orca-popup > div > div.orca-menu-separator {
+    display: none !important;
+}
+
 /* ===== 模态框和对话框 - 现代阴影 ===== */
 .orca-modal,
 .orca-dialog {
@@ -2024,7 +2036,9 @@ mark,
 #sidebar .orca-tags-list,
 #sidebar .orca-fav-list,
 #sidebar .orca-page-list,
+#sidebar section > div:nth-child(3) > div,
 #sidebar section > div:nth-child(3) > div > div {
+    background-color: transparent !important;
     scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) transparent !important;
 }
 #sidebar .orca-aliased-list::-webkit-scrollbar-track,
@@ -2041,6 +2055,30 @@ mark,
 #sidebar section > div:nth-child(3) > div > div::-webkit-scrollbar-thumb {
     background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
     border: 1px solid transparent !important;
+}
+
+/* Exact scroller containers discovered in host DOM (tags/pages/favorites/aliased). */
+#sidebar :is(
+    .orca-tags-list-list,
+    .orca-page-list-list,
+    .orca-fav-list-list,
+    .orca-aliased-list-list,
+    .orca-sidebar-tabs,
+    .orca-hideable
+) {
+    background-color: transparent !important;
+    scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) transparent !important;
+}
+
+#sidebar :is(
+    .orca-tags-list-list,
+    .orca-page-list-list,
+    .orca-fav-list-list,
+    .orca-aliased-list-list,
+    .orca-sidebar-tabs,
+    .orca-hideable
+)::-webkit-scrollbar-track {
+    background: transparent !important;
 }
 
 /* Plugin marketplace grid scrollbar: force transparent track (host app often sets white track). */
@@ -3465,8 +3503,7 @@ div.orca-settings {
 #main .orca-datetime-picker,
 #main .orca-time-picker,
 #main .orca-date-picker-popup,
-#main .orca-popup:has(.orca-calendar),
-#main .orca-popup:has(.vc-container) {
+#main .orca-popup:has(:is(.orca-calendar, .vc-container)) {
     background: var(--tokyo-floating-bg) !important;
     border: none !important;
     border-radius: var(--orca-radius-md) !important;
@@ -3838,14 +3875,18 @@ div.orca-settings {
 /* ===== 主编辑区日期/时间面板作用域修复（弹层挂载到 body 时仍生效） ===== */
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker),
-    .orca-popup:has(.orca-time-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker,
+            .orca-time-picker
+        )
+    )
 ) :is(.vc-weekday, .weekday, .weekdays, th) {
     color: var(--tokyo-night-comment) !important;
     font-weight: normal !important;
@@ -3901,13 +3942,17 @@ div.orca-settings {
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) :is(.vc-day, .day) {
     color: var(--tokyo-night-foreground) !important;
     background-color: transparent !important;
@@ -3920,13 +3965,17 @@ div.orca-settings {
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) .vc-day .vc-day-content {
     position: relative;
     background-color: transparent !important;
@@ -3937,26 +3986,34 @@ div.orca-settings {
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) :is(.day.weekend:not(.today):not(.selected):not(.value), .vc-day.is-weekend:not(.is-today):not(.is-selected) .vc-day-content) {
     color: var(--tokyo-night-comment) !important;
 }
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) :is(.day.outside, .vc-day.is-not-in-month, .day.prev-month, .day.next-month) {
     color: var(--tokyo-night-terminal-black) !important;
     opacity: 0.5 !important;
@@ -3964,13 +4021,17 @@ div.orca-settings {
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) :is(.vc-day.is-today .vc-day-content, .day.today, .day.current, .day.now) {
     color: var(--tokyo-night-cyan) !important;
     font-weight: bold !important;
@@ -3980,13 +4041,17 @@ div.orca-settings {
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) :is(.vc-day.is-selected .vc-day-content, .day.selected, .day.value) {
     background-color: transparent !important;
     color: var(--tokyo-night-red) !important;
@@ -3996,13 +4061,17 @@ div.orca-settings {
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) :is(.day:not(.value):not(.selected):hover, .vc-day:not(.is-selected):hover .vc-day-content) {
     background-color: transparent !important;
     transform: scale(1.24);
@@ -4013,39 +4082,51 @@ div.orca-settings {
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) .days .day:not(.value):not(.selected):hover + .day:not(.value):not(.selected) {
     transform: scale(1.1);
 }
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) .days .day:not(.value):not(.selected):has(+ .day:not(.value):not(.selected):hover) {
     transform: scale(1.1);
 }
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) :is(.months .month, .years .year) {
     color: var(--tokyo-night-foreground) !important;
     border-radius: var(--orca-radius-md) !important;
@@ -4059,13 +4140,17 @@ div.orca-settings {
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) :is(.months .month:hover, .years .year:hover) {
     background-color: transparent !important;
     transform: scale(1.24);
@@ -4076,26 +4161,34 @@ div.orca-settings {
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) :is(.months .month:hover + .month, .years .year:hover + .year) {
     transform: scale(1.1);
 }
 
 :is(
     .orca-date-picker-popup,
-    .orca-popup:has(.orca-calendar),
-    .orca-popup:has(.orca-date-picker),
-    .orca-popup:has(.orca-datepicker-menu),
     .orca-menu.orca-datepicker-menu,
     .orca-date-picker,
-    .orca-popup:has(.orca-datepicker),
-    .orca-popup:has(.orca-datetime-picker)
+    .orca-popup:has(
+        :is(
+            .orca-calendar,
+            .orca-date-picker,
+            .orca-datepicker-menu,
+            .orca-datepicker,
+            .orca-datetime-picker
+        )
+    )
 ) :is(.months .month:has(+ .month:hover), .years .year:has(+ .year:hover)) {
     transform: scale(1.1);
 }
@@ -4833,7 +4926,10 @@ div.orca-settings {
     h1 {
     display: inline-block;
     position: relative;
-    transition: all 0.4s ease;
+    transition:
+        color 0.4s ease,
+        text-shadow 0.4s ease,
+        transform 0.4s ease;
 }
 #main
     :is(
@@ -4867,7 +4963,14 @@ div.orca-settings {
     box-shadow:
         inset 0 -1px 0 rgb(from #ffffff r g b / 0.18),
         0 4px 12px rgb(from var(--tn-text-1) r g b / 0.05);
-    transition: all 0.4s ease;
+    transition:
+        color 0.4s ease,
+        text-shadow 0.4s ease,
+        background-image 0.4s ease,
+        border-top-color 0.4s ease,
+        border-bottom-color 0.4s ease,
+        box-shadow 0.4s ease,
+        transform 0.4s ease;
 }
 #main
     :is(
@@ -5158,7 +5261,9 @@ div.orca-settings {
     height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
-    transition: all 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 #main
     :is(
@@ -5402,7 +5507,11 @@ div.orca-settings {
     )
     .orca-highlight {
     display: inline-block;
-    transition: all 0.3s ease;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 #main
     :is(
@@ -5525,6 +5634,13 @@ div.orca-settings {
 .orca-repr-quote2.orca-repr-main .orca-block-handle,
 .orca-repr-quote2.orca-repr-main-collapsed .orca-block-handle {
     display: none !important;
+}
+
+/* Callout 内的无序列表仍需显示列表圆点（复用现有 ul 颜色规则）。 */
+.orca-repr-quote2 :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content) .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
+.orca-repr-quote2.orca-repr-main :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content) .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
+.orca-repr-quote2.orca-repr-main-collapsed :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content) .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled) {
+    display: block !important;
 }
 
 /* ===== Table cell block handle hidden ===== */
