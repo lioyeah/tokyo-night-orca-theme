@@ -1120,6 +1120,18 @@
     box-shadow: none !important;
 }
 
+/* Sidebar context menus are mounted under #main; keep overflow visible to avoid left-edge clipping. */
+#main.orca-panels-container,
+section#main.orca-panels-container,
+section#main.orca-panels-container.no-pointer {
+    overflow: visible !important;
+}
+
+/* Hide the bottom separator line in sidebar popup menu only. */
+#main > div.orca-popup > div > div.orca-menu-separator {
+    display: none !important;
+}
+
 /* ===== 模态框和对话框 - 现代阴影 ===== */
 .orca-modal,
 .orca-dialog {
@@ -1218,7 +1230,9 @@
 #sidebar .orca-tags-list,
 #sidebar .orca-fav-list,
 #sidebar .orca-page-list,
+#sidebar section > div:nth-child(3) > div,
 #sidebar section > div:nth-child(3) > div > div {
+    background-color: transparent !important;
     scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) transparent !important;
 }
 #sidebar .orca-aliased-list::-webkit-scrollbar-track,
@@ -1235,6 +1249,30 @@
 #sidebar section > div:nth-child(3) > div > div::-webkit-scrollbar-thumb {
     background-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) !important;
     border: 1px solid transparent !important;
+}
+
+/* Exact scroller containers discovered in host DOM (tags/pages/favorites/aliased). */
+#sidebar :is(
+    .orca-tags-list-list,
+    .orca-page-list-list,
+    .orca-fav-list-list,
+    .orca-aliased-list-list,
+    .orca-sidebar-tabs,
+    .orca-hideable
+) {
+    background-color: transparent !important;
+    scrollbar-color: color-mix(in srgb, var(--tn-border), var(--tn-text-2) 24%) transparent !important;
+}
+
+#sidebar :is(
+    .orca-tags-list-list,
+    .orca-page-list-list,
+    .orca-fav-list-list,
+    .orca-aliased-list-list,
+    .orca-sidebar-tabs,
+    .orca-hideable
+)::-webkit-scrollbar-track {
+    background: transparent !important;
 }
 
 /* Plugin marketplace grid scrollbar: force transparent track (host app often sets white track). */
