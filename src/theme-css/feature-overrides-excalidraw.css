@@ -1218,15 +1218,7 @@
     animation: liquidMorph 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===== Callout 块内圆点隐藏 ===== */
-/* 避免与左侧装饰线发生干涉 */
-.orca-repr-quote2 .orca-block-handle,
-.orca-repr-quote2.orca-repr-main .orca-block-handle,
-.orca-repr-quote2.orca-repr-main-collapsed .orca-block-handle {
-    display: none !important;
-}
-
-/* Callout 内的无序列表仍需显示列表圆点（复用现有 ul 颜色规则）。 */
+/* Callout 内的列表块仍保留真实手柄，方便鼠标操作。 */
 .orca-repr-quote2 :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content) .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
 .orca-repr-quote2.orca-repr-main :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content) .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
 .orca-repr-quote2.orca-repr-main-collapsed :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content) .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled) {

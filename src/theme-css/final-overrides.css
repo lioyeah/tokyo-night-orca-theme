@@ -62,6 +62,67 @@
     color: var(--tokyo-night-orange) !important;
 }
 
+/* Callout 直属根块手柄保持可交互，但设为完全透明，避免与左边框重叠。 */
+#main .orca-block[data-type="quote2"] > .orca-repr > .orca-repr-children > .orca-block .orca-block-handle,
+#main .orca-block[data-type="quote2"] > .orca-repr > .orca-repr-children > .orca-block .orca-block-handle::before {
+    opacity: 0 !important;
+}
+
+#main .orca-block[data-type="quote2"] > .orca-repr > .orca-repr-children > .orca-block .orca-block-handle:hover,
+#main .orca-block[data-type="quote2"] > .orca-repr > .orca-repr-children > .orca-block .orca-block-handle:hover::before {
+    opacity: 0 !important;
+}
+
+/* Callout 内次级 ul 恢复容器伪圆点显示，根级仍由现有假圆点链路承担。 */
+#main
+    .orca-block[data-type="quote2"]
+    > .orca-repr
+    > .orca-repr-children
+    > .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    > .orca-repr
+    > .orca-repr-main
+    > .orca-repr-main-content.orca-repr-ul-content::before,
+#main
+    .orca-block[data-type="quote2"]
+    > .orca-repr
+    > .orca-repr-children
+    > .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    > .orca-repr
+    > .orca-repr-main-content.orca-repr-ul-content::before,
+#main
+    .orca-block[data-type="quote2"]
+    > .orca-repr
+    > .orca-repr-children
+    > .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    > .orca-repr.orca-repr-ul
+    > .orca-repr-main-content.orca-repr-ul-content::before {
+    display: inline-block !important;
+}
+
+/* Callout 内次级 ul 补回左侧缩进，避免与根级列表落在同一基线。 */
+#main
+    .orca-block[data-type="quote2"]
+    > .orca-repr
+    > .orca-repr-children
+    > .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    > .orca-repr
+    > .orca-repr-main
+    > .orca-repr-main-content.orca-repr-ul-content,
+#main
+    .orca-block[data-type="quote2"]
+    > .orca-repr
+    > .orca-repr-children
+    > .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    > .orca-repr
+    > .orca-repr-main-content.orca-repr-ul-content {
+    padding-left: 1.2em !important;
+}
+
 /* ===== 块层级线（orca-repr-scope-line）颜色统一覆盖 ===== */
 #main .orca-block.orca-container {
     --tn-scope-line: color-mix(in srgb, var(--tokyo-night-blue), transparent 74%);

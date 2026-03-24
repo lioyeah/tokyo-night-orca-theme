@@ -5628,15 +5628,7 @@ div.orca-settings {
     animation: liquidMorph 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===== Callout 块内圆点隐藏 ===== */
-/* 避免与左侧装饰线发生干涉 */
-.orca-repr-quote2 .orca-block-handle,
-.orca-repr-quote2.orca-repr-main .orca-block-handle,
-.orca-repr-quote2.orca-repr-main-collapsed .orca-block-handle {
-    display: none !important;
-}
-
-/* Callout 内的无序列表仍需显示列表圆点（复用现有 ul 颜色规则）。 */
+/* Callout 内的列表块仍保留真实手柄，方便鼠标操作。 */
 .orca-repr-quote2 :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content) .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
 .orca-repr-quote2.orca-repr-main :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content) .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled),
 .orca-repr-quote2.orca-repr-main-collapsed :is(.orca-block[data-type="ul"], .orca-repr-ul, .orca-repr-ul-content) .orca-block-handle:is(.ti-point-filled, .ti-point, .ti-circle, .ti-circle-filled) {
@@ -5714,6 +5706,67 @@ div.orca-settings {
 #main .orca-repr-ul .orca-block-handle.ti::before,
 #main .orca-repr-ul-content .orca-block-handle.ti::before {
     color: var(--tokyo-night-orange) !important;
+}
+
+/* Callout 直属根块手柄保持可交互，但设为完全透明，避免与左边框重叠。 */
+#main .orca-block[data-type="quote2"] > .orca-repr > .orca-repr-children > .orca-block .orca-block-handle,
+#main .orca-block[data-type="quote2"] > .orca-repr > .orca-repr-children > .orca-block .orca-block-handle::before {
+    opacity: 0 !important;
+}
+
+#main .orca-block[data-type="quote2"] > .orca-repr > .orca-repr-children > .orca-block .orca-block-handle:hover,
+#main .orca-block[data-type="quote2"] > .orca-repr > .orca-repr-children > .orca-block .orca-block-handle:hover::before {
+    opacity: 0 !important;
+}
+
+/* Callout 内次级 ul 恢复容器伪圆点显示，根级仍由现有假圆点链路承担。 */
+#main
+    .orca-block[data-type="quote2"]
+    > .orca-repr
+    > .orca-repr-children
+    > .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    > .orca-repr
+    > .orca-repr-main
+    > .orca-repr-main-content.orca-repr-ul-content::before,
+#main
+    .orca-block[data-type="quote2"]
+    > .orca-repr
+    > .orca-repr-children
+    > .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    > .orca-repr
+    > .orca-repr-main-content.orca-repr-ul-content::before,
+#main
+    .orca-block[data-type="quote2"]
+    > .orca-repr
+    > .orca-repr-children
+    > .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    > .orca-repr.orca-repr-ul
+    > .orca-repr-main-content.orca-repr-ul-content::before {
+    display: inline-block !important;
+}
+
+/* Callout 内次级 ul 补回左侧缩进，避免与根级列表落在同一基线。 */
+#main
+    .orca-block[data-type="quote2"]
+    > .orca-repr
+    > .orca-repr-children
+    > .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    > .orca-repr
+    > .orca-repr-main
+    > .orca-repr-main-content.orca-repr-ul-content,
+#main
+    .orca-block[data-type="quote2"]
+    > .orca-repr
+    > .orca-repr-children
+    > .orca-block[data-type="ul"]
+    .orca-block[data-type="ul"]
+    > .orca-repr
+    > .orca-repr-main-content.orca-repr-ul-content {
+    padding-left: 1.2em !important;
 }
 
 /* ===== 块层级线（orca-repr-scope-line）颜色统一覆盖 ===== */
