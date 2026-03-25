@@ -93,41 +93,6 @@
     transition: all 0.3s ease;
 }
 
-/* 扩大悬停区域 - 使用伪元素，并扩展到覆盖相邻区域 */
-#main
-    :is(
-        .orca-block-editor-main,
-        .orca-repr-main-content,
-        .orca-repr-main-none-editable
-    )
-    hr.orca-hr-line:nth-of-type(1)::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 200%; /* 扩展到右侧hr区域 */
-    height: 24px;
-    cursor: pointer;
-}
-
-#main
-    :is(
-        .orca-block-editor-main,
-        .orca-repr-main-content,
-        .orca-repr-main-none-editable
-    )
-    hr.orca-hr-line:nth-of-type(2)::before {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 200%; /* 扩展到左侧hr区域 */
-    height: 24px;
-    cursor: pointer;
-}
-
 /* 左侧 hr：从左透明渐变到中间主色 */
 #main
     :is(
@@ -161,9 +126,8 @@
 }
 
 /*
- * 悬停点亮效果 - 通过扩大悬停区域实现联动
- * hover 左侧 hr 或其扩展区域时，点亮左侧，并通过兄弟选择器点亮右侧
- * hover 右侧 hr 或其扩展区域时，点亮右侧，并通过父容器 :has() 点亮左侧
+ * 悬停点亮效果
+ * 仅在真实 hr 上响应 hover，避免中间可编辑区域被透明命中层覆盖
  */
 #main
     :is(
