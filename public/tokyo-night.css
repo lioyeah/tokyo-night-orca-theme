@@ -1778,6 +1778,13 @@ mark,
         color var(--tokyo-transition-fast),
         box-shadow var(--tokyo-transition-fast) !important;
 }
+
+/* 标签候选面板：内容过多时在面板内部滚动，避免条目继续画到面板外。 */
+.orca-menu.orca-tag-trigger {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    border-radius: inherit !important;
+}
 .orca-menu .orca-menu-item.selected {
     background-color: var(--orca-color-primary-5) !important;
     color: var(--tokyo-night-bg-night) !important;
